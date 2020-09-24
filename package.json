@@ -1,5 +1,5 @@
 {
-  "name": "web-chat-service-desk-starter",
+  "name": "assistant-web-chat-service-desk-starter",
   "version": "1.0.0",
   "description": "A starter project for extending web chat with a custom service desk.",
   "main": "src/buildEntry.ts",
@@ -72,7 +72,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.ibm.com:watson-engagement-advisor/web-chat-service-desk-starter.git"
+    "url": "git@github.com:watson-developer-cloud/assistant-web-chat-service-desk-starter.git"
   },
   "license": "MIT",
   "config": {

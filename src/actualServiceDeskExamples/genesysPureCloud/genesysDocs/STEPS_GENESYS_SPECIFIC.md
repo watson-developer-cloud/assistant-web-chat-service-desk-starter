@@ -12,7 +12,7 @@
 
     - For Genesys, create a [web chat widget](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/), and [find your organization ID](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/)
 
-3. Copy [serviceDeskTemplate.ts](../src/serviceDesks/serviceDeskTemplate.ts) and give it a new, descriptive name. Then modify [buildEntry.ts](../src/buildEntry.ts) so that it's importing and building from your new file (instead of [exampleServiceDesk.ts](../src/serviceDesks/exampleServiceDesk.ts)).
+3. Copy [serviceDeskTemplate.ts](../../../serviceDesks/serviceDeskTemplate.ts) and give it a new, descriptive name. Then modify [buildEntry.ts](../../../buildEntry.ts) so that it's importing and building from your new file (instead of [exampleServiceDesk.ts](../../../serviceDesks/exampleServiceDesk.ts)).
 
 These Genesys docs and resources will help in implementing the core chat features in the following steps:
 
@@ -92,7 +92,7 @@ These Genesys docs and resources will help in implementing the core chat feature
             - [Set up an OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/) that uses a client credentials grant
             - [Make a request to that OAuth client](https://developer.mypurecloud.com/api/rest/authorization/use-client-credentials.html) for an access token (see [here](https://developer.mypurecloud.com/api/tutorials/oauth-client-credentials/?language=nodejs&step=1) for a tutorial)
 
-    - A simple (insecure) implementation of this for Genesys is shown [here](https://github.ibm.com/Ryan-Glassman/genesys-purecloud/tree/master/example-server). Further documentation on authenticated chat flow for Genesys can be found [here](https://developer.mypurecloud.com/api/webchat/authenticated-chat.html).
+    - A simple (insecure) implementation of this for Genesys is shown [here](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/master/src/actualServiceDeskExamples/genesysPureCloud/example-server). Further documentation on authenticated chat flow for Genesys can be found [here](https://developer.mypurecloud.com/api/webchat/authenticated-chat.html).
 
     After you have implemented authentication, change your chat implementation in the service desk tooling (for Genesys, this change will need to be made in the web chat widget) to require authentication. Then test to make sure that establishing a chat succeeds only if the user is properly authenticated.
 
