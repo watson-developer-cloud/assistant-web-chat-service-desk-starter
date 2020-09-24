@@ -84,6 +84,11 @@ This project uses [jest](https://jestjs.io/) as its testing framework with TypeS
 
 To run the defined tests, run `npm run test`.
 
+# Actual Service Desk Examples
+We provide reference implementations that provide fully functional integrations with popular service desks. 
+These implementations, while functional, are examples only, and have not been vetted for production use.
+- [Genesys PureCloud](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/master/src/actualServiceDeskExamples/genesysPureCloud)  
+
 ### TypeScript resources
 
 This repository is written in TypeScript. Because the web chat is also written in TypeScript, IBM can standardize and release service desk extensions also written in TypeScript into the main project. The official TypeScript documentation is very thorough and has many valuable resources, starting with [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html). If you are using a modern text editor, you will quickly discover how useful it is to right-click on a complex object argument in a function and view its detailed type definition!
