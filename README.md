@@ -87,7 +87,7 @@ To run the defined tests, run `npm run test`.
 # Actual Service Desk Examples
 We provide reference implementations that provide fully functional integrations with popular service desks. 
 These implementations, while functional, are examples only, and have not been vetted for production use.
-- [Genesys PureCloud](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/master/src/actualServiceDeskExamples/genesysPureCloud)  
+- [Genesys PureCloud](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/main/src/actualServiceDeskExamples/genesysPureCloud)  
 
 ### TypeScript resources
 

@@ -85,7 +85,7 @@ Keep the following things in mind as you work through these steps:
     - Make authenticated calls to your service desk API
     - Return the required user authentication information (such as a token)
 
-    Implementation of this step will vary significantly depending on your service desk provider's API, how it handles authentication, and how you choose to handle authentication for your middleware server. A simple (insecure) implementation for Genesys is shown [here](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/master/src/actualServiceDeskExamples/genesysPureCloud/example-server). Further documentation on authenticated chat flow for Genesys can be found [here](https://developer.mypurecloud.com/api/webchat/authenticated-chat.html).
+    Implementation of this step will vary significantly depending on your service desk provider's API, how it handles authentication, and how you choose to handle authentication for your middleware server. A simple (insecure) implementation for Genesys is shown [here](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/main/src/actualServiceDeskExamples/genesysPureCloud/example-server). Further documentation on authenticated chat flow for Genesys can be found [here](https://developer.mypurecloud.com/api/webchat/authenticated-chat.html).
 
     After you have implemented authentication, change your chat implementation in the service desk tooling (for example, the web chat widget in Genesys) to require authentication. Then test to make sure that establishing a chat succeeds only if the user is properly authenticated.
 
