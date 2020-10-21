@@ -12,7 +12,7 @@ The client side component manages the communication between the end user and the
 ## Setting it up
 
 0. If you haven't already, follow the setup steps in the root-level [README](../../../README.md) to ensure you can run an instance of [ExampleServiceDesk](../../serviceDesks/exampleServiceDesk.ts).
-1. Rename [purecloudSetup-sample.ts](./purecloudSetup-sample.ts) to `purecloudSetup.ts` and populate with your organization information.
+1. Update [purecloudSetup.ts](./purecloudSetup.ts) to populate with your organization information.
     - `DEPLOYMENT_ID` -> [create a web chat widget v1.1](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/)
     - `ORGANIZATION_ID` -> [find my organization ID](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/)
 

@@ -11,8 +11,9 @@
  * specific language governing permissions and limitations under the License.
  *
  */
-
-import { ExampleServiceDesk } from './serviceDesks/exampleServiceDesk'; // You should replace this with your own service desk.
+import { GenesysServiceDesk } from './actualServiceDeskExamples/genesysPureCloud/genesysServiceDesk';
+import { ExampleServiceDesk } from './serviceDesks/exampleServiceDesk';
+import { TwilioFlex } from './serviceDesks/twilioFlex';
 import { ServiceDesk, ServiceDeskFactoryParameters } from './types/serviceDesk';
 
 /**
@@ -26,7 +27,13 @@ import { ServiceDesk, ServiceDeskFactoryParameters } from './types/serviceDesk';
  * @param parameters ServiceDeskFactoryParameters passed from web chat into service desk.
  */
 function WebChatServiceDeskFactory(parameters: ServiceDeskFactoryParameters): ServiceDesk {
-  return new ExampleServiceDesk(parameters);
+  return getInstance(parameters);
+}
+
+function getInstance(parameters: ServiceDeskFactoryParameters): TwilioFlex | ExampleServiceDesk | GenesysServiceDesk {
+  const serviceDeskClass: string = process.env.SERVICE_DESK_CLASS || 'ExampleServiceDesk';
+  const constructors: any = { TwilioFlex, ExampleServiceDesk, GenesysServiceDesk };
+  return new constructors[serviceDeskClass](parameters);
 }
 
 export default WebChatServiceDeskFactory;

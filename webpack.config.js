@@ -14,6 +14,8 @@
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Dotenv = require('dotenv-webpack');
 
 const options = {
   entry: path.resolve(__dirname, 'src', 'buildEntry.ts'),
@@ -38,6 +40,7 @@ const options = {
       },
     ],
   },
+  plugins: [new Dotenv()],
 };
 
 module.exports = options;
