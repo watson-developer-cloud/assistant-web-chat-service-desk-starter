@@ -12,7 +12,9 @@
 
     - For Genesys, create a [web chat widget](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/), and [find your organization ID](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/)
 
-3. Copy [serviceDeskTemplate.ts](../../../serviceDesks/serviceDeskTemplate.ts) and give it a new, descriptive name. Then modify [buildEntry.ts](../../../buildEntry.ts) so that it's importing and building from your new file (instead of [exampleServiceDesk.ts](../../../serviceDesks/exampleServiceDesk.ts)).
+3. Copy [serviceDeskTemplate.ts](../../../serviceDesks/serviceDeskTemplate.ts) and give it a new, descriptive name. Then modify [buildEntry.ts](../../../buildEntry.ts) to add import statement to import the new class.
+
+4. Update `.env` file to update `SERVICE_DESK_CLASS` variable to the new class name. If you do not have `.env` file in the project root, copy and rename `.env-sample` file.
 
 These Genesys docs and resources will help in implementing the core chat features in the following steps:
 

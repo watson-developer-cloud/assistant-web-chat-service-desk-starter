@@ -12,6 +12,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.4",
+    "twilio-chat": "^4.0.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
@@ -27,8 +28,10 @@
     "@typescript-eslint/eslint-plugin": "^3.6.0",
     "@typescript-eslint/parser": "^3.6.0",
     "babel-loader": "^8.1.0",
+    "babel-runtime": "^6.26.0",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
+    "dotenv-webpack": "^4.0.0",
     "eslint": "^7.4.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-base": "^14.2.0",

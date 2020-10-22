@@ -56,7 +56,15 @@ In order to make this project available to your web chat, you simply need to pas
 
 ## Development
 
-To set up your development environment, first fork this repository. Then run `npm run dev` to get a development environment running in your browser on port `9000`.
+To set up your development environment, first fork this repository. 
+
+Copy `.env-sample` to `.env` and change the `SERVICE_DESK_CLASS` variable to run the target service desk implementation. If you do not provide any value, it will run the Mock service desk that we provide by default.
+
+If you want to run twilio flex, then `src/middleware` folder has a `flex` folder which has instructions on how to run the middleware.
+
+Run `npm install` 
+
+Then run `npm run dev` to get a development environment running in your browser on port `9000`.
 
 The files you will be editing are in the `src` directory, starting with the [buildEntry.ts](./src/buildEntry.ts) file. This script returns the `WebChatServiceDeskFactory` function that is available at `window.WebChatServiceDeskFactory` when this file is built. This function is what you will pass into the web chat configuration object as the `serviceDeskFactory`.
 

@@ -18,7 +18,9 @@ Keep the following things in mind as you work through these steps:
 
 1. Copy [serviceDeskTemplate.ts](../src/serviceDesks/serviceDeskTemplate.ts) and give it a new, descriptive name.
 
-1. Modify [buildEntry.ts](../src/buildEntry.ts) so that it is importing and building from your new file (instead of [exampleServiceDesk.ts](../src/serviceDesks/exampleServiceDesk.ts)).
+1. Modify [buildEntry.ts](../src/buildEntry.ts) to add the import your new class.
+
+1. Update `.env` file to update `SERVICE_DESK_CLASS` variable to the new class name. If you do not have `.env` file in the project root, copy and rename `.env-sample` file.
 
 1. Implement `startChat` to establish a connection with the service desk. This function might involve a number of steps to establish the chat environment, such as:
 
