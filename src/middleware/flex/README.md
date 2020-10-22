@@ -1,7 +1,9 @@
-twilio-flex
-======================
+## Twilio-Flex
 
-### Running the twilio flex middleware
+### Running the twilio flex
+
+This repo has an example implementation, integrating the Watson Assistant webchat with Twilio Flex contact center. You should only view this as an inspiration and a guide, and make necessary changes to the code to your needs before deploying the code to production. 
+
 
 ##### Prerequisites
 You need to have a Twilio flex instace created and must have privileges to access account information.
@@ -17,7 +19,7 @@ The following are some useful guides on Twilio Flex custom chat implementation:
 
 ##### Set credentials
 
-1. Copy `.env.sample` to `.env`
+1. Copy `.env-sample` to `.env` in this directory.
 2. Plug your credentials into `.env`
 
 You can find the following credentials in your Twilio Console:
@@ -41,6 +43,50 @@ $ npm install
 ```
 $ npm run dev
 ```
+That should run the server code (middleware) which authorizes the user with Twilio and helps in setting up the integration. At runtime, Watson Assistant webchat will call the `/auth` API hosted here and get the necessary auth information to start the chat with twilio flex.
+
+Please note that the local server is running nonsecure on `http`. For your production, you would have to find a way to host an API to get the information necessary to run the integration.
+
+#### Start the webchat
+Now that the twilio middleware is up and ready, you would need to start the web-chat and start playing with the integration.
+
+* Go to the root of the project folder and copy `.env-sample` file from the same directory to `.env`. Modify the `SERVICE_DESK_CLASS` variable to `TwilioFlex`. This is the name of the class for the Twilio implementation in [twilioFlex.ts](../../serviceDesks/twilioFlex.ts). 
+* Run `npm install` 
+* Run `npm run dev`. 
+* More information on how to run the webchat can be found [here](../../../README.md#development) 
+* This should start the webchat by opening a browser, and launching a webchat for Watson Assistant. You can _escalate to an agent_ within the webchat to trigger the twilio integration.
+
+### Functionalities
+#### Start chat with an agent
+The *startChat()* function in [twilioFlex.ts](../../serviceDesks/twilioFlex.ts) will trigger the integration with Twilio Flex. It calls the local middleware server for auth information which need to be changed according to your needs. 
+
+#### End chat
+Both User and Agent ending the chat is supported. This happens by leaving/closing the twilio channel that was created when the chat begun. 
+
+#### Message exchange
+Both User and Agent can exchange text messages.
+
+#### User authentication
+The Twilio middleware [auth.ts](./src/routes/auth.ts) does implement a very simple user authentication by generating a user token. Please change this according to your implementation needs.
+
+#### Agent transfers
+The event listeners set up in [twilioFlex.ts](../../serviceDesks/twilioFlex.ts) listens to members joining and leaving the channel. The current implementation closes the chat if an agent leaves (`memberLeft` event), which needs to be changed for agent transfer scenario.
+
+#### Conversation topic
+Current implementation sends `message_to_human_agent` attribute from the dialog as the first message to the agent when the conversation starts. However, you do have access to several other attributes within the `connectMessage` object that is available in the *startChat()* function, and you can use those.
+
+#### Agent name and avatar
+The agent name is implemented and available in the current implementation. The webchat does provide a method to display agent avatar/picture, but it is not implemented for Twilio Flex.
+
+#### Typing indicator
+Agent typing indicator is implemented. Webchat does not yet support user typing.
+
+#### Read Receipts
+There's a crude implementation to set read receipts, but you would have to change it taking [consumption-horizon]( https://www.twilio.com/docs/chat/consumption-horizon) into consideration.
+
+#### Agent availability
+Not implemented. Please get in touch with us, if you find a Twilio API to support this feature.
+
 
 #### Routing
 This example implementation does not take an opinion on how you should implement your contact center routing on twilio. The following documentation has information on how the routing is supported in flex and you should change the code necessary to implement the routing.
