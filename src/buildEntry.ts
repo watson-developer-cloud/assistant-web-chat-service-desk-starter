@@ -11,9 +11,9 @@
  * specific language governing permissions and limitations under the License.
  *
  */
-import { GenesysServiceDesk } from './actualServiceDeskExamples/genesysPureCloud/genesysServiceDesk';
 import { ExampleServiceDesk } from './serviceDesks/exampleServiceDesk';
-import { TwilioFlex } from './serviceDesks/twilioFlex';
+import { GenesysServiceDesk } from './serviceDesks/genesys/genesysServiceDesk';
+import { TwilioFlex } from './serviceDesks/twilio/twilioFlex';
 import { ServiceDesk, ServiceDeskFactoryParameters } from './types/serviceDesk';
 
 /**

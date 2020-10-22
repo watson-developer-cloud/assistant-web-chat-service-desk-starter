@@ -55,8 +55,11 @@ In order to make this project available to your web chat, you simply need to pas
 - [Node.js](https://nodejs.org/en/download/)
 
 ## Example Implementations
-1. Genesys PureCloud
-2. Twilio Flex
+We provide reference implementations that provide fully functional integrations with popular service desks. 
+These implementations, while functional, are examples only, and have not been vetted for production use.
+
+- [Genesys PureCloud](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/main/src/middleware/genesys)  
+- [Twilio Flex](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/main/src/middleware/flex) 
 
 ## Development
 
@@ -95,11 +98,6 @@ Supporting compatible browsers and all other build concerns are handled for you.
 This project uses [jest](https://jestjs.io/) as its testing framework with TypeScript capabilities enabled. Tests should be under a `__tests__` subdirectory and should have file names in the following format: `FILE_TO_BE_TESTED_NAME.test.ts`.
 
 To run the defined tests, run `npm run test`.
-
-# Actual Service Desk Examples
-We provide reference implementations that provide fully functional integrations with popular service desks. 
-These implementations, while functional, are examples only, and have not been vetted for production use.
-- [Genesys PureCloud](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/main/src/actualServiceDeskExamples/genesysPureCloud)  
 
 ### TypeScript resources
 

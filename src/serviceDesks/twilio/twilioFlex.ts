@@ -16,11 +16,11 @@ import { Channel } from 'twilio-chat/lib/channel';
 import { Member } from 'twilio-chat/lib/member';
 import { Message } from 'twilio-chat/lib/message';
 
-import { MessageRequest, MessageResponse } from '../types/message';
-import { User } from '../types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters } from '../types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from '../types/serviceDeskCallback';
-import { stringToMessageResponseFormat } from '../utils';
+import { MessageRequest, MessageResponse } from '../../types/message';
+import { User } from '../../types/profiles';
+import { ServiceDesk, ServiceDeskFactoryParameters } from '../../types/serviceDesk';
+import { AgentProfile, ServiceDeskCallback } from '../../types/serviceDeskCallback';
+import { stringToMessageResponseFormat } from '../../utils';
 
 /**
  * This class returns startChat, endChat, sendMessageToAgent, userTyping and userReadMessages to be exposed to web chat
