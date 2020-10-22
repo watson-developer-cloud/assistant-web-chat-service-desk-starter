@@ -15,8 +15,7 @@ The client side component manages the communication between the end user and the
 1. Update [purecloudSetup.ts](./purecloudSetup.ts) to populate with your organization information.
     - `DEPLOYMENT_ID` -> [create a web chat widget v1.1](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/)
     - `ORGANIZATION_ID` -> [find my organization ID](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/)
-
-2. Edit [buildEntry.ts](../../buildEntry.ts) to import from [GenesysServiceDesk.ts](./genesysServiceDesk.ts) (instead of ExampleServiceDesk.ts). Make sure that the new import path correctly leads to the new service desk. In this example the path should be `./actualServiceDeskExamples/genesysPureCloud/genesysServiceDesk`.
+2. In the [root](../../..) of this repository, change `.env` file to update `SERVICE_DESK_CLASS` variable to  `GenesysServiceDesk`. 
 3. In the [root](../../..) of this repository, run `npm run dev` as you normally would. If you've linked everything to your PureCloud account correctly, you should be able to connect to an agent in PureCloud.
 
 As described above, advanced functionality such as authenticated chat and agent availability require a REST API which requires additional setup:
