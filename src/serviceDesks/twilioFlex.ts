@@ -112,7 +112,7 @@ class TwilioFlex implements ServiceDesk {
       // this.agentProfile.nickname = member.identity;
       // For Agent Avatar/picture, use the attribute this.agentProfile.profile_picture_url = member.xxxx
 
-      // this could be a agennt transfer as well
+      // this could be a agent transfer as well
       this.callback.agentJoined(this.agentProfile);
       console.log(`${member.identity} has joined the channel.`);
     });
