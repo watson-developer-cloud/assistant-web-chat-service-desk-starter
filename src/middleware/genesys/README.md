@@ -12,7 +12,7 @@ The client side component manages the communication between the end user and the
 ## Setting it up
 
 0. If you haven't already, follow the setup steps in the root-level [README](../../../README.md) to ensure you can run an instance of [ExampleServiceDesk](../../serviceDesks/exampleServiceDesk.ts).
-1. Update [purecloudSetup.ts](./purecloudSetup.ts) to populate with your organization information.
+1. Update [purecloudSetup.ts](../../serviceDesks/genesys/purecloudSetup.ts) to populate with your organization information.
     - `DEPLOYMENT_ID` -> [create a web chat widget v1.1](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/)
     - `ORGANIZATION_ID` -> [find my organization ID](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/)
 2. Go to the project root directory and update `.env` file to update `SERVICE_DESK_CLASS` variable to  `GenesysServiceDesk`. 
@@ -29,6 +29,6 @@ As described above, advanced functionality such as authenticated chat and agent 
 5. Copy the resulting forwarding address (copy the HTTPS one!) and set `AUTH_SERVER_BASE_URL` in `purecloudSetup.ts` to that address.
 6. In the settings for your web chat widget in PureCloud tooling, set "Require Authentication" to on. Append `/jwt` to your ngrok forwarding address (as in, `<your-ngrok-url>/jwt`) and paste this in the "Authentication URL" field. Hit save.
 
-7. In [genesysServiceDesk.ts](./genesysServiceDesk.ts), set the flags `WIDGET_REQUIRES_AUTHENTICATION` and `AUTHENTICATED_CALLS_ENABLED` to `true`.
+7. In [genesysServiceDesk.ts](../../serviceDesks/genesys/genesysServiceDesk.ts), set the flags `WIDGET_REQUIRES_AUTHENTICATION` and `AUTHENTICATED_CALLS_ENABLED` to `true`.
     - Note: It's easiest to set the server up in full at the beginning, but these flags are independent. you may disable authentication in your web chat widget and set `WIDGET_REQUIRES_AUTHENTICATION` to `false`, and the server will still fetch an OAuth access token and serve agent availability, and vice versa.
 8. Run the service desk dev environment again, if you're not already (`npm run dev`), and test: the server should authenticate the chat and fetch agent availability.

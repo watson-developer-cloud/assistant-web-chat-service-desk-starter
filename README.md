@@ -54,13 +54,20 @@ In order to make this project available to your web chat, you simply need to pas
 
 - [Node.js](https://nodejs.org/en/download/)
 
+## Example Implementations
+We provide reference implementations that provide fully functional integrations with popular service desks. 
+These implementations, while functional, are examples only, and have not been vetted for production use.
+
+- [Genesys PureCloud](./src/middleware/genesys)  
+- [Twilio Flex](./src/middleware/flex) 
+
 ## Development
 
 To set up your development environment, first fork this repository. 
 
 Copy `.env-sample` to `.env` and change the `SERVICE_DESK_CLASS` variable to run the target service desk implementation. If you do not provide any value, it will run the Mock service desk that we provide by default.
 
-If you want to run twilio flex, then `src/middleware` folder has a `flex` folder which has instructions on how to run the middleware.
+If you are running an integration which needs middleware, then `src/middleware` folder has a corresponding folders for middlewares which has instructions on how to run the middleware.
 
 Run `npm install` 
 
@@ -68,7 +75,7 @@ Then run `npm run dev` to get a development environment running in your browser 
 
 The files you will be editing are in the `src` directory, starting with the [buildEntry.ts](./src/buildEntry.ts) file. This script returns the `WebChatServiceDeskFactory` function that is available at `window.WebChatServiceDeskFactory` when this file is built. This function is what you will pass into the web chat configuration object as the `serviceDeskFactory`.
 
-You will note that this file imports a mock service desk from [./src/serviceDesks/exampleServiceDesk.ts](./src/serviceDesks/exampleServiceDesk.ts). It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/serviceDesks](./src/serviceDesks) folder as well. You can start by copying the [./src/serviceDesks/serviceDeskTemplate.ts](./src/serviceDesks/serviceDeskTemplate.ts) file. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions.
+You will note that this file imports a mock service desk from [./src/serviceDesks/exampleServiceDesk.ts](./src/serviceDesks/exampleServiceDesk.ts). It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/serviceDesks](./src/serviceDesks) folder as well. You can start by copying the [./src/serviceDesks/serviceDeskTemplate.ts](./src/serviceDesks/serviceDeskTemplate.ts) file. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions. Once you add your class, import the same in [buildEntry.ts](./src/buildEntry.ts) and then change the `.env` to point to your implementation.
 
 ### Documentation
 
@@ -91,11 +98,6 @@ Supporting compatible browsers and all other build concerns are handled for you.
 This project uses [jest](https://jestjs.io/) as its testing framework with TypeScript capabilities enabled. Tests should be under a `__tests__` subdirectory and should have file names in the following format: `FILE_TO_BE_TESTED_NAME.test.ts`.
 
 To run the defined tests, run `npm run test`.
-
-# Actual Service Desk Examples
-We provide reference implementations that provide fully functional integrations with popular service desks. 
-These implementations, while functional, are examples only, and have not been vetted for production use.
-- [Genesys PureCloud](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/tree/main/src/actualServiceDeskExamples/genesysPureCloud)  
 
 ### TypeScript resources
 
