@@ -10,15 +10,6 @@ This project provides a development and production build environment for adding 
 
 The service desks must support client-side integrations using a browser-based (usually WebSockets or long-polling) API to connect from the service desk API to within the web chat browser.
 
-### Currently out of scope
-
-The following items are not currently in scope for this starter kit and would be your responsibility to implement if you need them:
-
-- History of the conversation for the human agent to view
-- Security support (this varies depending on the service desk, but most require generating and sending valid JWTs with messages to the agent)
-- Routing to specific agents
-- Behavior when all agents are offline
-
 ### Adding the service desk extension to the web chat
 
 In order to make this project available to your web chat, you simply need to pass the generated factory into your normal web chat embed code.
@@ -98,6 +89,15 @@ Supporting compatible browsers and all other build concerns are handled for you.
 This project uses [jest](https://jestjs.io/) as its testing framework with TypeScript capabilities enabled. Tests should be under a `__tests__` subdirectory and should have file names in the following format: `FILE_TO_BE_TESTED_NAME.test.ts`.
 
 To run the defined tests, run `npm run test`.
+
+### Currently out of scope
+
+The following items are not currently in scope for this starter kit and would be your responsibility to implement if you need them:
+
+- History of the conversation for the human agent to view
+- Security support (this varies depending on the service desk, but most require generating and sending valid JWTs with messages to the agent)
+- Routing to specific agents
+- Behavior when all agents are offline
 
 ### TypeScript resources
 
