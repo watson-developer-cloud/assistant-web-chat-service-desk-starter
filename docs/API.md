@@ -166,6 +166,9 @@ Sends a message from the agent to the chat widget.
 - `message: MessageResponse`: The message to display to the user.
 - `agentID: string`: The ID of the agent who is sending the message.
 
+From version 3.2.0, to display an error message to user, specify `response_type: 'inline_error'` in `MessageResponse`, this also displays 
+an error icon as well as hides the agent's avatar from user.
+
 ### beginTransferToAnotherAgent
 
 ```ts

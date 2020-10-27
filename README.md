@@ -41,6 +41,23 @@ In order to make this project available to your web chat, you simply need to pas
 </script>
 ```
 
+## Configuration
+Tailor web chat to your needs by initializing it with your own custom options. The web chat configuration options are defined by the parameters of watsonAssistantChatOptions.
+
+In addition to the parameters listed [here](https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=api-configuration#configurationobject), it supports the following options:
+
+#### serviceDesk
+_requires web chat version 3.2.0 or above_
+```
+serviceDesk: {
+  availabilityTimeoutSeconds: 30,
+}
+```
+
+- `availabilityTimeoutSeconds`: The timeout value in seconds to use when determining agent availability. When connect_to_agent response is received, 
+the system will ask the service desk if any agents are available. If no response is received within the timeout window, the system will return 
+"false" to indicate no agents are available.
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/en/download/)
