@@ -2,7 +2,7 @@
 
 This document outlines a suggested sequence of steps for building a service desk integration using this repository. It is intended as a guide, and you can follow it to whatever extent you choose. At the end of this document are checklists for [core functionality](#core-functionality-checklist) and [optional functionality](#optional-functionality-checklist).
 
-**Note:** Prebuilt reference implementations are available that implement the core features of integrations for Genesys Cloud and Twilio. You can use this process if you want to further customize or extend the reference implementations to include additional features.
+**Note:** Prebuilt reference implementations are available that implement the core features of integrations for [Genesys Cloud](../src/middleware/genesys) and [Twilio Flex](../src/middleware/flex). You can use this process described in this document if you want to further customize or extend these reference implementations to include additional features.
 
 Keep the following things in mind as you work through these steps:
 
@@ -93,11 +93,11 @@ Keep the following things in mind as you work through these steps:
 
     Implementation of this step will vary significantly depending on your service desk provider's API, how it handles authentication, and how you choose to handle authentication for your middleware server.
 
-        For example, a Genesys Cloud integration requires that you set up an OAuth client ](https://help.mypurecloud.com/articles/create-an-oauth-client/) that uses a client credentials grant. You can then make a request to the OAuth client using the Genesys PureCloud [REST API](https://developer.mypurecloud.com/api/rest/authorization/use-client-credentials.html) for an access token. (For more information, see [the Genesys PureCloud tutorial](https://developer.mypurecloud.com/api/tutorials/oauth-client-credentials/?language=nodejs&step=1).) See the Genesys Cloud [reference implementation](../src/middleware/genesys/README.md) for a simple example.
+      For example, a Genesys Cloud integration requires that you set up an OAuth client ](https://help.mypurecloud.com/articles/create-an-oauth-client/) that uses a client credentials grant. You can then make a request to the OAuth client using the Genesys PureCloud [REST API](https://developer.mypurecloud.com/api/rest/authorization/use-client-credentials.html) for an access token. (For more information, see [the Genesys PureCloud tutorial](https://developer.mypurecloud.com/api/tutorials/oauth-client-credentials/?language=nodejs&step=1).) See the Genesys Cloud [reference implementation](../src/middleware/genesys/README.md) for a simple example.
 
-        for more information about authenticated chat flow for Genesys Cloud, see the [Genesys PureCloud API documentation](https://developer.mypurecloud.com/api/webchat/authenticated-chat.html).
+      for more information about authenticated chat flow for Genesys Cloud, see the [Genesys PureCloud API documentation](https://developer.mypurecloud.com/api/webchat/authenticated-chat.html).
 
-    After you have implemented authentication, change your chat implementation in the service desk tooling (for example, the web chat widget in Genesys) to require authentication. Then test to make sure that establishing a chat succeeds only if the user is properly authenticated.
+      After you have implemented authentication, change your chat implementation in the service desk tooling (for example, the web chat widget in Genesys) to require authentication. Then test to make sure that establishing a chat succeeds only if the user is properly authenticated.
 
 1. If possible, provide more information about agent availability and wait status. If your service desk provides information about the user's place in the queue, agent availability, or wait time:
 
@@ -107,7 +107,7 @@ Keep the following things in mind as you work through these steps:
 
     Make sure your error-handling flow includes cases in which it is not possible to connect the end user to an agent (for example, if no agents are available).
 
-        For example, a Genesys Cloud integration would use the PureCloud REST API to [qhttps://developer.mypurecloud.com/api/rest/v2/analytics/queue.html]. (For more information, see the Genesys Cloud [tutoriall](https://developer.mypurecloud.com/api/tutorials/number-of-agent-in-queue/?language=python&step=1).
+      For example, a Genesys Cloud integration would use the PureCloud REST API to [qhttps://developer.mypurecloud.com/api/rest/v2/analytics/queue.html]. (For more information, see the Genesys Cloud [tutoriall](https://developer.mypurecloud.com/api/tutorials/number-of-agent-in-queue/?language=python&step=1).
 
 ## Core Functionality Checklist
 

@@ -1,20 +1,20 @@
 # Genesys Cloud integration example
 
-This is a functioning service desk integration between Watson Assistant and Genesys Cloud. This is a reference implementation that provides a fully functional integration.
+This is a functioning service desk integration between Watson Assistant and Genesys Cloud.
 
-**Important:** You should perform robust testing before deploying this integration in production.
+**Important:**  This is a reference implementation that provides an example of a fully functional integration. Make any necessary changes and perform robust testing before deploying this integration in production.
 
 This reference implementation supports the core features of a Genesys Cloud integration. If you want to customize or extend it to add more features, follow the procedure described in the [README](../../../README.md) for this repository.
 
-    You can refer to these Genesys docs and resources for more information about using the Genesys PureCloud API:
+  You can refer to these Genesys docs and resources for more information about using the Genesys PureCloud API:
 
-      - [Guest Chat Client - JavaScript](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/index.html)
+    - [Guest Chat Client - JavaScript](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/index.html)
 
-      - [Guest Chat APIs](https://developer.mypurecloud.com/api/webchat/guestchat.html)
+    - [Guest Chat APIs](https://developer.mypurecloud.com/api/webchat/guestchat.html)
 
-      - [Guest Chat Client API documentation](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/WebChatApi.html)
+    - [Guest Chat Client API documentation](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/WebChatApi.html)
 
-      - [Guest Chat Client API source code](https://github.com/MyPureCloud/purecloud-guest-chat-client-javascript/blob/9599e33609a87358671532b10e53fad24e592373/build/src/purecloud-guest-chat-client/api/WebChatApi.js)
+    - [Guest Chat Client API source code](https://github.com/MyPureCloud/purecloud-guest-chat-client-javascript/blob/9599e33609a87358671532b10e53fad24e592373/build/src/purecloud-guest-chat-client/api/WebChatApi.js)
 
 ## Overview
 
@@ -33,8 +33,9 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 1. In Genesys Cloud, [create a widget](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/) to enable users to chat with agents. Make a note of the widget ID.
 
 1. Update [`purecloudSetup.ts`](../../serviceDesks/genesys/purecloudSetup.ts) to populate it with your information.
-    - `ORGANIZATION_ID`: Your Genesys Cloud organization ID. You can find this ID in the [Genesys Cloud settings](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/).
-    - `DEPLOYMENT_ID`: The ID of the widget you created in the previous step.
+
+  - `ORGANIZATION_ID`: Your Genesys Cloud organization ID. You can find this ID in the [Genesys Cloud settings](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/).
+  - `DEPLOYMENT_ID`: The ID of the widget you created in the previous step.
 
 1. Go to the project root directory and edit the `.env` file. Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
 
@@ -54,9 +55,9 @@ To configure advanced functionality such as authenticated chat and agent availab
 
 1. The server needs to be accessed from the browser of your end users. If you do not have your own hosted environment and you wish to expose your local development for testing, consider using a service such as [ngrok](https://ngrok.com/) to create a public URL:
 
-    ```
-    ngrok http http://localhost:3000`
-    ```
+  ```
+  ngrok http http://localhost:3000`
+  ```
 
 1. In [`purecloudSetup.ts`](../../serviceDesks/genesys/purecloudSetup.ts), set the value of `AUTH_SERVER_BASE_URL` to the public URL for your server. Make sure you specify the `https://` URL.
 
@@ -66,6 +67,6 @@ To configure advanced functionality such as authenticated chat and agent availab
 
 1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), set the `WIDGET_REQUIRES_AUTHENTICATION` and `AUTHENTICATED_CALLS_ENABLED` flags to `true`.
 
-    **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication willl be disabled in the web chat widget, but the server will still use an OAuth token to authenticate when accessing agent availability status.
+  **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication willl be disabled in the web chat widget, but the server will still use an OAuth token to authenticate when accessing agent availability status.
 
 1. From the project root directory, run `npm run dev` again, and test. The server should now authenticate the chat and fetch agent availability.
