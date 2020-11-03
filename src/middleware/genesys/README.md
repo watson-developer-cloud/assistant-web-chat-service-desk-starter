@@ -8,13 +8,13 @@ This reference implementation supports the core features of a Genesys Cloud inte
 
   You can refer to these Genesys docs and resources for more information about using the Genesys PureCloud API:
 
-    - [Guest Chat Client - JavaScript](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/index.html)
+  - [Guest Chat Client - JavaScript](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/index.html)
 
-    - [Guest Chat APIs](https://developer.mypurecloud.com/api/webchat/guestchat.html)
+  - [Guest Chat APIs](https://developer.mypurecloud.com/api/webchat/guestchat.html)
 
-    - [Guest Chat Client API documentation](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/WebChatApi.html)
+  - [Guest Chat Client API documentation](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/WebChatApi.html)
 
-    - [Guest Chat Client API source code](https://github.com/MyPureCloud/purecloud-guest-chat-client-javascript/blob/9599e33609a87358671532b10e53fad24e592373/build/src/purecloud-guest-chat-client/api/WebChatApi.js)
+  - [Guest Chat Client API source code](https://github.com/MyPureCloud/purecloud-guest-chat-client-javascript/blob/9599e33609a87358671532b10e53fad24e592373/build/src/purecloud-guest-chat-client/api/WebChatApi.js)
 
 ## Overview
 
@@ -67,6 +67,6 @@ To configure advanced functionality such as authenticated chat and agent availab
 
 1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), set the `WIDGET_REQUIRES_AUTHENTICATION` and `AUTHENTICATED_CALLS_ENABLED` flags to `true`.
 
-  **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication willl be disabled in the web chat widget, but the server will still use an OAuth token to authenticate when accessing agent availability status.
+    **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication will be disabled in the web chat widget, but the server will still use an OAuth token to authenticate when accessing agent availability status.
 
 1. From the project root directory, run `npm run dev` again, and test. The server should now authenticate the chat and fetch agent availability.
