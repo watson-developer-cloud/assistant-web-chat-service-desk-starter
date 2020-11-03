@@ -64,6 +64,6 @@ To configure advanced functionality such as authenticated chat and agent availab
 
 1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), set the `WIDGET_REQUIRES_AUTHENTICATION` and `AUTHENTICATED_CALLS_ENABLED` flags to `true`.
 
-    **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication will be disabled in the web chat widget, but the server will still use an OAuth token to authenticate when accessing agent availability status.
+    **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication is disabled in the web chat widget, but the server still uses an OAuth token to authenticate when accessing agent availability status.
 
 1. From the project root directory, run `npm run dev` again, and test. The server should now authenticate the chat and fetch agent availability.
