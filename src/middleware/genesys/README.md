@@ -9,11 +9,8 @@ This reference implementation supports the core features of a Genesys Cloud inte
   You can refer to these Genesys docs and resources for more information about using the Genesys PureCloud API:
 
   - [Guest Chat Client - JavaScript](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/index.html)
-
   - [Guest Chat APIs](https://developer.mypurecloud.com/api/webchat/guestchat.html)
-
   - [Guest Chat Client API documentation](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/WebChatApi.html)
-
   - [Guest Chat Client API source code](https://github.com/MyPureCloud/purecloud-guest-chat-client-javascript/blob/9599e33609a87358671532b10e53fad24e592373/build/src/purecloud-guest-chat-client/api/WebChatApi.js)
 
 ## Overview
