@@ -13,7 +13,7 @@
  */
 import { ExampleServiceDesk } from './serviceDesks/exampleServiceDesk';
 import { GenesysServiceDesk } from './serviceDesks/genesys/genesysServiceDesk';
-import { InContactServiceDesk } from './serviceDesks/incontact/inContactServiceDesk';
+import { inContactServiceDesk } from './serviceDesks/incontact/inContactServiceDesk';
 import { TwilioFlex } from './serviceDesks/twilio/twilioFlex';
 import { ServiceDesk, ServiceDeskFactoryParameters } from './types/serviceDesk';
 
@@ -33,9 +33,9 @@ function WebChatServiceDeskFactory(parameters: ServiceDeskFactoryParameters): Se
 
 function getInstance(
   parameters: ServiceDeskFactoryParameters,
-): TwilioFlex | ExampleServiceDesk | GenesysServiceDesk | InContactServiceDesk {
+): TwilioFlex | ExampleServiceDesk | GenesysServiceDesk | inContactServiceDesk {
   const serviceDeskClass: string = process.env.SERVICE_DESK_CLASS || 'ExampleServiceDesk';
-  const constructors: any = { TwilioFlex, ExampleServiceDesk, GenesysServiceDesk, InContactServiceDesk };
+  const constructors: any = { TwilioFlex, ExampleServiceDesk, GenesysServiceDesk, inContactServiceDesk };
   return new constructors[serviceDeskClass](parameters);
 }
 

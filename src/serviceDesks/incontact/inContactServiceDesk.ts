@@ -17,9 +17,9 @@ import { MessageRequest, MessageResponse } from '../../types/message';
 import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC } from '../../types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../types/serviceDeskCallback';
 import { stringToMessageResponseFormat } from '../../utils';
-import { InContactSession } from './inContactTypes';
+import { inContactSession } from './inContactTypes';
 
-class InContactServiceDesk implements ServiceDesk {
+class inContactServiceDesk implements ServiceDesk {
   callback: ServiceDeskCallback;
 
   state: any;
@@ -27,7 +27,7 @@ class InContactServiceDesk implements ServiceDesk {
   /**
    * Object obtained from a call to the endpoint that is needed for all calls.
    */
-  session: InContactSession;
+  session: inContactSession;
 
   /**
    * The profile information for the current agent.
@@ -50,7 +50,7 @@ class InContactServiceDesk implements ServiceDesk {
   }
 
   async endChat(): Promise<void> {
-    // Stop polling as we don't want to keep doing it even if we fail to tell InContact the chat is over. We'll stop the current poller and clear this so we can get a new poller the next time we start polling.
+    // Stop polling as we don't want to keep doing it even if we fail to tell inContact the chat is over. We'll stop the current poller and clear this so we can get a new poller the next time we start polling.
     if (this.poller) {
       this.poller.stop = true;
       this.poller = undefined;
@@ -207,4 +207,4 @@ class InContactServiceDesk implements ServiceDesk {
   }
 }
 
-export { InContactServiceDesk };
+export { inContactServiceDesk };

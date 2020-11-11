@@ -67,7 +67,8 @@ We provide reference implementations that provide fully functional integrations 
 These implementations, while functional, are examples only, and have not been vetted for production use.
 
 - [Genesys PureCloud](./src/middleware/genesys)  
-- [Twilio Flex](./src/middleware/flex) 
+- [Twilio Flex](./src/middleware/flex)
+- [NICE inContact](./src/middleware/incontact)
 
 ## Development
 
