@@ -50,13 +50,13 @@ To configure advanced functionality such as authenticated chat and agent availab
 
 1. If you haven't done so already, [set up a Genesys Cloud OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/).
 
-1. In the `middleware/genesys` subdirectory, rename or copy `.env-sample` to `.env`.
+1. In the `src/middleware/genesys` subdirectory, rename or copy `.env-sample` to `.env`.
 
 1. In the `.env` file, update the values of the `GENESYS_CLIENT_ID` and `GENESYS_CLIENT_SECRET` to the credentials from your Genesys OAuth client.
 
-1. From the `middleware/genesys` directory, run `npm install`.
+1. From the `src/middleware/genesys` directory, run `npm install`.
 
-1. From the `middleware/genesys` directory, run `npm start`. This starts a server on port 3000 of your local machine.
+1. From the `src/middleware/genesys` directory, run `npm start`. This starts a server on port 3000 of your local machine.
 
 1. The server needs to be accessed from the browser of your end users. If you do not have your own hosted environment and you wish to expose your local development for testing, consider using a service such as [ngrok](https://ngrok.com/) to create a public URL:
 
