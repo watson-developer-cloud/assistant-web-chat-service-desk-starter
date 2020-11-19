@@ -14,7 +14,7 @@
 
 export enum setup {
   ORGANIZATION_ID = '<your-organization-id>', // https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/
-  DEPLOYMENT_ID = '<your-deployment-id>', // https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/ ID of widget == DEPLOYMENT_ID
-  QUEUE_TARGET = '<your-queue-name>', // name of queue you want chat requests to go into
+  DEPLOYMENT_ID = '<your-deployment-key>', // https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/ Deployment Key == DEPLOYMENT_ID
+  QUEUE_TARGET = '<your-queue-name>', // Name of queue you want chat requests to go into. How to create queues: https://help.mypurecloud.com/articles/create-queues/
   AUTH_SERVER_BASE_URL = '<your-auth-server-host-url>', // the URL of the server that will make an authenticated request for JWT. See https://developer.mypurecloud.com/api/webchat/authenticated-chat.html
 }

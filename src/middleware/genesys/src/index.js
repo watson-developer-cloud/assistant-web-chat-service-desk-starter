@@ -18,6 +18,15 @@ import axios from 'axios';
 import cors from 'cors';
 import express from 'express';
 import qs from 'qs';
+import {
+  PORT,
+  GENESYS_ANALYTICS_URL,
+  GENESYS_QUEUE_URL,
+  GENESYS_SIGNED_DATA_URL,
+  GENESYS_TOKEN_URL,
+  GENESYS_CLIENT_ID,
+  GENESYS_CLIENT_SECRET
+} from './config/constants';
 
 const app = express();
 app.use(cors());
@@ -57,7 +66,7 @@ app.post('/availability', async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT}!`));
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
 
 async function getQueueInfo(queue) {
   const availabilityInfo = {};
@@ -78,7 +87,7 @@ async function getQueueInfo(queue) {
 }
 
 async function getQueueID(queueName) {
-  const queueConfig = buildJSONRequest('get', process.env.GENESYS_QUEUE_URL);
+  const queueConfig = buildJSONRequest('get', GENESYS_QUEUE_URL);
   const qInfo = await axios(queueConfig);
 
   return qInfo.data.entities.find((q) => q.name === queueName).id;
@@ -108,7 +117,7 @@ async function queueQuery(queueId) {
     metrics: ['oOnQueueUsers', 'oWaiting'],
   };
 
-  const queryConfig = buildJSONRequest('post', process.env.GENESYS_ANALYTICS_URL, queryBody);
+  const queryConfig = buildJSONRequest('post', GENESYS_ANALYTICS_URL, queryBody);
 
   const query = await axios(queryConfig);
 
@@ -131,7 +140,7 @@ async function queueQuery(queueId) {
  * Helper function - obtain estimated wait time based on id.
  */
 async function getEstWaitTime(queueId) {
-  const url = `${process.env.GENESYS_QUEUE_URL}/${queueId}/estimatedwaittime`;
+  const url = `${GENESYS_QUEUE_URL}/${queueId}/estimatedwaittime`;
 
   const waitTimeConfig = buildJSONRequest('get', url);
 
@@ -149,10 +158,10 @@ async function createAccessToken() {
   // retrieve access token
   const userAuthConfig = {
     method: 'post',
-    url: process.env.GENESYS_TOKEN_URL,
+    url: GENESYS_TOKEN_URL,
     headers: {
       Authorization: `Basic ${Buffer.from(
-        `${process.env.GENESYS_CLIENT_ID}:${process.env.GENESYS_CLIENT_SECRET}`,
+        `${GENESYS_CLIENT_ID}:${GENESYS_CLIENT_SECRET}`,
       ).toString('base64')}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -176,7 +185,7 @@ async function userAuthJWT() {
   if (!accessToken) await createAccessToken();
 
   // use access token to get JWT
-  const signedDataConfig = buildJSONRequest('post', process.env.GENESYS_SIGNED_DATA_URL, { body: null });
+  const signedDataConfig = buildJSONRequest('post', GENESYS_SIGNED_DATA_URL, { body: null });
   const signedData = await axios(signedDataConfig);
 
   return signedData.data.jwt;

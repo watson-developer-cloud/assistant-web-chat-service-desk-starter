@@ -39,14 +39,14 @@ import { messages } from './stockMessages';
  * If true, this code will attempt to fetch a memberAuthToken from the authentication server pointed to
  * by AUTH_SERVER_BASE_URL in '../../purecloudSetup.ts' and use it when creating the chat.
  */
-const WIDGET_REQUIRES_AUTHENTICATION = false;
+const WIDGET_REQUIRES_AUTHENTICATION = true;
 
 /**
  * Indicates whether you've built out functionality to support API calls that require OAuth authentication.
  * These should be supported at the same server used for authenticated chat. Currently this flag is only
  * used for getAgentAvailability().
  */
-const AUTHENTICATED_CALLS_ENABLED = false;
+const AUTHENTICATED_CALLS_ENABLED = true;
 
 /**
  * This class returns startChat, endChat, sendMessageToAgent, userTyping and userReadMessages to be exposed to web chat
