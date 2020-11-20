@@ -17,7 +17,12 @@ export const PORT = process.env.PORT || 3000;
 export const GENESYS_CLIENT_ID = process.env.GENESYS_CLIENT_ID;
 export const GENESYS_CLIENT_SECRET = process.env.GENESYS_CLIENT_SECRET;
 
-// Genesys URLs
+export const ORGANIZATION_ID = process.env.ORGANIZATION_ID;
+export const DEPLOYMENT_ID = process.env.DEPLOYMENT_ID;
+export const QUEUE_TARGET = process.env.QUEUE_TARGET;
+export const AUTH_SERVER_BASE_URL = process.env.AUTH_SERVER_BASE_URL;
+
+// Static Genesys URLs
 export const GENESYS_TOKEN_URL = 'https://login.mypurecloud.com/oauth/token';
 export const GENESYS_SIGNED_DATA_URL = 'https://api.mypurecloud.com/api/v2/signeddata';
 export const GENESYS_QUEUE_URL = 'https://api.mypurecloud.com/api/v2/routing/queues';

@@ -31,13 +31,18 @@ import {
   LOG_PREFIX,
   MessageEvent,
 } from './genesysTypes';
-import { setup } from './purecloudSetup';
+import {
+  ORGANIZATION_ID,
+  DEPLOYMENT_ID,
+  QUEUE_TARGET,
+  AUTH_SERVER_BASE_URL,
+} from '../../middleware/genesys/src/config/constants';
 import { messages } from './stockMessages';
 
 /**
  * Indicates whether your chat deployment requires authentication.
  * If true, this code will attempt to fetch a memberAuthToken from the authentication server pointed to
- * by AUTH_SERVER_BASE_URL in '../../purecloudSetup.ts' and use it when creating the chat.
+ * by AUTH_SERVER_BASE_URL in '../../middleware/genesys/src/config/constants.ts' and use it when creating the chat.
  */
 const WIDGET_REQUIRES_AUTHENTICATION = true;
 
@@ -125,11 +130,11 @@ class GenesysServiceDesk implements ServiceDesk {
     } as ServiceDeskStateFromWAC);
 
     const createChatBody: ChatBody = {
-      organizationId: setup.ORGANIZATION_ID,
-      deploymentId: setup.DEPLOYMENT_ID,
+      organizationId: ORGANIZATION_ID,
+      deploymentId: DEPLOYMENT_ID,
       routingTarget: {
         targetType: 'QUEUE',
-        targetAddress: setup.QUEUE_TARGET,
+        targetAddress: QUEUE_TARGET,
       },
       memberInfo: {
         displayName: this.user.id,
@@ -145,7 +150,7 @@ class GenesysServiceDesk implements ServiceDesk {
          * In the future, this call should be protected using some security measure
          * based on user info
          */
-        const userAuth = await fetch(`${setup.AUTH_SERVER_BASE_URL}/jwt`, {
+        const userAuth = await fetch(`${AUTH_SERVER_BASE_URL}/jwt`, {
           method: 'POST',
           redirect: 'follow', // This can be set to ("error" | "follow" | "manual")
         });
@@ -504,11 +509,11 @@ class GenesysServiceDesk implements ServiceDesk {
     let agentAvailable: boolean;
 
     try {
-      availabilityRequest = await fetch(`${setup.AUTH_SERVER_BASE_URL}/availability`, {
+      availabilityRequest = await fetch(`${AUTH_SERVER_BASE_URL}/availability`, {
         method: 'POST',
         redirect: 'follow',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ queue: setup.QUEUE_TARGET }),
+        body: JSON.stringify({ queue: QUEUE_TARGET }),
       });
     } catch (error) {
       return Promise.reject(error);
