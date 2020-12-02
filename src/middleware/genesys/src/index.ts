@@ -32,9 +32,17 @@ import {
   AUTH_SERVER_BASE_URL
 } from './config/constants';
 
+// set up rate limiter: maximum of five requests per minute
+var RateLimit = require('express-rate-limit');
+var limiter = new RateLimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 5
+});
+
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(limiter);
 
 let accessToken: string;
 
