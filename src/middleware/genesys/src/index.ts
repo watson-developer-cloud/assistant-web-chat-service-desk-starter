@@ -51,8 +51,9 @@ app.get('/setup', async (_: express.Request, res: express.Response) => {
     }
     res.send(env);
   } catch (error) {
-    res.status(500).send(error);
-  }
+    console.log(error);
+    res.status(500);
+    res.end("An exception occurred");
 });
 
 /**
@@ -65,7 +66,9 @@ app.post('/jwt', async (_: express.Request, res: express.Response) => {
     const token = await userAuthJWT();
     res.send(token);
   } catch (error) {
-    res.status(500).send(error);
+    console.log(error);
+    res.status(500);
+    res.end("An exception occurred");
   }
 });
 
@@ -82,7 +85,9 @@ app.post('/availability', async (req: express.Request, res: express.Response) =>
     const agents = await getQueueInfo(queue_name);
     res.send(agents);
   } catch (error) {
-    res.status(500).send(error);
+    console.log(error);
+    res.status(500);
+    res.end("An exception occurred");
   }
 });
 
