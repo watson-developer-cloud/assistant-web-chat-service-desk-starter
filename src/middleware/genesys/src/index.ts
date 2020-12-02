@@ -14,7 +14,7 @@
 
 import 'dotenv/config';
 
-import axios from 'axios';
+import axios, { AxiosRequestConfig, Method } from 'axios';
 import cors from 'cors';
 import express from 'express';
 import qs from 'qs';
@@ -36,12 +36,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-let accessToken;
+let accessToken: string;
 
 /**
  * Get setup variables.
  */
-app.get('/setup', async (_, res) => {
+app.get('/setup', async (_: express.Request, res: express.Response) => {
   try {
     const env = {
       org_id: ORGANIZATION_ID,
@@ -58,7 +58,7 @@ app.get('/setup', async (_, res) => {
 /**
  * Get auth JWT. At the moment this token is an application level token and doesn't include info on the user.
  */
-app.post('/jwt', async (_, res) => {
+app.post('/jwt', async (_: express.Request, res: express.Response) => {
   if (!accessToken) await createAccessToken();
 
   try {
@@ -70,54 +70,62 @@ app.post('/jwt', async (_, res) => {
 });
 
 /**
- * Get info on agent availability and wait time
+ * Get info on agent availability and wait time.
  */
-app.post('/availability', async (req, res) => {
-  const { queue } = req.body;
+app.post('/availability', async (req: express.Request, res: express.Response) => {
+  const { queue_name } = req.body;
 
-  if (!queue) return res.status(400).send('No queue name supplied');
-
+  if (!queue_name) return res.status(400).send('No queue name supplied');
   if (!accessToken) await createAccessToken();
 
   try {
-    const agents = await getQueueInfo(queue);
-    return res.send(agents);
+    const agents = await getQueueInfo(queue_name);
+    res.send(agents);
   } catch (error) {
-    return res.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
 
-async function getQueueInfo(queue) {
-  const availabilityInfo = {};
+/**
+ * Helper function that obtains queue information based on the name.
+ */
+async function getQueueInfo(queueName: string): Promise<any> {
+  const availabilityInfo = {
+    estimatedWaitTime: 0,
+  };
 
-  const queueId = await getQueueID(queue);
-  if (!queueId) return Promise.reject(new Error(`Unable to locate queue ID for queue name ${queue}`));
+  const queueId = await getQueueID(queueName);
+  if (!queueId) return Promise.reject(new Error(`Unable to locate queue ID for queue name ${queueName}`));
 
-  const [queueQueryResults, estWaitTime] = await Promise.allSettled([queueQuery(queueId), getEstWaitTime(queueId)]);
+  const [queueQueryResults, estWaitTime] = await Promise.allSettled([queryForQueue(queueId), getEstimatedWaitTime(queueId)]);
   // obtain queue status
   if (queueQueryResults.status === 'fulfilled') Object.assign(availabilityInfo, queueQueryResults.value);
   // obtain wait time details
   if (estWaitTime.status === 'fulfilled') availabilityInfo.estimatedWaitTime = estWaitTime.value;
 
-  if (Object.keys(availabilityInfo).length === 0)
-    return Promise.reject(new Error(`Unable to get availability information for queue name ${queue}`));
+  if (Object.keys(availabilityInfo).length === 0) {
+    return Promise.reject(new Error(`Unable to get availability information for queue name ${queueName}`));
+  }
 
   return availabilityInfo;
 }
 
-async function getQueueID(queueName) {
-  const queueConfig = buildJSONRequest('get', GENESYS_QUEUE_URL);
+/**
+ * Helper function to grab the queue id based on the name.
+ */
+async function getQueueID(queueName: string) {
+  const queueConfig = buildJSONRequest('GET', GENESYS_QUEUE_URL);
   const qInfo = await axios(queueConfig);
 
-  return qInfo.data.entities.find((q) => q.name === queueName).id;
+  return qInfo.data.entities.find((q: any) => q.name === queueName).id;
 }
 
 /**
- * Helper function - obtain queue information based on id.
+ * Helper function that obtains queue information based on id.
  */
-async function queueQuery(queueId) {
+async function queryForQueue(queueId: string): Promise<any> {
   const queryBody = {
     filter: {
       type: 'or',
@@ -138,18 +146,16 @@ async function queueQuery(queueId) {
     metrics: ['oOnQueueUsers', 'oWaiting'],
   };
 
-  const queryConfig = buildJSONRequest('post', GENESYS_ANALYTICS_URL, queryBody);
-
+  const queryConfig = buildJSONRequest('POST', GENESYS_ANALYTICS_URL, queryBody);
   const query = await axios(queryConfig);
 
-  const onQueueMetric = query.data.results.find((item) => item.data && item.data[0].metric === 'oOnQueueUsers');
-
+  const onQueueMetric = query.data.results.find((item: any) => item.data && item.data[0].metric === 'oOnQueueUsers');
   const numberOfOnQueueAgents = onQueueMetric ? onQueueMetric.data[0].stats.count : 0;
 
   const posInQueue = query.data.results
-    .filter((item) => item.data && item.data[0].metric === 'oWaiting')
-    .map((item) => item.data[0].stats.count)
-    .reduce((a, b) => a + b, 0);
+    .filter((item: any) => item.data && item.data[0].metric === 'oWaiting')
+    .map((item: any) => item.data[0].stats.count)
+    .reduce((a: number, b: number) => a + b, 0);
 
   return {
     numberOfOnQueueAgents,
@@ -158,12 +164,12 @@ async function queueQuery(queueId) {
 }
 
 /**
- * Helper function - obtain estimated wait time based on id.
+ * Helper function that obtains estimated wait time based on id.
  */
-async function getEstWaitTime(queueId) {
+async function getEstimatedWaitTime(queueId: string): Promise<number> {
   const url = `${GENESYS_QUEUE_URL}/${queueId}/estimatedwaittime`;
 
-  const waitTimeConfig = buildJSONRequest('get', url);
+  const waitTimeConfig = buildJSONRequest('GET', url);
 
   const waitTimeResp = await axios(waitTimeConfig);
   const waitTime = waitTimeResp.data.results[0].estimatedWaitTimeSeconds;
@@ -173,12 +179,12 @@ async function getEstWaitTime(queueId) {
 }
 
 /**
- * Helper function to create an access token based on the OAuth credentials
+ * Helper function to create an access token based on the OAuth credentials.
  */
-async function createAccessToken() {
+async function createAccessToken(): Promise<void> {
   // retrieve access token
-  const userAuthConfig = {
-    method: 'post',
+  const userAuthConfig: AxiosRequestConfig = {
+    method: 'POST',
     url: GENESYS_TOKEN_URL,
     headers: {
       Authorization: `Basic ${Buffer.from(
@@ -200,20 +206,23 @@ async function createAccessToken() {
 }
 
 /**
- * Helper function  - obtain JWT based on access token
+ * Helper function for obtaining JWT based on access token.
  */
-async function userAuthJWT() {
+async function userAuthJWT(): Promise<string> {
   if (!accessToken) await createAccessToken();
 
   // use access token to get JWT
-  const signedDataConfig = buildJSONRequest('post', GENESYS_SIGNED_DATA_URL, { body: null });
+  const signedDataConfig = buildJSONRequest('POST', GENESYS_SIGNED_DATA_URL, { body: null });
   const signedData = await axios(signedDataConfig);
 
   return signedData.data.jwt;
 }
 
-function buildJSONRequest(method, url, body = undefined) {
-  const request = {
+/**
+ * Helper function that builds JSON request.
+ */
+function buildJSONRequest(method: Method, url: string, body: any = undefined): AxiosRequestConfig {
+  const request: AxiosRequestConfig = {
     method,
     url,
     headers: {
@@ -222,7 +231,9 @@ function buildJSONRequest(method, url, body = undefined) {
     },
   };
 
-  if (body) request.data = JSON.stringify(body);
+  if (body) {
+    request.data = JSON.stringify(body);
+  }
 
   return request;
 }

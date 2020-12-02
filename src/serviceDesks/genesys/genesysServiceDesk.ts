@@ -525,7 +525,7 @@ class GenesysServiceDesk implements ServiceDesk {
         method: 'POST',
         redirect: 'follow',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ queue: queue_target }),
+        body: JSON.stringify({ queue_name: queue_target }),
       });
     } catch (error) {
       return Promise.reject(error);
