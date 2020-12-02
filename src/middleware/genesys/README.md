@@ -29,13 +29,13 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
 1. In Genesys Cloud, [create a widget](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/) to enable users to chat with agents. Make a note of the generated `Deployment Key`. Follow the instructions for either a `1.1` or `1.0` widget.
 
-1. Make sure there is an active `Queue` by selecting your profile bubble on the left sidebar and clicking on `Activate Queues`. Check that there is at least one queue under `Active`. If not, either activate an `Available` queue on the right, or [create a queue](https://help.mypurecloud.com/articles/create-queues/). In any case, take note of the name of the `Active` queue you would like to use.
+1. Make sure there is an active queue by selecting your profile bubble on the left sidebar and clicking on **Activate Queues**. Check that there is at least one queue under **Active**. If not, either activate an available queue on the right, or [create a queue](https://help.mypurecloud.com/articles/create-queues/). In any case, take note of the name of the active queue you would like to use.
     - **Creating a queue:**
-      - Name must not include any spaces. This queue name should be unique, and ideally describe the purpose/grouping of the queue. Make sure you click Save.
-      - Click on the queue that you just created and add yourself through the `Members` tab (you do not have to click save).
-      - Any newly created Queues will be `Active` by default.
+      - The queue name must not include any spaces. This queue name should be unique, and should describe the purpose or grouping of the queue. Make sure you click **Save**.
+      - Click on the queue that you just created and add yourself through the **Members** tab (you do not have to click **Save**).
+      - Any newly created queues will be active by default.
 
-1. Set up OAuth Client server:
+1. Set up an OAuth Client server:
     1. If you haven't done so already, [set up a Genesys Cloud OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/).
 
     1. In the `src/middleware/genesys` subdirectory, rename or copy `.env-sample` to `.env`.
@@ -44,9 +44,9 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
     1. From the `src/middleware/genesys` directory, run `npm install`.
 
-    1. From the `src/middleware/genesys` directory, run `npm start`. This starts a server on port 3000 of your local machine.
+    1. From the `src/middleware/genesys` directory, run `npm start`. This starts a server on port 3000 on your local machine.
 
-    1. The server needs to be accessed from the browser of your end users. If you do not have your own hosted environment and you wish to expose your local development for testing, consider using a service such as [ngrok](https://ngrok.com/) to create a public URL:
+    1. Your end users must be able to access the server from their browsers. If you do not have your own hosted environment, and you wish to expose your local development for testing, consider using a service such as [ngrok](https://ngrok.com/) to create a public URL:
 
         ```
         ngrok http http://localhost:3000
@@ -56,17 +56,17 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
     1. In the **Authentication URL** field, specify `https://<server-url>/jwt`, where `<server-url>` is the public URL for your server. Click **Save**.
 
-    1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), make sure to set the `WIDGET_REQUIRES_AUTHENTICATION` and `AUTHENTICATED_CALLS_ENABLED` flags to `true`. This will ensure that authenticated chat and agent availbility calls work properly.
+    1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), make sure to set the `WIDGET_REQUIRES_AUTHENTICATION` and `AUTHENTICATED_CALLS_ENABLED` flags to `true`. This will ensure that authenticated chat and agent availability calls work properly.
 
         **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication is disabled in the web chat widget, but the server still uses an OAuth token to authenticate when accessing agent availability status.
 
-1. Update [`constants.js`](../../middleware/genesys/src/config/constants.js) to populate it with your information.
+1. Update your [`.env`](../../middleware/genesys/.env-sample) to populate it with your information.
 
     - `ORGANIZATION_ID`: Your Genesys Cloud organization ID. This ID is visible in your widget configuration page in the `Generated Script Tag` block's `org-guid` field.  You can also find this ID in the [Genesys Cloud settings](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/).
-    - `DEPLOYMENT_ID`: The `Deployment Key` of the widget you created in the previous steps.
-    - `QUEUE_TARGET`: The name of your active Queue, noted from the previous steps.
-    - `AUTH_SERVER_BASE_URL`: The public URL for your server - if you used `ngrok` above for your public URL, this should look like `https://<some-hash>.ngrok.io`. Make sure you specify the `https://` URL.
+    - `DEPLOYMENT_ID`: The deployment key of the widget you created in the previous steps.
+    - `QUEUE_TARGET`: The name of your active queue, noted from the previous steps.
+    - `AUTH_SERVER_BASE_URL`: The public URL of your server. If you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`. Make sure you specify the secure `https://` URL.
 
 1. Go to the project root directory and edit the `.env` file. Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
 
-1. From the project root directory, run `npm run dev`. To receive requests, make sure you are `On Queue` (top right button) in your Genesys account. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud, fully functional with authenticated chat and agent availability.
+1. From the project root directory, run `npm run dev`. To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud, fully functional with authenticated chat and agent availability.
