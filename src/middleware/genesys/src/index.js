@@ -25,7 +25,11 @@ import {
   GENESYS_SIGNED_DATA_URL,
   GENESYS_TOKEN_URL,
   GENESYS_CLIENT_ID,
-  GENESYS_CLIENT_SECRET
+  GENESYS_CLIENT_SECRET,
+  ORGANIZATION_ID,
+  DEPLOYMENT_ID,
+  QUEUE_TARGET,
+  AUTH_SERVER_BASE_URL
 } from './config/constants';
 
 const app = express();
@@ -33,6 +37,23 @@ app.use(cors());
 app.use(express.json());
 
 let accessToken;
+
+/**
+ * Get setup variables.
+ */
+app.get('/setup', async (_, res) => {
+  try {
+    const env = {
+      org_id: ORGANIZATION_ID,
+      deployment_id: DEPLOYMENT_ID,
+      queue_target: QUEUE_TARGET,
+      auth_server_base_url: AUTH_SERVER_BASE_URL,
+    }
+    res.send(env);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 /**
  * Get auth JWT. At the moment this token is an application level token and doesn't include info on the user.

@@ -31,12 +31,6 @@ import {
   LOG_PREFIX,
   MessageEvent,
 } from './genesysTypes';
-import {
-  ORGANIZATION_ID,
-  DEPLOYMENT_ID,
-  QUEUE_TARGET,
-  AUTH_SERVER_BASE_URL,
-} from '../../middleware/genesys/src/config/constants.js';
 import { messages } from './stockMessages';
 
 /**
@@ -44,14 +38,14 @@ import { messages } from './stockMessages';
  * If true, this code will attempt to fetch a memberAuthToken from the authentication server pointed to
  * by AUTH_SERVER_BASE_URL in '../../middleware/genesys/src/config/constants.ts' and use it when creating the chat.
  */
-const WIDGET_REQUIRES_AUTHENTICATION = false;
+const WIDGET_REQUIRES_AUTHENTICATION = true;
 
 /**
  * Indicates whether you've built out functionality to support API calls that require OAuth authentication.
  * These should be supported at the same server used for authenticated chat. Currently this flag is only
  * used for getAgentAvailability().
  */
-const AUTHENTICATED_CALLS_ENABLED = false;
+const AUTHENTICATED_CALLS_ENABLED = true;
 
 /**
  * This class returns startChat, endChat, sendMessageToAgent, userTyping and userReadMessages to be exposed to web chat
@@ -129,19 +123,35 @@ class GenesysServiceDesk implements ServiceDesk {
       userID: connectMessage.context.global.system.user_id,
     } as ServiceDeskStateFromWAC);
 
-    const createChatBody: ChatBody = {
-      organizationId: ORGANIZATION_ID,
-      deploymentId: DEPLOYMENT_ID,
+    let env;
+    try {
+      const setupEnv = await fetch(`http://localhost:3000/setup`);
+      env = await setupEnv.json();
+    } catch (error) {
+      console.error('Cannot retrieve setup environment.');
+
+      this.callback.setErrorStatus({
+        logInfo: error,
+        type: ErrorType.CONNECTING,
+      });
+
+      return Promise.reject();
+    }
+
+    const { org_id, deployment_id, queue_target, auth_server_base_url } = env;
+
+    // create chat body
+    const chatBody: ChatBody = {
+      organizationId: org_id,
+      deploymentId: deployment_id,
       routingTarget: {
         targetType: 'QUEUE',
-        targetAddress: QUEUE_TARGET,
+        targetAddress: queue_target,
       },
       memberInfo: {
         displayName: this.user.id,
       },
     };
-
-    // create chat
 
     try {
       // fetch and set user auth if required
@@ -150,12 +160,12 @@ class GenesysServiceDesk implements ServiceDesk {
          * In the future, this call should be protected using some security measure
          * based on user info
          */
-        const userAuth = await fetch(`${AUTH_SERVER_BASE_URL}/jwt`, {
+        const userAuth = await fetch(`${auth_server_base_url}/jwt`, {
           method: 'POST',
           redirect: 'follow', // This can be set to ("error" | "follow" | "manual")
         });
 
-        createChatBody.memberAuthToken = await userAuth.text();
+        chatBody.memberAuthToken = await userAuth.text();
       }
     } catch (error) {
       console.error('Cannot complete user authentication.');
@@ -169,7 +179,7 @@ class GenesysServiceDesk implements ServiceDesk {
     }
 
     try {
-      this.chatInfo = await this.webChatApi.postWebchatGuestConversations(createChatBody);
+      this.chatInfo = await this.webChatApi.postWebchatGuestConversations(chatBody);
     } catch (error) {
       console.error('Cannot open chat.');
 
@@ -509,11 +519,13 @@ class GenesysServiceDesk implements ServiceDesk {
     let agentAvailable: boolean;
 
     try {
-      availabilityRequest = await fetch(`${AUTH_SERVER_BASE_URL}/availability`, {
+      const env = await fetch(`http://localhost:3000/setup`);
+      const { queue_target, auth_server_base_url } = await env.json();
+      availabilityRequest = await fetch(`${auth_server_base_url}/availability`, {
         method: 'POST',
         redirect: 'follow',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ queue: QUEUE_TARGET }),
+        body: JSON.stringify({ queue: queue_target }),
       });
     } catch (error) {
       return Promise.reject(error);

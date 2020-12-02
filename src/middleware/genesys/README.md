@@ -38,19 +38,25 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 1. Set up an OAuth Client server:
     1. If you haven't done so already, [set up a Genesys Cloud OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/).
 
-    1. In the `src/middleware/genesys` subdirectory, rename or copy `.env-sample` to `.env`.
-
-    1. In the `.env` file, update the values of the `GENESYS_CLIENT_ID` and `GENESYS_CLIENT_SECRET` to the credentials from your Genesys OAuth client.
-
-    1. From the `src/middleware/genesys` directory, run `npm install`.
-
-    1. From the `src/middleware/genesys` directory, run `npm start`. This starts a server on port 3000 on your local machine.
-
     1. Your end users must be able to access the server from their browsers. If you do not have your own hosted environment, and you wish to expose your local development for testing, consider using a service such as [ngrok](https://ngrok.com/) to create a public URL:
 
         ```
         ngrok http http://localhost:3000
         ```
+
+    1. In the `src/middleware/genesys` subdirectory, rename or copy `.env-sample` to `.env`.
+
+    1. In the `.env` file, update with your credentials:
+        - `GENESYS_CLIENT_ID`: Your client ID from the Genesys Cloud OAuth client created above.
+        - `GENESYS_CLIENT_SECRET`: Your client secret from the Genesys Cloud OAuth client created above.
+        - `ORGANIZATION_ID`: Your Genesys Cloud organization ID. This ID is visible in your widget configuration page in the `Generated Script Tag` block's `org-guid` field.  You can also find this ID in the [Genesys Cloud settings](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/).
+        - `DEPLOYMENT_ID`: The deployment key of the widget you created in the previous steps.
+        - `QUEUE_TARGET`: The name of your active queue, noted from the previous steps.
+        - `AUTH_SERVER_BASE_URL`: The public URL of your server. If you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`. Make sure you specify the secure `https://` URL.
+
+    1. From the `src/middleware/genesys` directory, run `npm install`.
+
+    1. From the `src/middleware/genesys` directory, run `npm start`. This starts a server on port 3000 on your local machine.
 
     1. In the Genesys Cloud user interface, open the settings for your web chat widget and enable **Require Authentication**.
 
@@ -59,13 +65,6 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
     1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), make sure to set the `WIDGET_REQUIRES_AUTHENTICATION` and `AUTHENTICATED_CALLS_ENABLED` flags to `true`. This will ensure that authenticated chat and agent availability calls work properly.
 
         **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication is disabled in the web chat widget, but the server still uses an OAuth token to authenticate when accessing agent availability status.
-
-1. Update your [`.env`](../../middleware/genesys/.env-sample) to populate it with your information.
-
-    - `ORGANIZATION_ID`: Your Genesys Cloud organization ID. This ID is visible in your widget configuration page in the `Generated Script Tag` block's `org-guid` field.  You can also find this ID in the [Genesys Cloud settings](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/).
-    - `DEPLOYMENT_ID`: The deployment key of the widget you created in the previous steps.
-    - `QUEUE_TARGET`: The name of your active queue, noted from the previous steps.
-    - `AUTH_SERVER_BASE_URL`: The public URL of your server. If you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`. Make sure you specify the secure `https://` URL.
 
 1. Go to the project root directory and edit the `.env` file. Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
 
