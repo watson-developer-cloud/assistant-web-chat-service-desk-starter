@@ -34,18 +34,18 @@ import {
 import { messages } from './stockMessages';
 
 /**
- * Indicates whether your chat deployment requires authentication.
+ * Indicates whether your chat widget requires user authentication.
  * If true, this code will attempt to fetch a memberAuthToken from the authentication server pointed to
  * by SERVER_BASE_URL in '../../../.env' and use it when creating the chat.
  */
-const WIDGET_REQUIRES_AUTHENTICATION = false;
+const AUTHENTICATED_CHAT_ENABLED = false;
 
 /**
  * Indicates whether you've built out functionality to support API calls that require OAuth authentication.
- * These should be supported at the same server used for authenticated chat. Currently this flag is only
+ * These should be supported at SERVER_BASE_URL. Currently this flag is only
  * used for getAgentAvailability().
  */
-const AUTHENTICATED_CALLS_ENABLED = false;
+const OAUTH_API_CALLS_ENABLED = false;
 
 /**
  * This class returns startChat, endChat, sendMessageToAgent, userTyping and userReadMessages to be exposed to web chat
@@ -155,7 +155,7 @@ class GenesysServiceDesk implements ServiceDesk {
 
     try {
       // fetch and set user auth if required
-      if (WIDGET_REQUIRES_AUTHENTICATION) {
+      if (AUTHENTICATED_CHAT_ENABLED) {
         /**
          * In the future, this call should be protected using some security measure
          * based on user info
@@ -341,7 +341,7 @@ class GenesysServiceDesk implements ServiceDesk {
                  * In that case, getAgentAvailability() sets the current wait time for web chat.
                  */
                 try {
-                  if (AUTHENTICATED_CALLS_ENABLED) await this.getAgentAvailability();
+                  if (OAUTH_API_CALLS_ENABLED) await this.getAgentAvailability();
                 } catch (error) {
                   console.error(error); // don't need to stop everything for an error here
                 }

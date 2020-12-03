@@ -57,13 +57,23 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
         ngrok http http://localhost:3000
         ```
 
-    1. In the Genesys Cloud user interface, open the settings for your web chat widget and enable **Require Authentication**.
+1. (Optional) Enable advanced features.
 
-    1. In the **Authentication URL** field, specify `https://<server-url>/jwt`, where `<server-url>` is the public URL for your server. Click **Save**.
+    - **Agent Availability**
+        1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), set `OAUTH_API_CALLS_ENABLED` to `true`.
 
-    1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), make sure to set the `WIDGET_REQUIRES_AUTHENTICATION` and `AUTHENTICATED_CALLS_ENABLED` flags to `true`. This will ensure that authenticated chat and agent availability calls work properly.
+    - **JWT Authenticated Chat**
+        1. In the Genesys Cloud UI, open the settings for your web chat widget and enable **Require Authentication**.
 
-        **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication is disabled in the web chat widget, but the server still uses an OAuth token to authenticate when accessing agent availability status.
+        1. In the **Authentication URL** field, specify `https://<server-url>/jwt`, where `<server-url>` is the public URL for your middleware server. Click **Save**.
+
+        1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), make sure to set the `AUTHENTICATED_CHAT_ENABLED` flag to `true`.
+
+    **Implementation Notes:**
+    
+    There are two flags in [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts) that control advanced features such as agent availability and authenticated chat.
+    - `OAUTH_API_CALLS_ENABLED`: Default is `false`. When set to `true`, any Genesys API calls that require OAuth tokens for authentication will be enabled. Currently, only agent availability uses this flag.
+    - `AUTHENTICATED_CHAT_ENABLED`: Default is `false`. When set to `true`, JWT tokens will be used to authenticate chat users.
 
 1. Go to the project root directory and edit the `.env` file.
       - Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
@@ -71,4 +81,4 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
         **Note**: Make sure you specify the secure `https://` URL.
 
-1. From the project root directory, run `npm run dev`. To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud, fully functional with authenticated chat and agent availability.
+1. From the project root directory, run `npm run dev`. To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud.
