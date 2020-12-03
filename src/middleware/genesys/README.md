@@ -67,8 +67,8 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
 1. Go to the project root directory and edit the `.env` file.
       - Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
-      - Add `SERVER_BASE_URL` variable to where the middleware server is being run. If you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`.
-      
+      - Add `SERVER_BASE_URL` variable to where your middleware is deployed (For local development, if you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`).
+
         **Note**: Make sure you specify the secure `https://` URL.
 
 1. From the project root directory, run `npm run dev`. To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud, fully functional with authenticated chat and agent availability.
