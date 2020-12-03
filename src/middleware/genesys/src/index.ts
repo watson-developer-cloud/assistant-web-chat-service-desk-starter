@@ -28,8 +28,7 @@ import {
   GENESYS_CLIENT_SECRET,
   ORGANIZATION_ID,
   DEPLOYMENT_ID,
-  QUEUE_TARGET,
-  AUTH_SERVER_BASE_URL
+  QUEUE_TARGET
 } from './config/constants';
 
 // set up rate limiter: maximum of five requests per minute
@@ -55,7 +54,6 @@ app.get('/setup', async (_: express.Request, res: express.Response) => {
       org_id: ORGANIZATION_ID,
       deployment_id: DEPLOYMENT_ID,
       queue_target: QUEUE_TARGET,
-      auth_server_base_url: AUTH_SERVER_BASE_URL,
     }
     res.send(env);
   } catch (error) {

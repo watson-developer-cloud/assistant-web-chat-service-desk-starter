@@ -36,7 +36,7 @@ import { messages } from './stockMessages';
 /**
  * Indicates whether your chat deployment requires authentication.
  * If true, this code will attempt to fetch a memberAuthToken from the authentication server pointed to
- * by AUTH_SERVER_BASE_URL in '../../middleware/genesys/src/config/constants.ts' and use it when creating the chat.
+ * by SERVER_BASE_URL in '../../../.env' and use it when creating the chat.
  */
 const WIDGET_REQUIRES_AUTHENTICATION = false;
 
@@ -138,7 +138,7 @@ class GenesysServiceDesk implements ServiceDesk {
       return Promise.reject();
     }
 
-    const { org_id, deployment_id, queue_target, auth_server_base_url } = env;
+    const { org_id, deployment_id, queue_target } = env;
 
     // create chat body
     const chatBody: ChatBody = {
@@ -160,7 +160,7 @@ class GenesysServiceDesk implements ServiceDesk {
          * In the future, this call should be protected using some security measure
          * based on user info
          */
-        const userAuth = await fetch(`${auth_server_base_url}/jwt`, {
+        const userAuth = await fetch(`${process.env.SERVER_BASE_URL}/jwt`, {
           method: 'POST',
           redirect: 'follow', // This can be set to ("error" | "follow" | "manual")
         });
@@ -519,9 +519,9 @@ class GenesysServiceDesk implements ServiceDesk {
     let agentAvailable: boolean;
 
     try {
-      const env = await fetch(`http://localhost:3000/setup`);
-      const { queue_target, auth_server_base_url } = await env.json();
-      availabilityRequest = await fetch(`${auth_server_base_url}/availability`, {
+      const env = await fetch(`${process.env.SERVER_BASE_URL}/setup`);
+      const { queue_target } = await env.json();
+      availabilityRequest = await fetch(`${process.env.SERVER_BASE_URL}/availability`, {
         method: 'POST',
         redirect: 'follow',
         headers: { 'Content-Type': 'application/json' },

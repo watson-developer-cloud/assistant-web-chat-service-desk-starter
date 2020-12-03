@@ -20,7 +20,6 @@ export const GENESYS_CLIENT_SECRET = process.env.GENESYS_CLIENT_SECRET;
 export const ORGANIZATION_ID = process.env.ORGANIZATION_ID;
 export const DEPLOYMENT_ID = process.env.DEPLOYMENT_ID;
 export const QUEUE_TARGET = process.env.QUEUE_TARGET;
-export const AUTH_SERVER_BASE_URL = process.env.AUTH_SERVER_BASE_URL;
 
 // Static Genesys URLs
 export const GENESYS_TOKEN_URL = 'https://login.mypurecloud.com/oauth/token';

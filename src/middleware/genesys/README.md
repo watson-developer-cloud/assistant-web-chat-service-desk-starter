@@ -52,7 +52,6 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
         - `ORGANIZATION_ID`: Your Genesys Cloud organization ID. This ID is visible in your widget configuration page in the `Generated Script Tag` block's `org-guid` field.  You can also find this ID in the [Genesys Cloud settings](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/).
         - `DEPLOYMENT_ID`: The deployment key of the widget you created in the previous steps.
         - `QUEUE_TARGET`: The name of your active queue, noted from the previous steps.
-        - `AUTH_SERVER_BASE_URL`: The public URL of your server. If you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`. Make sure you specify the secure `https://` URL.
 
     1. From the `src/middleware/genesys` directory, run `npm install`.
 
@@ -68,6 +67,6 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
 1. Go to the project root directory and edit the `.env` file.
       - Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
-      - Add the `SERVER_BASE_URL` variable to where the middleware is being run (i.e. `http://localhost:3000` for local development).
+      - Add the `SERVER_BASE_URL` variable to the public URL where the middleware server is being run. If you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`. Make sure you specify the secure `https://` URL.
 
 1. From the project root directory, run `npm run dev`. To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud, fully functional with authenticated chat and agent availability.
