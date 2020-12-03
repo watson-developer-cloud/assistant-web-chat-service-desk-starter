@@ -12,18 +12,18 @@
  *
  */
 
+import axios from 'axios';
 import R from 'ramda';
-import request from 'request-promise';
 
 const makeRequest = (options) => {
   return new Promise((resolve) => {
-    request(options)
+    axios(options)
       .then((output) => {
-        return resolve(output);
+        return resolve(R.path(['data'], output));
       })
       .catch((output) => {
-        const code = R.pathOr(500, ['response', 'statusCode'], output);
-        const error = R.pathOr('Internal Server Error', ['response', 'statusMessage'], output);
+        const code = R.pathOr(500, ['response', 'status'], output);
+        const error = R.pathOr('Internal Server Error', ['response', 'statusText'], output);
         return resolve({ error, code });
       });
   });
@@ -37,17 +37,17 @@ const getToken = (config) => {
 
     const options = {
       method: 'POST',
-      uri: `${config.incontact.apiUri}/InContactAuthorizationServer/Token`,
+      url: `${config.incontact.apiUri}/InContactAuthorizationServer/Token`,
       headers: {
         Authorization: `Basic ${key}`,
       },
-      body: {
+      data: {
         grant_type: 'password',
         username: config.incontact.username,
         password: config.incontact.password,
         scope: '',
       },
-      json: true,
+      responseType: 'json',
     };
 
     makeRequest(options).then((output) => {
@@ -60,16 +60,16 @@ const getSession = (token, config) => {
   return new Promise((resolve) => {
     const options = {
       method: 'POST',
-      uri: `${config.incontact.apiUri}/inContactAPI/services/${config.incontact.version}/contacts/chats`,
+      url: `${config.incontact.apiUri}/inContactAPI/services/${config.incontact.version}/contacts/chats`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: {
+      data: {
         pointOfContact: config.incontact.pointOfContact,
         parameters: ['P1', config.incontact.skill, 'P3', 'P4'],
         mediaType: 3,
       },
-      json: true,
+      responseType: 'json',
     };
 
     makeRequest(options).then((output) => {
@@ -82,11 +82,11 @@ const getMessage = (token, chatSessionId, config) => {
   return new Promise((resolve) => {
     const options = {
       method: 'GET',
-      uri: `${config.incontact.apiUri}/inContactAPI/services/${config.incontact.version}/contacts/chats/${chatSessionId}?timeout=10`,
+      url: `${config.incontact.apiUri}/inContactAPI/services/${config.incontact.version}/contacts/chats/${chatSessionId}?timeout=10`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      json: true,
+      responseType: 'json',
     };
 
     makeRequest(options).then((output) => {
@@ -103,8 +103,8 @@ const postMessage = (token, chatSessionId, label, message, config) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: { label, message },
-      json: true,
+      data: { label, message },
+      responseType: 'json',
     };
 
     makeRequest(options).then((output) => {
@@ -121,7 +121,7 @@ const endSession = async (token, chatSessionId, config) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      json: true,
+      responseType: 'json',
     };
 
     makeRequest(options).then((output) => {
@@ -138,7 +138,7 @@ const getQueue = async (token, config) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      json: true,
+      responseType: 'json',
     };
 
     makeRequest(options).then((output) => {

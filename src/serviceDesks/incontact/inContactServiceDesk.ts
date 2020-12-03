@@ -136,11 +136,13 @@ class InContactServiceDesk implements ServiceDesk {
 
     do {
       try {
+        // eslint-disable-next-line no-await-in-loop
         const request = await fetch(`${this.SERVER_BASE_URL}/incontact/get`, {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
           body: JSON.stringify(this.session),
         });
+        // eslint-disable-next-line no-await-in-loop
         const output = await request.json();
         if (output.status) {
           switch (output.status) {
