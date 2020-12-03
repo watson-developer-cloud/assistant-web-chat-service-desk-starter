@@ -38,12 +38,6 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 1. Set up an OAuth Client server:
     1. If you haven't done so already, [set up a Genesys Cloud OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/).
 
-    1. Your end users must be able to access the server from their browsers. If you do not have your own hosted environment, and you wish to expose your local development for testing, consider using a service such as [ngrok](https://ngrok.com/) to create a public URL:
-
-        ```
-        ngrok http http://localhost:3000
-        ```
-
     1. In the `src/middleware/genesys` subdirectory, rename or copy `.env-sample` to `.env`.
 
     1. In the `.env` file, update with your credentials:
@@ -57,6 +51,12 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
     1. From the `src/middleware/genesys` directory, run `npm start`. This starts a server on port 3000 on your local machine.
 
+    1. Your end users must be able to access the server from their browsers. If you do not have your own hosted environment, and you wish to expose your local development for testing, consider using a service such as [ngrok](https://ngrok.com/) to create a public URL:
+
+        ```
+        ngrok http http://localhost:3000
+        ```
+
     1. In the Genesys Cloud user interface, open the settings for your web chat widget and enable **Require Authentication**.
 
     1. In the **Authentication URL** field, specify `https://<server-url>/jwt`, where `<server-url>` is the public URL for your server. Click **Save**.
@@ -67,6 +67,8 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
 1. Go to the project root directory and edit the `.env` file.
       - Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
-      - Add the `SERVER_BASE_URL` variable to the public URL where the middleware server is being run. If you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`. Make sure you specify the secure `https://` URL.
+      - Add `SERVER_BASE_URL` variable to where the middleware server is being run. If you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`.
+      
+        **Note**: Make sure you specify the secure `https://` URL.
 
 1. From the project root directory, run `npm run dev`. To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud, fully functional with authenticated chat and agent availability.
