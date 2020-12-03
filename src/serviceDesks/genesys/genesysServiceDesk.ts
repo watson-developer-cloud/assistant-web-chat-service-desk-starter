@@ -125,7 +125,7 @@ class GenesysServiceDesk implements ServiceDesk {
 
     let env;
     try {
-      const setupEnv = await fetch(`http://localhost:3000/setup`);
+      const setupEnv = await fetch(`${process.env.SERVER_BASE_URL}/setup`);
       env = await setupEnv.json();
     } catch (error) {
       console.error('Cannot retrieve setup environment.');

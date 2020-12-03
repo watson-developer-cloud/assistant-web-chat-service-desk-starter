@@ -66,6 +66,8 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
         **Note:** These flags are independent, so you do not have to enable both simultaneously. For example, if you set `WIDGET_REQUIRES_AUTHENTICATION = false` and `AUTHENTICATED_CALLS_ENABLED = true`, authentication is disabled in the web chat widget, but the server still uses an OAuth token to authenticate when accessing agent availability status.
 
-1. Go to the project root directory and edit the `.env` file. Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
+1. Go to the project root directory and edit the `.env` file.
+      - Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
+      - Update the `SERVER_BASE_URL` variable to where the middleware is being run (i.e. `http://localhost:3000`).
 
 1. From the project root directory, run `npm run dev`. To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud, fully functional with authenticated chat and agent availability.
