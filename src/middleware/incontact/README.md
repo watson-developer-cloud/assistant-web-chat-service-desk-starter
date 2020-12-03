@@ -1,4 +1,4 @@
-# NICE inContact integration example
+# NICE inContact Integration Example
 
 This is a functioning service desk integration between Watson Assistant and NICE inContact.
 
