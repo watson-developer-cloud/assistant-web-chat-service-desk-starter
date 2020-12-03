@@ -68,6 +68,6 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
 1. Go to the project root directory and edit the `.env` file.
       - Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
-      - Update the `SERVER_BASE_URL` variable to where the middleware is being run (i.e. `http://localhost:3000`).
+      - Add the `SERVER_BASE_URL` variable to where the middleware is being run (i.e. `http://localhost:3000` for local development).
 
 1. From the project root directory, run `npm run dev`. To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud, fully functional with authenticated chat and agent availability.
