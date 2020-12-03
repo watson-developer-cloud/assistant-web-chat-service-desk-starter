@@ -12,7 +12,7 @@
  *
  */
 
-export interface inContactSession {
+export interface InContactSession {
   chatSessionId: string;
   contactId: number;
   token: string;

@@ -17,9 +17,9 @@ import { MessageRequest, MessageResponse } from '../../types/message';
 import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC } from '../../types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../types/serviceDeskCallback';
 import { stringToMessageResponseFormat } from '../../utils';
-import { inContactSession } from './inContactTypes';
+import { InContactSession } from './inContactTypes';
 
-class inContactServiceDesk implements ServiceDesk {
+class InContactServiceDesk implements ServiceDesk {
   callback: ServiceDeskCallback;
 
   state: any;
@@ -27,7 +27,7 @@ class inContactServiceDesk implements ServiceDesk {
   /**
    * Object obtained from a call to the endpoint that is needed for all calls.
    */
-  session: inContactSession;
+  session: InContactSession;
 
   /**
    * The profile information for the current agent.
@@ -130,34 +130,18 @@ class inContactServiceDesk implements ServiceDesk {
     this.state = state;
   }
 
-  areAnyAgentsOnline(connectMessage: MessageResponse): Promise<boolean | null> {
-    return Promise.resolve(undefined);
-  }
-
-  userReadMessages(): Promise<void> {
-    return Promise.resolve(undefined);
-  }
-
-  userTyping(isTyping: boolean): Promise<void> {
-    return Promise.resolve(undefined);
-  }
-
   private async startPolling(): Promise<void> {
     const poller = { stop: false };
     this.poller = poller;
 
     do {
       try {
-        /* eslint-disable-next-line no-await-in-loop */
         const request = await fetch(`${this.SERVER_BASE_URL}/incontact/get`, {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
           body: JSON.stringify(this.session),
         });
-
-        /* eslint-disable-next-line no-await-in-loop */
         const output = await request.json();
-
         if (output.status) {
           switch (output.status) {
             case 'Waiting':
@@ -207,4 +191,4 @@ class inContactServiceDesk implements ServiceDesk {
   }
 }
 
-export { inContactServiceDesk };
+export { InContactServiceDesk };
