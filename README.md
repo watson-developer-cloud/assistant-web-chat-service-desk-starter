@@ -6,6 +6,8 @@ A starter kit for building custom service integrations for Watson Assistant web 
 
 This project provides a development and production build environment for adding your own client-side service desk implementations to the web chat integration for Watson Assistant. These extensions can be shared between teams and also can be submitted as potential contributions to the the main web chat project. If you're interested in contributing to this project or proposing that your integration be offered in Watson Assistant, see [./CONTRIBUTING.md](./CONTRIBUTING.md).
 
+**Important:** Any custom code used with Watson Assistant is the responsibility of the developer and is not covered by IBM support.
+
 ### Technical requirements and scope
 
 The service desks must support client-side integrations using a browser-based (usually WebSockets or long-polling) API to connect from the service desk API to within the web chat browser.
@@ -66,7 +68,7 @@ the system will ask the service desk if any agents are available. If no response
 We provide reference implementations that provide fully functional integrations with popular service desks. 
 These implementations, while functional, are examples only, and have not been vetted for production use.
 
-- [Genesys PureCloud](./src/middleware/genesys)  
+- [Genesys Cloud](./src/middleware/genesys)  
 - [Twilio Flex](./src/middleware/flex) 
 
 ## Development
