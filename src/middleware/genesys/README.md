@@ -29,23 +29,40 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
 1. In Genesys Cloud, [create a widget](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/) to enable users to chat with agents. Make a note of the generated `Deployment Key`. Follow the instructions for either a `1.1` or `1.0` widget.
 
-1. Make sure there is an active queue by selecting your profile bubble on the left sidebar and clicking on **Activate Queues**. Check that there is at least one queue under **Active**. If not, either activate an available queue on the right, or [create a queue](https://help.mypurecloud.com/articles/create-queues/). In any case, take note of the name of the active queue you would like to use.
+1. Make sure there is an active queue by selecting your profile bubble on the left sidebar and clicking on **Activate Queues**. Check that there is at least one queue under **Active**. If not, either activate a queue under **Available**, or [create a queue](https://help.mypurecloud.com/articles/create-queues/). In any case, take note of the name of the active queue you would like to use.
     - **Creating a queue:**
       - The queue name must not include any spaces. This queue name should be unique, and should describe the purpose or grouping of the queue. Make sure you click **Save**.
       - Click on the queue that you just created and add yourself through the **Members** tab (you do not have to click **Save**).
       - Any newly created queues will be active by default.
 
-1. Set up an OAuth Client server:
-    1. If you haven't done so already, [set up a Genesys Cloud OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/).
+1. Set up middleware server:
 
     1. In the `src/middleware/genesys` subdirectory, rename or copy `.env-sample` to `.env`.
 
     1. In the `.env` file, update with your credentials:
-        - `GENESYS_CLIENT_ID`: Your client ID from the Genesys Cloud OAuth client created above.
-        - `GENESYS_CLIENT_SECRET`: Your client secret from the Genesys Cloud OAuth client created above.
         - `ORGANIZATION_ID`: Your Genesys Cloud organization ID. This ID is visible in your widget configuration page in the `Generated Script Tag` block's `org-guid` field.  You can also find this ID in the [Genesys Cloud settings](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/).
         - `DEPLOYMENT_ID`: The deployment key of the widget you created in the previous steps.
         - `QUEUE_TARGET`: The name of your active queue, noted from the previous steps.
+
+    1. (Optional) Enable advanced features.
+
+        1. If you haven't done so already, [set up a Genesys Cloud OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/).
+
+        1. In the `.env` file, update with your credentials:
+            - `GENESYS_CLIENT_ID`: Your client ID from the Genesys Cloud OAuth client created above.
+            - `GENESYS_CLIENT_SECRET`: Your client secret from the Genesys Cloud OAuth client created above.
+
+        1. Enable desired features:
+
+            - **Agent Availability**
+                1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), set `OAUTH_API_CALLS_ENABLED` to `true`.
+
+            - **JWT Authenticated Chat**
+                1. In the Genesys Cloud UI, open the settings for your web chat widget and enable **Require Authentication**.
+
+                1. In the **Authentication URL** field, specify `https://<server-url>/jwt`, where `<server-url>` is the public URL for your middleware server. Click **Save**.
+
+                1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), make sure to set the `AUTHENTICATED_CHAT_ENABLED` flag to `true`.
 
     1. From the `src/middleware/genesys` directory, run `npm install`.
 
@@ -56,18 +73,6 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
         ```
         ngrok http http://localhost:3000
         ```
-
-1. (Optional) Enable advanced features.
-
-    - **Agent Availability**
-        1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), set `OAUTH_API_CALLS_ENABLED` to `true`.
-
-    - **JWT Authenticated Chat**
-        1. In the Genesys Cloud UI, open the settings for your web chat widget and enable **Require Authentication**.
-
-        1. In the **Authentication URL** field, specify `https://<server-url>/jwt`, where `<server-url>` is the public URL for your middleware server. Click **Save**.
-
-        1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), make sure to set the `AUTHENTICATED_CHAT_ENABLED` flag to `true`.
 
     **Implementation Notes:**
     
