@@ -62,12 +62,6 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
         ngrok http http://localhost:3000
         ```
 
-    **Implementation Notes:**
-    
-    There are two flags in [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts) that control advanced features such as agent availability and authenticated chat.
-    - `OAUTH_API_CALLS_ENABLED`: Default is `false`. When set to `true`, any Genesys API calls that require OAuth tokens for authentication will be enabled. Currently, only agent availability uses this flag.
-    - `AUTHENTICATED_CHAT_ENABLED`: Default is `false`. When set to `true`, JWT tokens will be used to authenticate chat users.
-
 1. Go to the project root directory and edit the `.env` file.
       - Update the `SERVICE_DESK_CLASS` variable to `GenesysServiceDesk`.
       - Add `SERVER_BASE_URL` variable to where your middleware is deployed (For local development, if you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`).
@@ -87,3 +81,9 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
             1. In [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts), make sure to set the `AUTHENTICATED_CHAT_ENABLED` flag to `true`.
 
 1. From the project root directory, run `npm run dev`. To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud.
+
+**Implementation Notes:**
+
+There are two flags in [`genesysServiceDesk.ts`](../../serviceDesks/genesys/genesysServiceDesk.ts) that control advanced features such as agent availability and authenticated chat.
+- `OAUTH_API_CALLS_ENABLED`: Default is `false`. When set to `true`, any Genesys API calls that require OAuth tokens for authentication will be enabled. Currently, only agent availability uses this flag.
+- `AUTHENTICATED_CHAT_ENABLED`: Default is `false`. When set to `true`, JWT tokens will be used to authenticate chat users.
