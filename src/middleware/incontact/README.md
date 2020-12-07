@@ -34,7 +34,7 @@ The communication uses the Patron API, which can be found at [Patron APIs](https
 
 1. Go to the project root directory and edit the `.env` file:
  
-    - Update the `SERVICE_DESK_CLASS` variable to `inContactServiceDesk`.
+    - Update the `SERVICE_DESK_CLASS` variable to `InContactServiceDesk`.
     - Add `SERVER_BASE_URL` variable to where your middleware is deployed.
 
 1. From the project root directory, run `npm run dev`. If you've linked everything to your NICE inContact account correctly, you should be able to connect to an agent in NICE inContact.
