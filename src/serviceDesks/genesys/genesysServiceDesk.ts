@@ -31,22 +31,21 @@ import {
   LOG_PREFIX,
   MessageEvent,
 } from './genesysTypes';
-import { setup } from './purecloudSetup';
 import { messages } from './stockMessages';
 
 /**
- * Indicates whether your chat deployment requires authentication.
+ * Indicates whether your chat widget requires user authentication.
  * If true, this code will attempt to fetch a memberAuthToken from the authentication server pointed to
- * by AUTH_SERVER_BASE_URL in '../../purecloudSetup.ts' and use it when creating the chat.
+ * by SERVER_BASE_URL in '../../../.env' and use it when creating the chat.
  */
-const WIDGET_REQUIRES_AUTHENTICATION = false;
+const AUTHENTICATED_CHAT_ENABLED = false;
 
 /**
  * Indicates whether you've built out functionality to support API calls that require OAuth authentication.
- * These should be supported at the same server used for authenticated chat. Currently this flag is only
+ * These should be supported at SERVER_BASE_URL. Currently this flag is only
  * used for getAgentAvailability().
  */
-const AUTHENTICATED_CALLS_ENABLED = false;
+const OAUTH_API_CALLS_ENABLED = false;
 
 /**
  * This class returns startChat, endChat, sendMessageToAgent, userTyping and userReadMessages to be exposed to web chat
@@ -124,33 +123,49 @@ class GenesysServiceDesk implements ServiceDesk {
       userID: connectMessage.context.global.system.user_id,
     } as ServiceDeskStateFromWAC);
 
-    const createChatBody: ChatBody = {
-      organizationId: setup.ORGANIZATION_ID,
-      deploymentId: setup.DEPLOYMENT_ID,
+    let env;
+    try {
+      const setupEnv = await fetch(`${process.env.SERVER_BASE_URL}/setup`);
+      env = await setupEnv.json();
+    } catch (error) {
+      console.error('Cannot retrieve setup environment.');
+
+      this.callback.setErrorStatus({
+        logInfo: error,
+        type: ErrorType.CONNECTING,
+      });
+
+      return Promise.reject();
+    }
+
+    const { org_id, deployment_id, queue_target } = env;
+
+    // create chat body
+    const chatBody: ChatBody = {
+      organizationId: org_id,
+      deploymentId: deployment_id,
       routingTarget: {
         targetType: 'QUEUE',
-        targetAddress: setup.QUEUE_TARGET,
+        targetAddress: queue_target,
       },
       memberInfo: {
         displayName: this.user.id,
       },
     };
 
-    // create chat
-
     try {
       // fetch and set user auth if required
-      if (WIDGET_REQUIRES_AUTHENTICATION) {
+      if (AUTHENTICATED_CHAT_ENABLED) {
         /**
          * In the future, this call should be protected using some security measure
          * based on user info
          */
-        const userAuth = await fetch(`${setup.AUTH_SERVER_BASE_URL}/jwt`, {
+        const userAuth = await fetch(`${process.env.SERVER_BASE_URL}/jwt`, {
           method: 'POST',
           redirect: 'follow', // This can be set to ("error" | "follow" | "manual")
         });
 
-        createChatBody.memberAuthToken = await userAuth.text();
+        chatBody.memberAuthToken = await userAuth.text();
       }
     } catch (error) {
       console.error('Cannot complete user authentication.');
@@ -164,7 +179,7 @@ class GenesysServiceDesk implements ServiceDesk {
     }
 
     try {
-      this.chatInfo = await this.webChatApi.postWebchatGuestConversations(createChatBody);
+      this.chatInfo = await this.webChatApi.postWebchatGuestConversations(chatBody);
     } catch (error) {
       console.error('Cannot open chat.');
 
@@ -326,7 +341,7 @@ class GenesysServiceDesk implements ServiceDesk {
                  * In that case, getAgentAvailability() sets the current wait time for web chat.
                  */
                 try {
-                  if (AUTHENTICATED_CALLS_ENABLED) await this.getAgentAvailability();
+                  if (OAUTH_API_CALLS_ENABLED) await this.getAgentAvailability();
                 } catch (error) {
                   console.error(error); // don't need to stop everything for an error here
                 }
@@ -504,11 +519,13 @@ class GenesysServiceDesk implements ServiceDesk {
     let agentAvailable: boolean;
 
     try {
-      availabilityRequest = await fetch(`${setup.AUTH_SERVER_BASE_URL}/availability`, {
+      const env = await fetch(`${process.env.SERVER_BASE_URL}/setup`);
+      const { queue_target } = await env.json();
+      availabilityRequest = await fetch(`${process.env.SERVER_BASE_URL}/availability`, {
         method: 'POST',
         redirect: 'follow',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ queue: setup.QUEUE_TARGET }),
+        body: JSON.stringify({ queue_name: queue_target }),
       });
     } catch (error) {
       return Promise.reject(error);
