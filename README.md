@@ -8,6 +8,14 @@ This project provides a development and production build environment for adding 
 
 **Important:** Any custom code used with Watson Assistant is the responsibility of the developer and is not covered by IBM support.
 
+## Example Implementations
+We provide reference implementations that provide fully functional integrations with popular service desks. 
+These implementations, while functional, are examples only, and have not been vetted for production use.
+
+- [Genesys Cloud](./src/middleware/genesys)  
+- [Twilio Flex](./src/middleware/flex) 
+- [NICE inContact](./src/middleware/incontact)
+
 ### Technical requirements and scope
 
 The service desks must support client-side integrations using a browser-based (usually WebSockets or long-polling) API to connect from the service desk API to within the web chat browser.
@@ -63,14 +71,6 @@ the system will ask the service desk if any agents are available. If no response
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/en/download/)
-
-## Example Implementations
-We provide reference implementations that provide fully functional integrations with popular service desks. 
-These implementations, while functional, are examples only, and have not been vetted for production use.
-
-- [Genesys Cloud](./src/middleware/genesys)  
-- [Twilio Flex](./src/middleware/flex) 
-- [NICE inContact](./src/middleware/incontact)
 
 ## Development
 
