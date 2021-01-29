@@ -47,7 +47,7 @@
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
-    "semantic-release": "^17.1.1",
+    "semantic-release": "^17.3.7",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.1.2",
     "typescript": "^3.9.6",
