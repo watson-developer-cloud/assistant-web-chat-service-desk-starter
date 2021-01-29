@@ -25,7 +25,7 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
 ## Setting Up
 
-1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md) to make sure you can run an instance of [ExampleServiceDesk](../../serviceDesks/exampleServiceDesk.ts).
+1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md#development) to make sure you can run an instance of [ExampleServiceDesk](../../serviceDesks/exampleServiceDesk.ts).
 
 1. In Genesys Cloud, [create a widget](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/) to enable users to chat with agents. Make a note of the generated deployment key. Follow the instructions for either a `1.1` or `1.0` widget.
 
