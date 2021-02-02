@@ -16,7 +16,7 @@ import { Channel } from 'twilio-chat/lib/channel';
 import { Member } from 'twilio-chat/lib/member';
 import { Message } from 'twilio-chat/lib/message';
 
-import { MessageRequest, MessageResponse } from '../../types/message';
+import { MessageRequest, MessageResponse, ConnectToAgentItem } from '../../types/message';
 import { User } from '../../types/profiles';
 import { ServiceDesk, ServiceDeskFactoryParameters } from '../../types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../types/serviceDeskCallback';
@@ -158,11 +158,16 @@ class TwilioFlex implements ServiceDesk {
       console.log(`Message received upfront: ${msg}`);
     });
 
-    // You can also get connectMessage.output.generic[0].topic and connectMessage.output.generic[0].dialog_node and use it as a first message to the agent.
-    // connectMessage.output.generic[0].transfer_info has more information that could be used for routing as well.
-    const firstMessage = connectMessage.output.generic[0].message_to_human_agent;
-    // console.log(JSON.stringify(connectMessage));
-    await this.twilioChannel.sendMessage(firstMessage);
+    const responses = connectMessage.output.generic;
+    const connectToAgent = responses.find( ( value ) => value.response_type === 'connect_to_agent' ) as ConnectToAgentItem;
+    if (!connectToAgent) {
+      console.error(`No connect to agent response has been configured for this assistant.`);
+      return Promise.reject();
+    }
+
+    // You can also get connectToAgent.topic and connectToAgent.dialog_node and use it as a first message to the agent.
+    // connectToAgent.transfer_info has more information that could be used for routing as well.
+    await this.twilioChannel.sendMessage(connectToAgent.message_to_human_agent);
     return Promise.resolve();
   }
 

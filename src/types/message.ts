@@ -84,4 +84,31 @@ export interface ConnectToAgentItem extends GenericItem {
 
   // Dialog node id that was used to determine the topic.
   dialog_node?: string;
+
+  // Message to send to user if there is agent is available to respond.
+  agent_available?: {
+    message: string;
+  };
+
+  // Message to send to user if no agents are available to response.
+  agent_unavailable?: {
+    message: string;
+  };
+
+  // Additional information necessary to transfer agents.
+  transfer_info?: TransferInfo;
+}
+
+export interface TransferInfo {
+  // The reason for the escalation.
+  reason?: {
+    type: string;
+  };
+
+  // Contains information to route the escalated conversation to the appropriate service desk department or queue.
+  target?: {
+    [service_desk: string]: {
+      [routing_info: string]: string;
+    };
+  };
 }
