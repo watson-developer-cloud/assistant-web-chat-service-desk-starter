@@ -8,7 +8,7 @@ This project provides a development and production build environment for adding 
 
 **Important:** Any custom code used with Watson Assistant is the responsibility of the developer and is not covered by IBM support.
 
-To find out if your company's tool is feasible for this approach, or if you'd like some help building an integration, [contact us here](https://www.ibm.com/watson/assistant-integrations/?utm_medium=webchatbyosd).
+To find out if your company's tool is feasible for this approach, check out our Adoption Guide [here](./docs/ADOPTION_GUIDE.md). If you'd like some help building an integration, [contact us here](https://www.ibm.com/watson/assistant-integrations/?utm_medium=webchatbyosd).
 
 ## Example Implementations
 We provide reference implementations that provide fully functional integrations with popular service desks. 
