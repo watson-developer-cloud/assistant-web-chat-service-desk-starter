@@ -31,21 +31,15 @@ const makeRequest = (options) => {
 
 const getToken = (config) => {
   return new Promise((resolve) => {
-    const key = Buffer.from(
-      `${config.incontact.appName}@${config.incontact.vendorName}:${config.incontact.appId}`,
-    ).toString('base64');
-
     const options = {
       method: 'POST',
-      url: `${config.incontact.apiUri}/InContactAuthorizationServer/Token`,
+      url: `${config.incontact.accessKeyApiUri}/authentication/v1/token/access-key`,
       headers: {
-        Authorization: `Basic ${key}`,
+        'Content-Type': 'application/json',
       },
       data: {
-        grant_type: 'password',
-        username: config.incontact.username,
-        password: config.incontact.password,
-        scope: '',
+        accessKeyId: config.incontact.accessKeyId,
+        accessKeySecret: config.incontact.accessKeySecret,
       },
       responseType: 'json',
     };

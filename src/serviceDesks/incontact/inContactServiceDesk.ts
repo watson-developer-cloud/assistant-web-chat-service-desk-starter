@@ -104,20 +104,6 @@ class InContactServiceDesk implements ServiceDesk {
     });
 
     try {
-      const request = await fetch(`${this.SERVER_BASE_URL}/incontact/queue`, {
-        method: 'POST',
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...this.session }),
-      });
-      const output = await request.json();
-      if (output && output.queue) {
-        this.callback.updateAgentAvailability({ position_in_queue: output.queue });
-      }
-    } catch (error) {
-      return Promise.reject();
-    }
-
-    try {
       await this.startPolling();
     } catch (error) {
       return Promise.reject();
@@ -146,8 +132,23 @@ class InContactServiceDesk implements ServiceDesk {
         const output = await request.json();
         if (output.status) {
           switch (output.status) {
-            case 'Waiting':
+            case 'Active':
               this.callback.agentJoined(this.agent);
+              break;
+            case 'Waiting':
+              try {
+                const request = await fetch(`${this.SERVER_BASE_URL}/incontact/queue`, {
+                  method: 'POST',
+                  headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ ...this.session }),
+                });
+                const output = await request.json();
+                if (output && output.queue != undefined) {
+                  this.callback.updateAgentAvailability({ position_in_queue: output.queue });
+                }
+              } catch (error) {
+                return Promise.reject();
+              }
               break;
             case 'Disconnected':
               this.callback.agentEndedChat();
