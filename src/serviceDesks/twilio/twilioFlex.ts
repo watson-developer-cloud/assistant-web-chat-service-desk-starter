@@ -159,7 +159,7 @@ class TwilioFlex implements ServiceDesk {
     });
 
     const responses = connectMessage.output.generic;
-    const connectToAgent = responses.find( ( value ) => value.response_type === 'connect_to_agent' ) as ConnectToAgentItem;
+    const connectToAgent = responses.find(value => value.response_type === 'connect_to_agent') as ConnectToAgentItem;
     if (!connectToAgent) {
       console.error(`No connect to agent response has been configured for this assistant.`);
       return Promise.reject();
