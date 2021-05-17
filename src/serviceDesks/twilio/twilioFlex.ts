@@ -16,7 +16,7 @@ import { Channel } from 'twilio-chat/lib/channel';
 import { Member } from 'twilio-chat/lib/member';
 import { Message } from 'twilio-chat/lib/message';
 
-import { MessageRequest, MessageResponse, ConnectToAgentItem } from '../../types/message';
+import { ConnectToAgentItem, MessageRequest, MessageResponse } from '../../types/message';
 import { User } from '../../types/profiles';
 import { ServiceDesk, ServiceDeskFactoryParameters } from '../../types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../types/serviceDeskCallback';
@@ -159,7 +159,7 @@ class TwilioFlex implements ServiceDesk {
     });
 
     const responses = connectMessage.output.generic;
-    const connectToAgent = responses.find(value => value.response_type === 'connect_to_agent') as ConnectToAgentItem;
+    const connectToAgent = responses.find((value) => value.response_type === 'connect_to_agent') as ConnectToAgentItem;
     if (!connectToAgent) {
       console.error(`No connect to agent response has been configured for this assistant.`);
       return Promise.reject();

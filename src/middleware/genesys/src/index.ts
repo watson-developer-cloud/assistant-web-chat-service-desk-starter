@@ -17,25 +17,26 @@ import 'dotenv/config';
 import axios, { AxiosRequestConfig, Method } from 'axios';
 import cors from 'cors';
 import express from 'express';
+import RateLimit from 'express-rate-limit';
 import qs from 'qs';
+
 import {
-  PORT,
+  DEPLOYMENT_ID,
   GENESYS_ANALYTICS_URL,
+  GENESYS_CLIENT_ID,
+  GENESYS_CLIENT_SECRET,
   GENESYS_QUEUE_URL,
   GENESYS_SIGNED_DATA_URL,
   GENESYS_TOKEN_URL,
-  GENESYS_CLIENT_ID,
-  GENESYS_CLIENT_SECRET,
   ORGANIZATION_ID,
-  DEPLOYMENT_ID,
-  QUEUE_TARGET
+  PORT,
+  QUEUE_TARGET,
 } from './config/constants';
 
-// set up rate limiter: maximum of five requests per minute
-var RateLimit = require('express-rate-limit');
-var limiter = new RateLimit({
-  windowMs: 1*60*1000, // 1 minute
-  max: 20
+// set up rate limiter
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20, // maximum of twenty requests per minute (arbitrary)
 });
 
 const app = express();
@@ -54,12 +55,12 @@ app.get('/setup', async (_: express.Request, res: express.Response) => {
       org_id: ORGANIZATION_ID,
       deployment_id: DEPLOYMENT_ID,
       queue_target: QUEUE_TARGET,
-    }
+    };
     res.send(env);
   } catch (error) {
     console.log(error);
     res.status(500);
-    res.end("An exception occurred");
+    res.end('An exception occurred');
   }
 });
 
@@ -75,7 +76,7 @@ app.post('/jwt', async (_: express.Request, res: express.Response) => {
   } catch (error) {
     console.log(error);
     res.status(500);
-    res.end("An exception occurred");
+    res.end('An exception occurred');
   }
 });
 
@@ -90,11 +91,11 @@ app.post('/availability', async (req: express.Request, res: express.Response) =>
 
   try {
     const agents = await getQueueInfo(queue_name);
-    res.send(agents);
+    return res.send(agents);
   } catch (error) {
     console.log(error);
     res.status(500);
-    res.end("An exception occurred");
+    return res.end('An exception occurred');
   }
 });
 
@@ -111,7 +112,10 @@ async function getQueueInfo(queueName: string): Promise<any> {
   const queueId = await getQueueID(queueName);
   if (!queueId) return Promise.reject(new Error(`Unable to locate queue ID for queue name ${queueName}`));
 
-  const [queueQueryResults, estWaitTime] = await Promise.allSettled([queryForQueue(queueId), getEstimatedWaitTime(queueId)]);
+  const [queueQueryResults, estWaitTime] = await Promise.allSettled([
+    queryForQueue(queueId),
+    getEstimatedWaitTime(queueId),
+  ]);
   // obtain queue status
   if (queueQueryResults.status === 'fulfilled') Object.assign(availabilityInfo, queueQueryResults.value);
   // obtain wait time details
@@ -199,9 +203,7 @@ async function createAccessToken(): Promise<void> {
     method: 'POST',
     url: GENESYS_TOKEN_URL,
     headers: {
-      Authorization: `Basic ${Buffer.from(
-        `${GENESYS_CLIENT_ID}:${GENESYS_CLIENT_SECRET}`,
-      ).toString('base64')}`,
+      Authorization: `Basic ${Buffer.from(`${GENESYS_CLIENT_ID}:${GENESYS_CLIENT_SECRET}`).toString('base64')}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     data: qs.stringify({

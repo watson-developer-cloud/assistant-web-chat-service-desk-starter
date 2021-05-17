@@ -214,7 +214,7 @@ class GenesysServiceDesk implements ServiceDesk {
 
     // send initial connect_to_agent message from WA
     const responses = connectMessage.output.generic;
-    const connectToAgent = responses.find(value => value.response_type === 'connect_to_agent') as ConnectToAgentItem;
+    const connectToAgent = responses.find((value) => value.response_type === 'connect_to_agent') as ConnectToAgentItem;
     if (!connectToAgent) {
       console.error(`No connect to agent response has been configured for service desk.`);
       return Promise.reject();
