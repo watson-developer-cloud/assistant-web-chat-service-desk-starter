@@ -63,8 +63,9 @@ class InContactServiceDesk implements ServiceDesk {
         body: JSON.stringify(this.session),
       });
       await request.json();
-      // eslint-disable-next-line no-empty
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(error);
+    }
 
     return Promise.resolve();
   }
@@ -78,7 +79,7 @@ class InContactServiceDesk implements ServiceDesk {
       });
       await request.json();
     } catch (error) {
-      return Promise.reject();
+      throw new Error(error);
     }
     return Promise.resolve();
   }
@@ -91,14 +92,14 @@ class InContactServiceDesk implements ServiceDesk {
         body: JSON.stringify({}),
       });
       const output = await request.json();
-      if (output && output.chatSessionId) {
+      if (output.chatSessionId) {
         this.session = output;
       }
     } catch (error) {
-      return Promise.reject();
+      throw new Error(error);
     }
 
-    // The beforeunload event is fired when the window, the document and its resources are about to be unloaded.
+    // The before unload event is fired when the window, the document and its resources are about to be unloaded.
     window.addEventListener('unload', (event) => {
       navigator.sendBeacon(`${this.SERVER_BASE_URL}/incontact/end`, JSON.stringify(this.session)); // https://golb.hplar.ch/2018/09/beacon-api.html
     });
@@ -106,7 +107,7 @@ class InContactServiceDesk implements ServiceDesk {
     try {
       await this.startPolling();
     } catch (error) {
-      return Promise.reject();
+      throw new Error(error);
     }
 
     return Promise.resolve();
@@ -133,21 +134,26 @@ class InContactServiceDesk implements ServiceDesk {
         if (output.status) {
           switch (output.status) {
             case 'Active':
+              // For production, should change this to load in actual agent profile info
               this.callback.agentJoined(this.agent);
               break;
             case 'Waiting':
               try {
+                // eslint-disable-next-line no-await-in-loop
                 const request = await fetch(`${this.SERVER_BASE_URL}/incontact/queue`, {
                   method: 'POST',
                   headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ ...this.session }),
+                  body: JSON.stringify(this.session),
                 });
+                // eslint-disable-next-line no-await-in-loop
                 const output = await request.json();
-                if (output && output.queue != undefined) {
-                  this.callback.updateAgentAvailability({ position_in_queue: output.queue });
+                if (output.queue !== undefined) {
+                  // Add one since queue value is 0 when there is no line
+                  this.callback.updateAgentAvailability({ position_in_queue: output.queue + 1 });
                 }
               } catch (error) {
-                return Promise.reject();
+                // Do not stop polling when queue call fails
+                console.error('Unable to retrieve queue information.');
               }
               break;
             case 'Disconnected':
@@ -163,14 +169,16 @@ class InContactServiceDesk implements ServiceDesk {
           this.callback.agentTyping(output.typing);
         }
 
-        if (output.agent && output.agent.id) {
+        // Update active agent - not currently functional, but can be used to update agent profile if you can retrieve agent information from InContact
+        if (output.agent?.id) {
           if (this.agent.id !== output.agent.id) {
             this.callback.agentJoined(output.agent);
             this.agent = output.agent;
           }
         }
 
-        if (output.messages && output.messages.length > 0) {
+        // If there are new messages from agent, relay to user
+        if (output.messages?.length > 0) {
           for (let i = 0; i < output.messages.length; i++) {
             this.callback.sendMessageToUser(stringToMessageResponseFormat(output.messages[i]), this.agent.id);
           }
@@ -181,6 +189,7 @@ class InContactServiceDesk implements ServiceDesk {
           poller.stop = true;
         }
 
+        // Set updated chatSessionId as provided by InContact
         if (output.chatSessionId) {
           this.session.chatSessionId = output.chatSessionId;
         }

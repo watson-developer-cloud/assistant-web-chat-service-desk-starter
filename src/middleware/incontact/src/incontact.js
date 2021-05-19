@@ -15,7 +15,7 @@
 import axios from 'axios';
 import R from 'ramda';
 
-const makeRequest = (options) => {
+async function makeRequest(options) {
   return new Promise((resolve) => {
     axios(options)
       .then((output) => {
@@ -27,7 +27,7 @@ const makeRequest = (options) => {
         return resolve({ error, code });
       });
   });
-};
+}
 
 const getToken = (config) => {
   return new Promise((resolve) => {
