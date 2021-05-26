@@ -56,47 +56,34 @@ class InContactServiceDesk implements ServiceDesk {
       this.poller = undefined;
     }
 
-    try {
-      const request = await fetch(`${this.SERVER_BASE_URL}/incontact/end`, {
-        method: 'POST',
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(this.session),
-      });
-      await request.json();
-    } catch (error) {
-      throw new Error(error);
-    }
-
+    const request = await fetch(`${this.SERVER_BASE_URL}/incontact/end`, {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(this.session),
+    });
+    await request.json();
     return Promise.resolve();
   }
 
   async sendMessageToAgent(message: MessageRequest, messageID: string): Promise<void> {
-    try {
-      const request = await fetch(`${this.SERVER_BASE_URL}/incontact/post`, {
-        method: 'POST',
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...this.session, message: message.input.text, label: 'User' }),
-      });
-      await request.json();
-    } catch (error) {
-      throw new Error(error);
-    }
+    const request = await fetch(`${this.SERVER_BASE_URL}/incontact/post`, {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...this.session, message: message.input.text, label: 'User' }),
+    });
+    await request.json();
     return Promise.resolve();
   }
 
   async startChat(connectMessage: MessageResponse): Promise<void> {
-    try {
-      const request = await fetch(`${this.SERVER_BASE_URL}/incontact/start`, {
-        method: 'POST',
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({}),
-      });
-      const output = await request.json();
-      if (output.chatSessionId) {
-        this.session = output;
-      }
-    } catch (error) {
-      throw new Error(error);
+    const request = await fetch(`${this.SERVER_BASE_URL}/incontact/start`, {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    const output = await request.json();
+    if (output.chatSessionId) {
+      this.session = output;
     }
 
     // The before unload event is fired when the window, the document and its resources are about to be unloaded.
@@ -104,12 +91,7 @@ class InContactServiceDesk implements ServiceDesk {
       navigator.sendBeacon(`${this.SERVER_BASE_URL}/incontact/end`, JSON.stringify(this.session)); // https://golb.hplar.ch/2018/09/beacon-api.html
     });
 
-    try {
-      await this.startPolling();
-    } catch (error) {
-      throw new Error(error);
-    }
-
+    await this.startPolling();
     return Promise.resolve();
   }
 
@@ -153,7 +135,7 @@ class InContactServiceDesk implements ServiceDesk {
                 }
               } catch (error) {
                 // Do not stop polling when queue call fails
-                console.error('Unable to retrieve queue information.');
+                console.error('Unable to retrieve queue information.', error);
               }
               break;
             case 'Disconnected':
