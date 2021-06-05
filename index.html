@@ -4,12 +4,51 @@
 The html file is used when you are in development mode. The compiled extensions are automatically
 added to this file by Webpack when you are developing using npm run dev.
 -->
+<script
+  src="https://cdn.kustomerapp.com/chat-web/core.js"
+  data-kustomer-api-key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwN2FmYzMxOTkxYzZjMDA5NTA3NzY1MyIsInVzZXIiOiI2MDdhZmMyY2Q0NGIzNTAwMWFkMGEyN2YiLCJvcmciOiI1ZmZjOGEwZjA0MGQ5YWQzZjZlODQ5OTciLCJvcmdOYW1lIjoienp6LXdpbHNvbi1saWxsaWFuIiwidXNlclR5cGUiOiJtYWNoaW5lIiwicG9kIjoicHJvZDEiLCJyb2xlcyI6WyJvcmciXSwiYXVkIjoidXJuOmNvbnN1bWVyIiwiaXNzIjoidXJuOmFwaSIsInN1YiI6IjYwN2FmYzJjZDQ0YjM1MDAxYWQwYTI3ZiJ9.1lesUnMqr7X_vdPsOf9KgPiDUiOYL7vNJEwAlSjnzRo"
+></script>
+
 <script>
   window.watsonAssistantChatOptions = {
-      integrationID: "37414c5c-8d93-4252-a773-eaddeae6ae28",
+      integrationID: "b6bdff84-e7e1-4daa-8651-5d3b301945c2", 
       region: "us-south",
-      serviceInstanceID: "8a8ea449-4fb6-453e-811a-bae320dc62b3",
-      onLoad: function(instance) { instance.render(); },
+      serviceInstanceID: "95f7f0b7-8a3c-4cbb-a0ad-cd0e907bd375", 
+      onLoad: function(instance) { 
+        function updateTranscript(event) {
+				if(!event.data.context.skills['main skill'].user_defined.transcript) {
+					event.data.context.skills['main skill'].user_defined.transcript = [];
+				}
+				if(event.data.output && event.data.output.generic) {
+					event.data.output.generic.forEach((watsonMessage) => {
+						if(watsonMessage.response_type == 'text') {
+							event.data.context.skills['main skill'].user_defined.transcript.push({
+								"user": "Watson",
+								"message": watsonMessage.text
+							})
+						}
+					});
+				} else {
+					if(!event.data.input.text) {
+						return;
+					}
+					event.data.context.skills['main skill'].user_defined.transcript.push({
+						"user": "Guest",
+						"message": event.data.input.text
+					});
+				}
+			}
+			instance.on({
+				type: "pre:send",
+				handler: updateTranscript
+			});
+			instance.on({
+				type: "pre:receive",
+				handler: updateTranscript
+			});
+        instance.render(); 
+      
+      },
       serviceDeskFactory: window.WebChatServiceDeskFactory
     };
   setTimeout(function(){

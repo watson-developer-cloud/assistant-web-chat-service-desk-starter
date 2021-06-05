@@ -16,7 +16,7 @@ import { GenesysServiceDesk } from './serviceDesks/genesys/genesysServiceDesk';
 import { InContactServiceDesk } from './serviceDesks/incontact/inContactServiceDesk';
 import { TwilioFlex } from './serviceDesks/twilio/twilioFlex';
 import { ServiceDesk, ServiceDeskFactoryParameters } from './types/serviceDesk';
-
+import { kustomerDesk } from './serviceDesks/kustomerDesk';
 /**
  * This file exports the methods used by web chat to communicate back and forth with the service desk. It is exposed
  * as window.WebChatServiceDeskFactory and should be passed into your web chat config as shown in the README.md.
@@ -35,7 +35,7 @@ function getInstance(
   parameters: ServiceDeskFactoryParameters,
 ): TwilioFlex | ExampleServiceDesk | GenesysServiceDesk | InContactServiceDesk {
   const serviceDeskClass: string = process.env.SERVICE_DESK_CLASS || 'ExampleServiceDesk';
-  const constructors: any = { TwilioFlex, ExampleServiceDesk, GenesysServiceDesk, InContactServiceDesk };
+  const constructors: any = { TwilioFlex, ExampleServiceDesk, GenesysServiceDesk, InContactServiceDesk, kustomerDesk };
   return new constructors[serviceDeskClass](parameters);
 }
 
