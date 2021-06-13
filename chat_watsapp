@@ -1,0 +1,38 @@
+// Install the Java helper library from twilio.com/docs/java/install
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
+public class Example {
+    // Find your Account SID and Auth Token at twilio.com/console
+    // and set the environment variables. See http://twil.io/secure
+    public static final String ACCOUNT_SID = System.getenv("AC2eafcafe57f1e5ae384bedc2e431818f");
+    public static final String AUTH_TOKEN = System.getenv("ce41a36f497c896f18ab499069f1c9d2");
+
+    public static void main(String[] args) {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Scanner sc= new Scanner (System.In);
+               
+               System.out.println("what is your name?");
+                String name= sc.newLine();
+                             
+                
+                System.out.println("receiver's num?");
+                Int num= sc.newInt();
+                
+                System.out.println("what do you need to write?");
+                String str= sc.newLine();
+                
+                
+               Message message2 = Message.creator(
+                new com.twilio.type.PhoneNumber(num),
+                
+                name + "'s message is:" + str);
+                
+                
+            .create();
+
+     
+    }
+}
