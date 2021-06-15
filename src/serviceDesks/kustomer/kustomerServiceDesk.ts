@@ -14,12 +14,11 @@
 
 import { ErrorType } from '../../types/errors';
 import { MessageRequest, MessageResponse } from '../../types/message';
-import { User } from '../../types/profiles';
 import { ServiceDesk, ServiceDeskFactoryParameters } from '../../types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../types/serviceDeskCallback';
 import { stringToMessageResponseFormat } from '../../utils';
 import { onAgentTypingActivityResponse, onConversationCreateResponse, onConversationEndedResponse, onMessageSentResponse } from './kustomerTypes';
-import { createConversation, describeCustomer, endConversation, initKustomerCore, isChatAvailable, login, logout, markRead, sendMessage, sendTypingActivity } from './kustomerHelper';
+import { createConversation, endConversation, initKustomerCore, isChatAvailable, login, logout, markRead, sendMessage, sendTypingActivity } from './kustomerHelper';
 /**
  * This class returns startChat, endChat, sendMessageToAgent, updateState, userTyping, userReadMessages and
  * areAnyAgentsOnline to be exposed to web chat through src/buildEntry.ts.
