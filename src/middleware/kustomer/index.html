@@ -1,0 +1,59 @@
+<html>
+
+<body>
+    <!--
+The html file is used when you are in development mode. The compiled extensions are automatically
+added to this file by Webpack when you are developing using npm run dev.
+-->
+    <script src="https://cdn.kustomerapp.com/chat-web/core.js" data-kustomer-api-key="YOUR_KUSTOMER_API_KEY"></script>
+
+    <script>
+        window.watsonAssistantChatOptions = {
+            integrationID: "37414c5c-8d93-4252-a773-eaddeae6ae28",
+            region: "us-south",
+            serviceInstanceID: "8a8ea449-4fb6-453e-811a-bae320dc62b3",
+            onLoad: function (instance) {
+                //Help build the chat transcript
+                function updateTranscript(event) {
+                    if (!event.data.context.skills['main skill'].user_defined.transcript) {
+                        event.data.context.skills['main skill'].user_defined.transcript = [];
+                    }
+                    //If pre:receive
+                    if (event.data.output && event.data.output.generic) {
+                        event.data.output.generic.forEach((watsonMessage) => {
+                            if (watsonMessage.response_type == 'text') {
+                                event.data.context.skills['main skill'].user_defined.transcript.push({
+                                    "user": "Watson",
+                                    "message": watsonMessage.text
+                                })
+                            }
+                        });
+                    } else {
+                        //If pre:send
+                        if (!event.data.input.text) {
+                            return;
+                        }
+                        event.data.context.skills['main skill'].user_defined.transcript.push({
+                            "user": "Guest",
+                            "message": event.data.input.text
+                        });
+                    }
+                }
+                instance.on({ type: "pre:send", handler: updateTranscript });
+                instance.on({ type: "pre:receive", handler: updateTranscript });
+                instance.render();
+            },
+            serviceDeskFactory: window.WebChatServiceDeskFactory,
+            serviceDesk: {
+                availabilityTimeoutSeconds: 30,
+            }
+        };
+        setTimeout(function () {
+            const t = document.createElement('script');
+            t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+            document.head.appendChild(t);
+        });
+    </script>
+</body>
+
+</html>
