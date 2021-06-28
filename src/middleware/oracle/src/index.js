@@ -20,13 +20,13 @@ const fetch = require('node-fetch');
 const app = express();
 const port = 3000;
 
+require('dotenv').config();
+
 app.use(bodyParser.json());
 app.use(cors());
 
 app.post('/auth', async (req, res) => {
-  console.log(req.body);
-
-  const resp = await fetch(process.env.TOKEN_PATH, {
+  const resp = await fetch(process.env.TOKEN_URL, {
     method: 'POST',
     headers: {
       apikey: process.env.API_KEY,

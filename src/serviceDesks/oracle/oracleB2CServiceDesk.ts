@@ -59,7 +59,7 @@ tdService.addRule('text style', {
  * This class returns startChat, endChat, sendMessageToAgent, userTyping and
  * areAnyAgentsOnline to be exposed to web chat through src/buildEntry.ts.
  */
-class OracleCloudB2C implements ServiceDesk {
+class OracleB2CServiceDesk implements ServiceDesk {
   agentProfile: AgentProfile;
   callback: ServiceDeskCallback;
   user: User;
@@ -320,4 +320,4 @@ class OracleCloudB2C implements ServiceDesk {
   }
 }
 
-export { OracleCloudB2C };
+export { OracleB2CServiceDesk };
