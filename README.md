@@ -17,6 +17,7 @@ These implementations, while functional, are examples only, and have not been ve
 - [Genesys Cloud](./src/middleware/genesys)  
 - [Twilio Flex](./src/middleware/flex) 
 - [NICE inContact](./src/middleware/incontact)
+- [Oracle Cloud B2C](./src/middleware/oracle)
 
 ### Technical requirements and scope
 
