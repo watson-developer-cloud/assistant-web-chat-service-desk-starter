@@ -30,10 +30,12 @@ interface ServiceDesk {
    * @param connectMessage The original server message response that caused the connection to an agent. It will
    * contain specific information to send to the service desk as part of the connection. This can includes things
    * like a message to display to a human agent.
+   * @param startChatOptions Starting with version 4.5.0 of web chat, a set of options that can be applied when
+   * starting a new chat. This includes metadata on how to add chat transcripts to your agent's view.
    * @returns Returns a Promise that resolves when the service desk has successfully started a new chat. This does
    * not necessarily mean that an agent has joined the conversation or has read any messages sent by the user.
    */
-  startChat(connectMessage: MessageResponse): Promise<void>;
+  startChat(connectMessage: MessageResponse, startChatOptions?: StartChatOptions): Promise<void>;
 
   /**
    * Tells the service desk to terminate the chat.
@@ -121,4 +123,23 @@ interface ServiceDeskStateFromWAC {
   locale: string;
 }
 
-export { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC };
+/**
+ * Options for startChat.
+ */
+interface StartChatOptions {
+  agentAppInfo: AgentAppInfo;
+}
+
+/**
+ * This data is used to configure an read only web chat inside the service desk.
+ */
+interface AgentAppInfo {
+  /**
+   * A string that is separated by that can be used to create a PublicConfig. It includes base connect
+   * info like integrationID, etc, and by pass JWT security with a one time auth code. The data inside this
+   * string can change at any time and it should be used only to pass data to the agent application.
+   */
+  sessionHistoryKey: string;
+}
+
+export { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC, StartChatOptions };

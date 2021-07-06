@@ -18,7 +18,7 @@
 
 import { MessageRequest, MessageResponse } from '../types/message';
 import { User } from '../types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC } from '../types/serviceDesk';
+import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC, StartChatOptions } from '../types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../types/serviceDeskCallback';
 
 /**
@@ -41,14 +41,21 @@ class ServiceDeskTemplate implements ServiceDesk {
    * Instructs the service desk to start a new chat. This should be called immediately after the service desk
    * instance has been created. It will make the appropriate calls to the service desk and begin communicating back
    * to the calling code using the callback produce to the instance. This may only be called once per instance.
+   * 
+   * Most service desks have a way to embed a custom iFrame into the agent view, as well as a way to pass metadata
+   * into that iFrame. startChatOptions.agentAppInfo contains metadata for you to be able to render the conversation
+   * history with Watson Assistant to your agents in a custom iFrame and this data should be passed via whatever
+   * methods the service desk you are using uses.
    *
    * @param connectMessage The original server message response that caused the connection to an agent. It will
    * contain specific information to send to the service desk as part of the connection. This can includes things
    * like a message to display to a human agent.
+   * @param startChatOptions Starting with version 4.5.0 of web chat, a set of options that can be applied when
+   * starting a new chat. This includes metadata on how to add chat transcripts to your agent's view.
    * @returns Returns a Promise that resolves when the service desk has successfully started a new chat. This does
    * not necessarily mean that an agent has joined the conversation or has read any messages sent by the user.
    */
-  async startChat(connectMessage: MessageResponse): Promise<void> {}
+  async startChat(connectMessage: MessageResponse, startChatOptions?: StartChatOptions): Promise<void> {}
 
   /**
    * Tells the service desk to terminate the chat.
