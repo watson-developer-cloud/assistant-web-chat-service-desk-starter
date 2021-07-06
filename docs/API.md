@@ -7,14 +7,15 @@ To be implemented by the developer. Implementation template can be found in [../
 ### startChat
 
 ```ts
-async startChat(connectMessage: MessageResponse): Promise<void>
+async startChat(connectMessage: MessageResponse, startChatOptions: StartChatOptions): Promise<void>
 ```
 
-Opens the chat with the service desk and performs any necessary setup steps.
+Opens the chat with the service desk and performs any necessary setup steps. Most service desks have a way to embed a custom iFrame into the agent view, as well as a way to pass metadata into that iFrame. startChatOptions.agentAppInfo contains metadata for you to be able to render the conversation history with Watson Assistant to your agents in a custom iFrame and this data should be passed via whatever methods the service desk you are using uses. See [./AGENT_APP.md](./AGENT_APP.md).
 
 **Parameters:**
 
 - `connectMessage: MessageResponse`: Provided by the web chat and containing the `connect_to_agent` response as defined in the Watson Assistant tooling.
+- `startChatOptions: StartChatOptions`: As of web chat 4.5.0, this object contains additional options for starting a chat. Notably, it includes metadata needed to display a chat transcript to your live agent. See [the StartChatOptions type](../src/types/serviceDesk.ts).
 
 **Returns:**
 

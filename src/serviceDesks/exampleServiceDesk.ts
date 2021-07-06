@@ -15,7 +15,7 @@
 import { ErrorType } from '../types/errors';
 import { MessageRequest, MessageResponse } from '../types/message';
 import { User } from '../types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC } from '../types/serviceDesk';
+import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC, StartChatOptions } from '../types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../types/serviceDeskCallback';
 import { stringToMessageResponseFormat } from '../utils';
 
@@ -43,10 +43,17 @@ class ExampleServiceDesk implements ServiceDesk {
    * @param connectMessage The original server message response that caused the connection to an agent. It will
    * contain specific information to send to the service desk as part of the connection. This can includes things
    * like a message to display to a human agent.
+   * @param startChatOptions Starting with version 4.5.0 of web chat, a set of options that can be applied when
+   * starting a new chat. This includes metadata on how to add chat transcripts to your agent's view.
    * @returns Returns a Promise that resolves when the service desk has successfully started a new chat. This does
    * not necessarily mean that an agent has joined the conversation or has read any messages sent by the user.
    */
-  async startChat(connectMessage: MessageResponse): Promise<void> {
+  async startChat(connectMessage: MessageResponse, startChatOptions?: StartChatOptions): Promise<void> {
+    // Most service desks have a way to embed a custom iFrame into the agent view, as well as a way to pass metadata
+    // into that iFrame. startChatOptions.agentAppInfo contains metadata for you to be able to render the conversation
+    // history with Watson Assistant to your agents in a custom iFrame and this data should be passed via whatever
+    // methods the service desk you are using uses.
+
     // In your real implementation you will want to grab this.user and this.sessionID to make available to your service desk.
     return runSteps(this, sendConnectToAgent(this, connectMessage));
   }
