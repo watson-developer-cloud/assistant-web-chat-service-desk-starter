@@ -10,7 +10,7 @@ To be implemented by the developer. Implementation template can be found in [../
 async startChat(connectMessage: MessageResponse, startChatOptions: StartChatOptions): Promise<void>
 ```
 
-Opens the chat with the service desk and performs any necessary setup steps. Most service desks have a way to embed a custom iFrame into the agent view, as well as a way to pass metadata into that iFrame. startChatOptions.agentAppInfo contains metadata for you to be able to render the conversation history with Watson Assistant to your agents in a custom iFrame and this data should be passed via whatever methods the service desk you are using uses. See [./AGENT_APP.md](./AGENT_APP.md).
+Opens the chat with the service desk and performs any necessary setup steps. Most service desks have a way to embed a custom iFrame into the agent view, as well as a way to pass metadata into that iFrame. `startChatOptions.agentAppInfo` contains metadata for you to be able to render the conversation history with Watson Assistant to your agents in a custom iFrame, and this data should be passed using whatever methods are appropriate for the service desk you are using. See [./AGENT_APP.md](./AGENT_APP.md).
 
 **Parameters:**
 
