@@ -135,7 +135,7 @@ interface StartChatOptions {
  */
 interface AgentAppInfo {
   /**
-   * A string that is separated by that can be used to create a PublicConfig. It includes base connect
+   * A string that is separated by `::` that can be used to create a PublicConfig. It includes base connect
    * info like integrationID, etc, and by pass JWT security with a one time auth code. The data inside this
    * string can change at any time and it should be used only to pass data to the agent application.
    */
