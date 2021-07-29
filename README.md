@@ -104,7 +104,7 @@ One of the items passed into the factory is a callback object. These callbacks a
 
 ### Displaying the chat history to your human agent
 
-As of the 4.5.0 release of web chat, Watson Assistant will pass configuration needed to display a chat history widget in you live agent application interface. This agent application will contain a copy of the conversation your customer had with Watson Assistant for your live agent to be able to view. Visit ['./docs/AGENT_APP.md'](./docs/AGENT_APP.md) to learn more.
+As of the 4.5.0 release of web chat, Watson Assistant will pass configuration needed to display a chat history widget in your live agent application interface. This agent application will contain a copy of the conversation your customer had with Watson Assistant for your live agent to be able to view. Visit ['./docs/AGENT_APP.md'](./docs/AGENT_APP.md) to learn more.
 
 ### Production build
 
