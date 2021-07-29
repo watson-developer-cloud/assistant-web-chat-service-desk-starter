@@ -33,4 +33,4 @@ Alternatively, you can load in a JavaScript file that you can feed the `sessionH
 </script>
 ```
 
-The `loadAgentApp` method takes two arguments. First, the `sessionHistoryKey`. The second argument is a DOM element for the read-only web chat to render to. The web chat will grow to the size of the element and the element should be given a height and width for the web chat to grow to.
+The `loadAgentApp` method takes two arguments. The first argument is the `sessionHistoryKey` value. The second is a DOM element for the read-only web chat to render to. The web chat will grow to the size of the element and the element should be given a height and width for the web chat to grow to.
