@@ -27,7 +27,7 @@ Alternatively, you can load in a JavaScript file that you can feed the `sessionH
 
 ```
 <div id="agent-app-host" style="width: 380px; height: 380px;"></div>
-<script src="https://web-chat.global.assistant.watson.appdomain.cloud/loadAgentAppFrame.js" />
+<script src="https://web-chat.global.assistant.watson.appdomain.cloud/loadAgentApp.js" />
 <script>
   loadAgentApp(sessionHistoryKey, document.querySelector('#agent-app-host'));
 </script>
