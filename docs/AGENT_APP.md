@@ -10,7 +10,7 @@ Located at `startChatOptions.agentAppInfo.sessionHistoryKey` is a string that co
 
 ## Viewing agent application via iFrame
 
-Some service desks allow you to add an iFrame to the agent page via a server side template language. If that mechanism also allows you to access the `sessionHistoryKey` you can simply embed an iFrame that will render the history of the conversation:
+Some service desks allow you to add an iFrame to the agent page via a server side template language. If that mechanism also allows you to access the `sessionHistoryKey`, you can simply embed an iFrame that will render the history of the conversation:
 
 ```
 <iframe
