@@ -90,7 +90,7 @@ class OracleB2CServiceDesk implements ServiceDesk {
         }
       : {};
 
-    // TODO Define your own Oracle Cloud authorization endpoint
+    // TODO Define your own Oracle Cloud authorization endpoint appropriate for your needs.
     const authUrl = 'http://localhost:3000/auth';
 
     const resp = await fetch(authUrl, {
