@@ -62,7 +62,7 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
         ngrok http http://localhost:3000
         ```
 
-1. Go to the client directory in [src/genesys/webChat/client](../client). Rename or copy `.env-sample` to `.env`. In the `.env` file:
+1. Go to the client directory in [src/genesys/webChat/client](./client). Rename or copy `.env-sample` to `.env`. In the `.env` file:
       - Add `SERVER_BASE_URL` variable to where your middleware is deployed (For local development, if you used `ngrok` to create your public URL, this looks like `https://<some-hash>.ngrok.io`).
 
         **Note**: Make sure you specify the secure `https://` URL.
@@ -70,16 +70,16 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
       - If you chose to set up an OAuth client in the middleware server instructions above, and want to enable advanced features:
 
         - For **Agent Availability**
-            1. In [`genesysServiceDesk.ts`](../client/src/genesysServiceDesk.ts), set `OAUTH_API_CALLS_ENABLED` to `true`.
+            1. In [`genesysServiceDesk.ts`](./client/src/genesysServiceDesk.ts), set `OAUTH_API_CALLS_ENABLED` to `true`.
 
         - For **JWT Authenticated Chat**
             1. In the Genesys Cloud UI, open the settings for your web chat widget and enable **Require Authentication**.
 
             1. In the **Authentication URL** field, specify `https://<server-url>/jwt`, where `<server-url>` is the public URL for your middleware server. Click **Save**.
 
-            1. In [`genesysServiceDesk.ts`](../client/src/genesysServiceDesk.ts), make sure to set the `AUTHENTICATED_CHAT_ENABLED` flag to `true`.
+            1. In [`genesysServiceDesk.ts`](./client/src/genesysServiceDesk.ts), make sure to set the `AUTHENTICATED_CHAT_ENABLED` flag to `true`.
 
-1. From the Genesys webchat client directory [src/genesys/webChat/client](../client), run:
+1. From the Genesys webchat client directory [src/genesys/webChat/client](./client), run:
     - `npm run install`
     - `npm run dev`
 
@@ -87,6 +87,6 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
 **Implementation Notes:**
 
-There are two flags in [`genesysServiceDesk.ts`](../client/src/genesysServiceDesk.ts) that control advanced features such as agent availability and authenticated chat.
+There are two flags in [`genesysServiceDesk.ts`](./client/src/genesysServiceDesk.ts) that control advanced features such as agent availability and authenticated chat.
 - `OAUTH_API_CALLS_ENABLED`: Default is `false`. When set to `true`, any Genesys API calls that require OAuth tokens for authentication will be enabled. Currently, only agent availability uses this flag.
 - `AUTHENTICATED_CHAT_ENABLED`: Default is `false`. When set to `true`, JWT tokens will be used to authenticate chat users.

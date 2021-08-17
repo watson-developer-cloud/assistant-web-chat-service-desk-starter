@@ -14,9 +14,10 @@ To find out if your company's tool is feasible for this approach, check out our 
 We provide reference implementations that provide fully functional integrations with popular service desks. 
 These implementations, while functional, are examples only, and have not been vetted for production use.
 
-- [Genesys Cloud](./src/genesys/webChat/server)  
-- [Twilio Flex](./src/flex/webChat/server) 
-- [NICE inContact](./src/incontact/webChat/server)
+- [Generic Example](./src/example/webChat)
+- [Genesys Cloud](./src/genesys/webChat)  
+- [Twilio Flex](./src/flex/webChat) 
+- [NICE inContact](./src/incontact/webChat)
 
 ### Technical requirements and scope
 
@@ -79,13 +80,13 @@ the system will ask the service desk if any agents are available. If no response
 To set up your development environment, first fork this repository. 
 
 Instructions for setting up a development environment for each of the service desk reference example integrations can be found in the following paths:
-- [Genesys Cloud](./src/genesys/webChat/server)  
-- [Twilio Flex](./src/flex/webChat/server) 
-- [NICE inContact](./src/incontact/webChat/server)
+- [Genesys Cloud](./src/genesys/webChat)  
+- [Twilio Flex](./src/flex/webChat) 
+- [NICE inContact](./src/incontact/webChat)
 
-To run the default example, change to the `src/example/webChat/client` directory and run `npm install`. Then run `npm run dev` to launch the example service desk webchat client.
+To run the default example, go to the [`src/example/webChat`](src/example/webChat) directory and follow the instructions in the [README.md](src/example/webChat/README.md).
 
-It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/](./src/) folder as well. You can start by copying the [./src/template/](./src/template) directory. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions.
+It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/](./src/) folder as well. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions.
 
 ### Documentation
 

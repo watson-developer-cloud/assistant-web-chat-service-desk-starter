@@ -18,9 +18,9 @@ Keep the following things in mind as you work through these steps:
 
     For example, Genesys Cloud requires that you create a [web chat widget](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/) and [find your organization ID](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/).
 
-1. Copy the [src/template](../src/template/) directory and give it a new descriptive name.
+1. Copy the [src/example](../src/example/) directory and give it a new descriptive name.
 
-1. Modify [buildEntry.ts](../src/buildEntry.ts) in your copied directory to match the name for your new class.
+1. Modify [buildEntry.ts](../src/example/webChat/client/src/buildEntry.ts) in your copied directory to match the name for your new class.
 
 1. Run `npm install`. Then run `npm run dev` to start get development environment running.
 

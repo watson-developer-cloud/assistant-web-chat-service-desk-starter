@@ -47,7 +47,7 @@ You should now be able to start a web chat session in a browser, and within the 
 
 ## Supported features
 
-- **Start chat with an agent:** The `startChat()` function in [`twilioFlex.ts`](../../serviceDesks/twilio/twilioFlex.ts) triggers the integration with Twilio Flex. It calls the local middleware server for authentication information, which you must configure.
+- **Start chat with an agent:** The `startChat()` function in [`twilioFlex.ts`](./client/src/twilioFlex.ts) triggers the integration with Twilio Flex. It calls the local middleware server for authentication information, which you must configure.
 
 - **End chat:** The chat can be ended by either the user or the agent. This happens when either party leaves or closes the Twilio channel that was created when the chat started.
 
@@ -55,7 +55,7 @@ You should now be able to start a web chat session in a browser, and within the 
 
 - **User authentication:** The Twilio middleware [auth.ts](./src/routes/auth.ts) implements a simple example user authentication by generating a user token. You should update this to accommodate your needs.
 
-- **Agent transfers:** The event listeners set up in [twilioFlex.ts](../../serviceDesks/twilio/twilioFlex.ts) listen for participants joining and leaving the channel. This example implementation uses the `memberLeft` event to close the chat if an agent leaves; you will need to modify this behavior to support agent transfers.
+- **Agent transfers:** The event listeners set up in [twilioFlex.ts](./client/src/twilioFlex.ts) listen for participants joining and leaving the channel. This example implementation uses the `memberLeft` event to close the chat if an agent leaves; you will need to modify this behavior to support agent transfers.
 
 - **Conversation topic:** The example implementation sends the `message_to_human_agent` attribute from the dialog as the first message to the agent when the conversation starts. However, several other attributes are available within the `connectMessage` object that is passed to the `startChat()` function. For more information, see the documentation for the `topic` property of the `connect_to_agent` response type in the Watson Assistant [API reference](https://cloud.ibm.com/apidocs/assistant/assistant-v2#message).
 
