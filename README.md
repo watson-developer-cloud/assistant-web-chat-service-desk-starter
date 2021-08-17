@@ -1,6 +1,6 @@
 # Web chat service desk extension starter
 
-A starter kit for building custom service integrations for Watson Assistant web chat. This starter kit requires web chat version 3.0.0 or above.
+A starter kit for building custom service integrations for Watson Assistant web chat. This starter kit requires web chat version 3.4.0 or above.
 
 ## Overview
 
@@ -60,7 +60,7 @@ Tailor web chat to your needs by initializing it with your own custom options. T
 In addition to the parameters listed [here](https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=api-configuration#configurationobject), it supports the following options:
 
 #### serviceDesk
-_requires web chat version 3.2.0 or above_
+_requires web chat version 3.4.0 or above_
 ```
 serviceDesk: {
   availabilityTimeoutSeconds: 30,
@@ -103,6 +103,10 @@ The `serviceDeskFactory` configuration setting expects a factory that returns an
 
 One of the items passed into the factory is a callback object. These callbacks are defined in [./src/types/serviceDeskCallback.ts](./src/types/serviceDeskCallback.ts). These are the functions you will call inside your service desk code to communicate information back to the web chat.
 
+### Displaying the chat history to your human agent
+
+As of the 4.5.0 release of web chat, Watson Assistant will pass configuration needed to display a chat history widget in your live agent application interface. This agent application will contain a copy of the conversation your customer had with Watson Assistant for your live agent to be able to view. Visit ['./docs/AGENT_APP.md'](./docs/AGENT_APP.md) to learn more.
+
 ### Production build
 
 Supporting compatible browsers and all other build concerns are handled for you. Just run `npm run build`, and `dist/servicedesk.bundle.js` is generated. Embed this file *before* the web chat embed script, and it will make `window.WebChatServiceDeskFactory` available for use.
@@ -117,7 +121,6 @@ To run the defined tests, run `npm run test`.
 
 The following items are not currently in scope for this starter kit and would be your responsibility to implement if you need them:
 
-- History of the conversation for the human agent to view
 - Security support (this varies depending on the service desk, but most require generating and sending valid JWTs with messages to the agent)
 - Routing to specific agents
 - Behavior when all agents are offline
