@@ -18,6 +18,7 @@ These implementations, while functional, are examples only, and have not been ve
 - [Genesys Cloud](./src/genesys/webChat)  
 - [Twilio Flex](./src/flex/webChat) 
 - [NICE inContact](./src/incontact/webChat)
+- [Oracle Cloud B2C](./src/oracle/webChat)
 
 ### Technical requirements and scope
 
@@ -83,6 +84,7 @@ Instructions for setting up a development environment for each of the service de
 - [Genesys Cloud](./src/genesys/webChat)  
 - [Twilio Flex](./src/flex/webChat) 
 - [NICE inContact](./src/incontact/webChat)
+- [Oracle Cloud B2C](./src/oracle/webChat)
 
 To run the default example, go to the [`src/example/webChat`](src/example/webChat) directory and follow the instructions in the [README.md](src/example/webChat/README.md).
 

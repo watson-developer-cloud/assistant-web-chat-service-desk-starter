@@ -22,22 +22,22 @@ The communication uses the B2C Service, where details can be found at [B2C Servi
 
 1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md) to make sure you can run an instance of [ExampleServiceDesk](../../serviceDesks/exampleServiceDesk.ts).
 
-1. In the `middleware/oracle` subdirectory, rename or copy `.env-sample` to `.env`.
+1. In the `oracle/webChat/server` subdirectory, rename or copy `.env-sample` to `.env`.
 
 1. In the `.env` file, update the values to the credentials from your B2C Service.
     - `TOKEN_URL`: Url path for fetching session token.
     - `API_KEY`: If endpoint is self-hosted and/or otherwise requires an API key, include here.
 
-1. From the `middleware/oracle` directory, run `npm i`.
+1. From the `oracle/webChat/server` directory, run `npm i`.
 
-1. From the `middleware/oracle` directory, run `npm start`. This starts a server on port `3000` of your local machine.
+1. From the `oracle/webChat/server` directory, run `npm start`. This starts a server on port `3000` of your local machine.
 
-1. Go to the project root directory and edit the `.env` file:
- 
-    - Update the `SERVICE_DESK_CLASS` variable to `OracleB2CServiceDesk`.
+1. Go to the client directory in [src/oracle/webChat/client](./client).
 
-1. From the project root directory, run `npm run dev`. If you've linked everything to your B2C Service correctly, you should be able to connect to an available agent.
-
+1. From the client directory [src/oracle/webChat/client](./client) run:
+    - `npm i`
+    - `npm run dev`
+    
 You should now be able to start a web chat session in a browser, and within the web chat, escalate to an agent to trigger the Oracle B2C Service integration. For more information about how to start a web chat session using this integration, see the starter kit [README](../../../README.md#development).
 
 ## Supported features
