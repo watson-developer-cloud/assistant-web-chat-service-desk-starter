@@ -31,7 +31,7 @@ The following Twilio resources provide some useful guides on Twilio Flex custom 
 `FLEX_FLOW_ID` | The Custom FlexFlow SID. Use the Twilio CLI to create a custom Flex Flow. For more information, see [Add a Custom Chat Channel to Twilio Flex](https://www.twilio.com/blog/add-custom-chat-channel-twilio-flex).
 `API_KEY` | The API key for accessing the Twilio APIs. Generate an API key using the **Create a new Flex Flow** section of the [Twilio console](https://www.twilio.com/console/project/api-keys).
 `API_SECRET` | The secret for the specified API key.
-`CHAT_SERVICE_ID` | The Programmable Chat service SID, as shown in the Twilio [console](https://www.twilio.com/console/chat/services)
+`CHAT_SERVICE_ID` | The Programmable Chat service SID, as shown in the Twilio [Programmable Chat tab](https://www.twilio.com/console/chat/services)
 
 1. Run `npm install` to install the dependencies.
 

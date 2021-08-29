@@ -18,15 +18,13 @@ const { parsed } = config();
 
 module.exports = {
   incontact: {
-    appName: parsed.INCONTACT_APP_NAME,
-    vendorName: parsed.INCONTACT_VENDOR_NAME,
-    appId: parsed.INCONTACT_APP_ID,
+    accessKeyId: parsed.INCONTACT_ACCESS_KEY_ID,
+    accessKeySecret: parsed.INCONTACT_ACCESS_KEY_SECRET,
+    accessKeyApiUri: parsed.INCONTACT_ACCESS_KEY_API_URI,
     apiUri: parsed.INCONTACT_API_URI,
-    version: parsed.INCONTACT_VERSION || 'v19.0',
     pointOfContact: parsed.INCONTACT_POINTOFCONTACT,
-    skill: parsed.INCONTACT_SKILL,
-    username: parsed.INCONTACT_USERNAME,
-    password: parsed.INCONTACT_PASSWORD,
+    skillId: parsed.INCONTACT_SKILL,
+    version: parsed.INCONTACT_VERSION || 'v20.0',
   },
   app: {
     port: process.env.PORT || 3000,

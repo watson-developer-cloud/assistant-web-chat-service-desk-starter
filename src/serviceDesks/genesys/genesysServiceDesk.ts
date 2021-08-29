@@ -84,6 +84,11 @@ class GenesysServiceDesk implements ServiceDesk {
    */
   conversationUserId: string;
 
+  /**
+   * The URL of the server that will make requests to Purecloud API
+   */
+  private SERVER_BASE_URL: string = process.env.SERVER_BASE_URL || 'http://localhost:3000';
+
   constructor(parameters: ServiceDeskFactoryParameters) {
     this.callback = parameters.callback;
     this.initialAgentJoined = false;
@@ -125,7 +130,7 @@ class GenesysServiceDesk implements ServiceDesk {
 
     let env;
     try {
-      const setupEnv = await fetch(`${process.env.SERVER_BASE_URL}/setup`);
+      const setupEnv = await fetch(`${this.SERVER_BASE_URL}/setup`);
       env = await setupEnv.json();
     } catch (error) {
       console.error('Cannot retrieve setup environment.');
@@ -160,7 +165,7 @@ class GenesysServiceDesk implements ServiceDesk {
          * In the future, this call should be protected using some security measure
          * based on user info
          */
-        const userAuth = await fetch(`${process.env.SERVER_BASE_URL}/jwt`, {
+        const userAuth = await fetch(`${this.SERVER_BASE_URL}/jwt`, {
           method: 'POST',
           redirect: 'follow', // This can be set to ("error" | "follow" | "manual")
         });
@@ -213,11 +218,16 @@ class GenesysServiceDesk implements ServiceDesk {
     }
 
     // send initial connect_to_agent message from WA
-    const connect2Agent = connectMessage.output.generic[0] as ConnectToAgentItem;
+    const responses = connectMessage.output.generic;
+    const connectToAgent = responses.find((value) => value.response_type === 'connect_to_agent') as ConnectToAgentItem;
+    if (!connectToAgent) {
+      console.error(`No connect to agent response has been configured for service desk.`);
+      return Promise.reject();
+    }
 
     const initialRequest: MessageRequest = {
       input: {
-        text: this.buildSummaryMessageToAgent(connect2Agent),
+        text: this.buildSummaryMessageToAgent(connectToAgent),
         source: this.user,
       } as MessageInput,
     };
@@ -519,9 +529,9 @@ class GenesysServiceDesk implements ServiceDesk {
     let agentAvailable: boolean;
 
     try {
-      const env = await fetch(`${process.env.SERVER_BASE_URL}/setup`);
+      const env = await fetch(`${this.SERVER_BASE_URL}/setup`);
       const { queue_target } = await env.json();
-      availabilityRequest = await fetch(`${process.env.SERVER_BASE_URL}/availability`, {
+      availabilityRequest = await fetch(`${this.SERVER_BASE_URL}/availability`, {
         method: 'POST',
         redirect: 'follow',
         headers: { 'Content-Type': 'application/json' },
