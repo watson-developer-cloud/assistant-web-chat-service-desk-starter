@@ -12,6 +12,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.10.4",
+    "common": "file:../../../common",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

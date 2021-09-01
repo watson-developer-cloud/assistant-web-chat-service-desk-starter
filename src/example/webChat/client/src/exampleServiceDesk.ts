@@ -15,7 +15,12 @@
 import { ErrorType } from '../../../../common/types/errors';
 import { MessageRequest, MessageResponse } from '../../../../common/types/message';
 import { User } from '../../../../common/types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC, StartChatOptions } from '../../../../common/types/serviceDesk';
+import {
+  ServiceDesk,
+  ServiceDeskFactoryParameters,
+  ServiceDeskStateFromWAC,
+  StartChatOptions,
+} from '../../../../common/types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
 import { stringToMessageResponseFormat } from '../../../../common/utils';
 

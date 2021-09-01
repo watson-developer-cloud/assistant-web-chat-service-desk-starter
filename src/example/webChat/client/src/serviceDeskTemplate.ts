@@ -15,12 +15,15 @@
 /**
  * Copy and paste this file into a new folder to get started.
  */
-
-import { MessageRequest, MessageResponse } from '../types/message';
-import { User } from '../types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC, StartChatOptions } from '../types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from '../types/serviceDeskCallback';
-
+import { MessageRequest, MessageResponse } from '../../../../common/types/message';
+import { User } from '../../../../common/types/profiles';
+import {
+  ServiceDesk,
+  ServiceDeskFactoryParameters,
+  ServiceDeskStateFromWAC,
+  StartChatOptions,
+} from '../../../../common/types/serviceDesk';
+import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
 /**
  * This class returns startChat, endChat, sendMessageToAgent, updateState, userTyping, userReadMessages and
  * areAnyAgentsOnline to be exposed to web chat through src/buildEntry.ts.
@@ -41,7 +44,7 @@ class ServiceDeskTemplate implements ServiceDesk {
    * Instructs the service desk to start a new chat. This should be called immediately after the service desk
    * instance has been created. It will make the appropriate calls to the service desk and begin communicating back
    * to the calling code using the callback produce to the instance. This may only be called once per instance.
-   * 
+   *
    * Most service desks have a way to embed a custom iFrame into the agent view, as well as a way to pass metadata
    * into that iFrame. startChatOptions.agentAppInfo contains metadata for you to be able to render the conversation
    * history with Watson Assistant to your agents in a custom iFrame and this data should be passed via whatever
