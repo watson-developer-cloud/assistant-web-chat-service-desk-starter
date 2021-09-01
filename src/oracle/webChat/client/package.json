@@ -13,8 +13,7 @@
   "dependencies": {
     "@babel/runtime": "^7.10.4",
     "common": "file:../../../common",
-    "turndown": "^7.1.1",
-    "uuid": "^3.3.3"
+    "turndown": "^7.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.4",
