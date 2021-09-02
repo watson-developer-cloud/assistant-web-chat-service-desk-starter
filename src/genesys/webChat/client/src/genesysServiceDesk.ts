@@ -25,7 +25,11 @@ import {
   MessageResponse,
 } from '../../../../common/types/message';
 import { User } from '../../../../common/types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC } from '../../../../common/types/serviceDesk';
+import {
+  ServiceDesk,
+  ServiceDeskFactoryParameters,
+  ServiceDeskStateFromWAC,
+} from '../../../../common/types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
 import {
   ChatBody,
@@ -112,7 +116,7 @@ class GenesysServiceDesk implements ServiceDesk {
    */
   async startChat(connectMessage: MessageResponse): Promise<void> {
     // append SDK script in browser
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = GenesysConstants.SCRIPT_SOURCE;

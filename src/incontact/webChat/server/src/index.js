@@ -26,6 +26,7 @@ import R from 'ramda';
 import config from './config';
 import { endSession, getMessage, getQueue, getSession, getToken, postMessage } from './incontact';
 
+console.log(endSession);
 const app = express();
 
 app.enable('strict routing');

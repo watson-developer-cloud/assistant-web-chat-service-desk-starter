@@ -15,6 +15,7 @@
 import axios from 'axios';
 import R from 'ramda';
 
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 async function makeRequest(options) {
   return new Promise((resolve) => {
     axios(options)
@@ -29,7 +30,7 @@ async function makeRequest(options) {
   });
 }
 
-const getToken = (config) => {
+export function getToken(config) {
   return new Promise((resolve) => {
     const options = {
       method: 'POST',
@@ -48,9 +49,9 @@ const getToken = (config) => {
       return resolve(output);
     });
   });
-};
+}
 
-const getSession = (token, config) => {
+export function getSession(token, config) {
   return new Promise((resolve) => {
     const options = {
       method: 'POST',
@@ -70,9 +71,9 @@ const getSession = (token, config) => {
       return resolve(output);
     });
   });
-};
+}
 
-const getMessage = (token, chatSessionId, config) => {
+export function getMessage(token, chatSessionId, config) {
   return new Promise((resolve) => {
     const options = {
       method: 'GET',
@@ -87,9 +88,9 @@ const getMessage = (token, chatSessionId, config) => {
       return resolve(output);
     });
   });
-};
+}
 
-const postMessage = (token, chatSessionId, label, message, config) => {
+export function postMessage(token, chatSessionId, label, message, config) {
   return new Promise((resolve) => {
     const options = {
       method: 'POST',
@@ -105,9 +106,9 @@ const postMessage = (token, chatSessionId, label, message, config) => {
       return resolve(output);
     });
   });
-};
+}
 
-const endSession = async (token, chatSessionId, config) => {
+export async function endSession(token, chatSessionId, config) {
   return new Promise((resolve) => {
     const options = {
       method: 'DELETE',
@@ -122,9 +123,9 @@ const endSession = async (token, chatSessionId, config) => {
       return resolve(output);
     });
   });
-};
+}
 
-const getQueue = async (token, config) => {
+export async function getQueue(token, config) {
   return new Promise((resolve) => {
     const options = {
       method: 'GET',
@@ -139,13 +140,4 @@ const getQueue = async (token, config) => {
       return resolve(output);
     });
   });
-};
-
-module.exports = {
-  getToken,
-  getSession,
-  getQueue,
-  getMessage,
-  postMessage,
-  endSession,
-};
+}

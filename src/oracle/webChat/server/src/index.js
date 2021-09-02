@@ -11,7 +11,7 @@
  * specific language governing permissions and limitations under the License.
  *
  */
-
+/* eslint-disable @typescript-eslint/no-var-requires */
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');

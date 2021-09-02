@@ -11,21 +11,20 @@
  * specific language governing permissions and limitations under the License.
  *
  */
- import { ServiceDesk, ServiceDeskFactoryParameters } from '../../../../types/serviceDesk';
- import { OracleB2CServiceDesk } from './oracleB2CServiceDesk';
- 
- /**
-  * This file exports the methods used by web chat to communicate back and forth with the service desk. It is exposed
-  * as window.WebChatServiceDeskFactory and should be passed into your web chat config as shown in the README.md.
-  */
- /**
-  * A factory to generate a new set of service desk extensions.
-  *
-  * @param parameters ServiceDeskFactoryParameters passed from web chat into service desk.
-  */
- function WebChatServiceDeskFactory(parameters: ServiceDeskFactoryParameters): ServiceDesk {
-   return new OracleB2CServiceDesk(parameters);
- }
- 
- export default WebChatServiceDeskFactory;
- 
+import { ServiceDesk, ServiceDeskFactoryParameters } from '../../../../common/types/serviceDesk';
+import { OracleB2CServiceDesk } from './oracleB2CServiceDesk';
+
+/**
+ * This file exports the methods used by web chat to communicate back and forth with the service desk. It is exposed
+ * as window.WebChatServiceDeskFactory and should be passed into your web chat config as shown in the README.md.
+ */
+/**
+ * A factory to generate a new set of service desk extensions.
+ *
+ * @param parameters ServiceDeskFactoryParameters passed from web chat into service desk.
+ */
+function WebChatServiceDeskFactory(parameters: ServiceDeskFactoryParameters): ServiceDesk {
+  return new OracleB2CServiceDesk(parameters);
+}
+
+export default WebChatServiceDeskFactory;
