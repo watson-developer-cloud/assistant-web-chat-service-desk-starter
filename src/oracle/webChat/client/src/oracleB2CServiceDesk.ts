@@ -14,11 +14,11 @@
 
 import TurndownService from 'turndown';
 
-import { MessageRequest, MessageResponse } from '../../types/message';
-import { User } from '../../types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters } from '../../types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from '../../types/serviceDeskCallback';
-import { stringToMessageResponseFormat } from '../../utils';
+import { MessageRequest, MessageResponse } from '../../../../common/types/message';
+import { User } from '../../../../common/types/profiles';
+import { ServiceDesk, ServiceDeskFactoryParameters } from '../../../../common/types/serviceDesk';
+import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
+import { stringToMessageResponseFormat } from '../../../../common/utils';
 
 declare global {
   interface Window {
