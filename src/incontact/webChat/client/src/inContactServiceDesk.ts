@@ -12,11 +12,15 @@
  *
  */
 
-import { ErrorType } from '../../types/errors';
-import { MessageRequest, MessageResponse } from '../../types/message';
-import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC } from '../../types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from '../../types/serviceDeskCallback';
-import { stringToMessageResponseFormat } from '../../utils';
+import { ErrorType } from '../../../../common/types/errors';
+import { MessageRequest, MessageResponse } from '../../../../common/types/message';
+import {
+  ServiceDesk,
+  ServiceDeskFactoryParameters,
+  ServiceDeskStateFromWAC,
+} from '../../../../common/types/serviceDesk';
+import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
+import { stringToMessageResponseFormat } from '../../../../common/utils';
 import { InContactSession } from './inContactTypes';
 
 class InContactServiceDesk implements ServiceDesk {
