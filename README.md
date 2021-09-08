@@ -88,6 +88,8 @@ Instructions for setting up a development environment for each of the service de
 
 To run the default example, go to the [`src/example/webChat`](src/example/webChat) directory and follow the instructions in the [README.md](src/example/webChat/README.md).
 
+To enable linting rules specific to this project on your IDE or Code Editor run `npm install` from the root project directory.
+
 It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/](./src/) folder as well. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions.
 
 ### Documentation
