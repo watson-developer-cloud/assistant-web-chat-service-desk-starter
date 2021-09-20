@@ -15,7 +15,9 @@ import { ExampleServiceDesk } from './serviceDesks/exampleServiceDesk';
 import { GenesysServiceDesk } from './serviceDesks/genesys/genesysServiceDesk';
 import { InContactServiceDesk } from './serviceDesks/incontact/inContactServiceDesk';
 import { TwilioFlex } from './serviceDesks/twilio/twilioFlex';
+import { OracleB2CServiceDesk } from './serviceDesks/oracle/oracleB2CServiceDesk';
 import { KustomerServiceDesk } from './serviceDesks/kustomer/kustomerServiceDesk';
+
 import { ServiceDesk, ServiceDeskFactoryParameters } from './types/serviceDesk';
 
 /**
@@ -34,9 +36,16 @@ function WebChatServiceDeskFactory(parameters: ServiceDeskFactoryParameters): Se
 
 function getInstance(
   parameters: ServiceDeskFactoryParameters,
-): TwilioFlex | ExampleServiceDesk | GenesysServiceDesk | InContactServiceDesk | KustomerServiceDesk {
+): TwilioFlex | ExampleServiceDesk | GenesysServiceDesk | InContactServiceDesk | OracleB2CServiceDesk | KustomerServiceDesk {
   const serviceDeskClass: string = process.env.SERVICE_DESK_CLASS || 'ExampleServiceDesk';
-  const constructors: any = { TwilioFlex, ExampleServiceDesk, GenesysServiceDesk, InContactServiceDesk, KustomerServiceDesk };
+  const constructors: any = {
+    TwilioFlex,
+    ExampleServiceDesk,
+    GenesysServiceDesk,
+    InContactServiceDesk,
+    OracleB2CServiceDesk,
+    KustomerServiceDesk
+  };
   return new constructors[serviceDeskClass](parameters);
 }
 
