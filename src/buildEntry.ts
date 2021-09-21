@@ -17,7 +17,6 @@ import { InContactServiceDesk } from './serviceDesks/incontact/inContactServiceD
 import { TwilioFlex } from './serviceDesks/twilio/twilioFlex';
 import { OracleB2CServiceDesk } from './serviceDesks/oracle/oracleB2CServiceDesk';
 import { KustomerServiceDesk } from './serviceDesks/kustomer/kustomerServiceDesk';
-
 import { ServiceDesk, ServiceDeskFactoryParameters } from './types/serviceDesk';
 
 /**
