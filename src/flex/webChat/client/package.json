@@ -38,6 +38,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
+    "preinstall": "cd ../../../../ && npm install",
     "build": "webpack --config webpack.config.js",
     "dev": "webpack-dev-server --config webpack.dev.js",
     "lint": "eslint \"src/*.{ts,tsx,js}\"",
