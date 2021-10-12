@@ -25,7 +25,7 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
 ## Setting Up
 
-1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md#development) to make sure you can run an instance of [ExampleServiceDesk](../../serviceDesks/exampleServiceDesk.ts).
+1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md#development) to make sure you can run an instance of [ExampleServiceDesk](../../example/webChat/README.md).
 
 1. In Genesys Cloud, [create a widget](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/) to enable users to chat with agents. Make a note of the generated deployment key. Follow the instructions for either a `1.1` or `1.0` widget.
 
@@ -80,7 +80,7 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
             1. In [`genesysServiceDesk.ts`](./client/src/genesysServiceDesk.ts), make sure to set the `AUTHENTICATED_CHAT_ENABLED` flag to `true`.
 
 1. From the Genesys webchat client directory [src/genesys/webChat/client](./client), run:
-    - `npm run install`
+    - `npm install`
     - `npm run dev`
 
     To receive requests, make sure you have clicked the **On Queue** button in the Genesys UI. If you've linked everything to your Genesys Cloud account correctly, you should be able to connect to an agent in Genesys Cloud.

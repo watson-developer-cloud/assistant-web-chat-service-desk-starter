@@ -20,7 +20,7 @@ The communication uses the B2C Service, where details can be found at [B2C Servi
 
 ## Setting up
 
-1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md) to make sure you can run an instance of [ExampleServiceDesk](../../serviceDesks/exampleServiceDesk.ts).
+1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md) to make sure you can run an instance of [ExampleServiceDesk](../../example/webChat/README.md).
 
 1. In the `oracle/webChat/server` subdirectory, rename or copy `.env-sample` to `.env`.
 
@@ -42,7 +42,7 @@ You should now be able to start a web chat session in a browser, and within the 
 
 ## Supported features
 
-- **Start chat with an agent:** The `startChat()` function in [`oracleB2CServiceDesk.ts`](../../serviceDesks/oracle/oracleB2CServiceDesk.ts) triggers the integration with Oracle B2C by creating a chat session. It calls the local middleware server for authentication information, which you must configure.
+- **Start chat with an agent:** The `startChat()` function in [`oracleB2CServiceDesk.ts`](./client/src/oracleB2CServiceDesk.ts) triggers the integration with Oracle B2C by creating a chat session. It calls the local middleware server for authentication information, which you must configure.
 
 - **End chat:** The chat can be ended by either the user or the agent. This happens when either party leaves or closes the chat session.
 
