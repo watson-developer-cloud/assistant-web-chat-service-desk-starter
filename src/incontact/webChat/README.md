@@ -77,7 +77,7 @@ The communication uses the Patron API, which can be found at [Patron APIs](https
 1. Go to the client directory in [src/incontact/webChat/client](./client). Rename or copy `.env-sample` to `.env`. In the `.env` file: 
     - Add `SERVER_BASE_URL` variable to where your middleware is deployed. For instance, if you deployed locally, this value would be `http://localhost:3000`.
 
-1. From the InContact webchat client directory [src/incontact/webChat/client](./client) run:
+1. From the InContact web chat client directory [src/incontact/webChat/client](./client) run:
     - `npm i`
     - `npm run dev`
 

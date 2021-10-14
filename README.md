@@ -80,7 +80,7 @@ the system will ask the service desk if any agents are available. If no response
 
 To set up your development environment, first fork this repository. 
 
-Instructions for setting up a development environment for each of the service desk reference example integrations can be found in the following paths:
+Instructions for setting up a development environment for each of the service desk reference example integrations can be found in the following directories:
 - [Genesys Cloud](./src/genesys/webChat)  
 - [Twilio Flex](./src/flex/webChat) 
 - [NICE inContact](./src/incontact/webChat)
@@ -90,7 +90,7 @@ To run the default example, go to the [`src/example/webChat`](src/example/webCha
 
 To enable linting rules specific to this project on your IDE or Code Editor run `npm install` from the root project directory.
 
-It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/](./src/) folder as well. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions.
+It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/](./src/) directory as well. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions.
 
 ### Documentation
 
