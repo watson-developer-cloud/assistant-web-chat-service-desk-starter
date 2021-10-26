@@ -1,3 +1,3 @@
 # Genesys Cloud Integration Usage Example
 
-This example has been moved to [src/genesys/webChat](../../genesys/webChat).
+The instructions and sample have been moved to [src/genesys/webChat](../../genesys/webChat).
