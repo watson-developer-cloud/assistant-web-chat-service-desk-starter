@@ -1,0 +1,11 @@
+{
+  "name": "genesys-agentapp",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "http-server -p 9000 public/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "http-server": "^13.0.2"
+  }
+}
