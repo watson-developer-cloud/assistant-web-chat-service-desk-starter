@@ -1,0 +1,46 @@
+{
+  "name": "genesys-webchat-client",
+  "version": "1.0.0",
+  "description": "Genesys webchat client service desk example.",
+  "main": "src/buildEntry.ts",
+  "browserslist": [
+    "> 0.25%",
+    "last 2 versions",
+    "ie 11",
+    "Firefox ESR",
+    "not dead"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4",
+    "common": "file:../../../common"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@babel/runtime-corejs3": "^7.15.4",
+    "@types/clone-deep": "^4.0.1",
+    "@types/jest": "^26.0.4",
+    "@types/uuid": "^3.4.6",
+    "babel-loader": "^8.1.0",
+    "babel-runtime": "^6.26.0",
+    "dotenv-webpack": "^4.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.2",
+    "typescript": "^3.9.6",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "scripts": {
+    "preinstall": "cd ../../../../ && npm install",
+    "build": "webpack --config webpack.config.js",
+    "dev": "webpack-dev-server --config webpack.dev.js",
+    "test": "jest --clearCache && jest"
+  },
+  "license": "MIT"
+}

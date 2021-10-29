@@ -14,10 +14,11 @@ To find out if your company's tool is feasible for this approach, check out our 
 We provide reference implementations that provide fully functional integrations with popular service desks. 
 These implementations, while functional, are examples only, and have not been vetted for production use.
 
-- [Genesys Cloud](./src/middleware/genesys)  
-- [Twilio Flex](./src/middleware/flex) 
-- [NICE inContact](./src/middleware/incontact)
-- [Oracle Cloud B2C](./src/middleware/oracle)
+- [Generic Example](./src/example/webChat)
+- [Genesys Cloud](./src/genesys/webChat)  
+- [Twilio Flex](./src/flex/webChat) 
+- [NICE inContact](./src/incontact/webChat)
+- [Oracle Cloud B2C](./src/oracle/webChat)
 
 ### Technical requirements and scope
 
@@ -79,17 +80,17 @@ the system will ask the service desk if any agents are available. If no response
 
 To set up your development environment, first fork this repository. 
 
-Copy `.env-sample` to `.env` and change the `SERVICE_DESK_CLASS` variable to run the target service desk implementation. If you do not provide any value, it will run the Mock service desk that we provide by default.
+Instructions for setting up a development environment for each of the service desk reference example integrations can be found in the following directories:
+- [Genesys Cloud](./src/genesys/webChat)  
+- [Twilio Flex](./src/flex/webChat) 
+- [NICE inContact](./src/incontact/webChat)
+- [Oracle Cloud B2C](./src/oracle/webChat)
 
-If you are running an integration which needs middleware, then `src/middleware` folder has a corresponding folders for middlewares which has instructions on how to run the middleware.
+To run the default example, go to the [`src/example/webChat`](src/example/webChat) directory and follow the instructions in the [README.md](src/example/webChat/README.md).
 
-Run `npm install` 
+To enable linting rules specific to this project on your IDE or Code Editor run `npm install` from the root project directory.
 
-Then run `npm run dev` to get a development environment running in your browser on port `9000`.
-
-The files you will be editing are in the `src` directory, starting with the [buildEntry.ts](./src/buildEntry.ts) file. This script returns the `WebChatServiceDeskFactory` function that is available at `window.WebChatServiceDeskFactory` when this file is built. This function is what you will pass into the web chat configuration object as the `serviceDeskFactory`.
-
-You will note that this file imports a mock service desk from [./src/serviceDesks/exampleServiceDesk.ts](./src/serviceDesks/exampleServiceDesk.ts). It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/serviceDesks](./src/serviceDesks) folder as well. You can start by copying the [./src/serviceDesks/serviceDeskTemplate.ts](./src/serviceDesks/serviceDeskTemplate.ts) file. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions. Once you add your class, import the same in [buildEntry.ts](./src/buildEntry.ts) and then change the `.env` to point to your implementation.
+It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/](./src/) directory as well. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions.
 
 ### Documentation
 

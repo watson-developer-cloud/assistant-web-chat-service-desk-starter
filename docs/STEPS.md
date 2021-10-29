@@ -2,7 +2,7 @@
 
 This document outlines a suggested sequence of steps for building a service desk integration using this repository. It is intended as a guide, and you can follow it to whatever extent you choose. At the end of this document are checklists for [core functionality](#core-functionality-checklist) and [optional functionality](#optional-functionality-checklist).
 
-**Note:** Prebuilt reference implementations are available that implement the core features of integrations for [Genesys Cloud](../src/middleware/genesys) and [Twilio Flex](../src/middleware/flex). You can use this process described in this document if you want to further customize or extend these reference implementations to include additional features.
+**Note:** Prebuilt reference implementations are available that implement the core features of integrations for [Genesys Cloud](../src/genesys/webChat/server) and [Twilio Flex](../src/flex/webChat/server). You can use this process described in this document if you want to further customize or extend these reference implementations to include additional features.
 
 Keep the following things in mind as you work through these steps:
 
@@ -12,17 +12,17 @@ Keep the following things in mind as you work through these steps:
 
 ## Steps
 
-1. Fork this repository. Run `npm run dev` to make sure the default example setup is working properly.
+1. Fork this repository. 
 
 1. Take the appropriate setup steps in the service desk client. Your service desk should have a JavaScript client, and you will need to follow the setup instructions related to that client to get started.
 
     For example, Genesys Cloud requires that you create a [web chat widget](https://help.mypurecloud.com/articles/create-a-widget-for-web-chat/) and [find your organization ID](https://help.mypurecloud.com/faq/how-do-i-find-my-organization-id/).
 
-1. Copy [serviceDeskTemplate.ts](../src/serviceDesks/serviceDeskTemplate.ts) and give it a new, descriptive name.
+1. Copy the [src/example](../src/example/) directory and give it a new descriptive name.
 
-1. Modify [buildEntry.ts](../src/buildEntry.ts) to add the import for your new class.
+1. Modify [buildEntry.ts](../src/example/webChat/client/src/buildEntry.ts) in your copied directory to match the name for your new class.
 
-1. Update the `.env` file to update the `SERVICE_DESK_CLASS` variable to the new class name. If you do not have an `.env` file in the project root, copy and rename the `.env-sample` file.
+1. Run `npm install`. Then run `npm run dev` to start get development environment running.
 
 1. Implement `startChat()` to establish a connection with the service desk. This function might involve a number of steps to establish the chat environment, such as:
 
@@ -64,7 +64,7 @@ Keep the following things in mind as you work through these steps:
 
         - If your service desk requires the current `sessionID`, `userID`, or `locale` at any time, implement `updateState()` and invoke it in `startChat()`.
 
-            **Note:** For a Genesys Cloud integration, this is required in order to provide the service desk with a value for `displayName`. The Genesys Cloud [reference implementation](../src/middleware/genesys/README.md) implements this functionality.
+            **Note:** For a Genesys Cloud integration, this is required in order to provide the service desk with a value for `displayName`. The Genesys Cloud [reference implementation](../src/genesys/webChat/server/README.md) implements this functionality.
 
     - **Typing indicators**, to the extent your service desk supports them:
         - Human agent typing: `this.callback.agentTyping()`
@@ -93,7 +93,7 @@ Keep the following things in mind as you work through these steps:
 
     Implementation of this step will vary significantly depending on your service desk provider's API, how it handles authentication, and how you choose to handle authentication for your middleware server.
 
-      For example, a Genesys Cloud integration requires that you [set up an OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/) that uses a client credentials grant. You can then make a request to the OAuth client using the Genesys PureCloud [REST API](https://developer.mypurecloud.com/api/rest/authorization/use-client-credentials.html) for an access token. (For more information, see [the Genesys PureCloud tutorial](https://developer.mypurecloud.com/api/tutorials/oauth-client-credentials/?language=nodejs&step=1).) See the Genesys Cloud [reference implementation](../src/middleware/genesys/README.md) for a simple example.
+      For example, a Genesys Cloud integration requires that you [set up an OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/) that uses a client credentials grant. You can then make a request to the OAuth client using the Genesys PureCloud [REST API](https://developer.mypurecloud.com/api/rest/authorization/use-client-credentials.html) for an access token. (For more information, see [the Genesys PureCloud tutorial](https://developer.mypurecloud.com/api/tutorials/oauth-client-credentials/?language=nodejs&step=1).) See the Genesys Cloud [reference implementation](../src/genesys/webChat/server/README.md) for a simple example.
 
       For more information about authenticated chat flow for Genesys Cloud, see the [Genesys PureCloud API documentation](https://developer.mypurecloud.com/api/webchat/authenticated-chat.html).
 
