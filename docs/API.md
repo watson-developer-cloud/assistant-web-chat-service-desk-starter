@@ -120,7 +120,9 @@ Sends updated availability information to the chat widget for a user who is wait
 
 **Parameters:**
 
-- `availability: AgentAvailability`: The availability information to display to the user. This can be an empty object; if it is, the web chat provides a generic message indicating that the user will be connected to a live agent as soon as possible. See [../src/common/types/serviceDeskCallback.ts](../src/common/types/serviceDeskCallback.ts) for `AgentAvailability` type definition.
+- `availability: AgentAvailability`: The availability information to display to the user. This can be an empty object; if it is, the web chat provides a generic message indicating that the user will be connected to a live agent as soon as possible. See [../src/common/types/serviceDeskCallback.ts](../src/common/types/serviceDeskCallback.ts) for detailson the `AgentAvailability` type definition.
+
+    **Note:** Of the populatable fields in the `AgentAvailability` object, only *one* of `position_in_queue` and `estimated_wait_time` can be rendered in the widget. If both fields are provided, `estimated_wait_time` will take priority and the `position_in_queue` field will be ignored.
 
 ### agentJoined
 
