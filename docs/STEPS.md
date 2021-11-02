@@ -64,7 +64,7 @@ Keep the following things in mind as you work through these steps:
 
         - If your service desk requires the current `sessionID`, `userID`, or `locale` at any time, implement `updateState()` and invoke it in `startChat()`.
 
-            **Note:** For a Genesys Cloud integration, this is required in order to provide the service desk with a value for `displayName`. The Genesys Cloud [reference implementation](../src/genesys/webChat/server/README.md) implements this functionality.
+            **Note:** For a Genesys Cloud integration, this is required in order to provide the service desk with a value for `displayName`. The Genesys Cloud [reference implementation](../src/genesys/webChat/README.md) implements this functionality.
 
     - **Typing indicators**, to the extent your service desk supports them:
         - Human agent typing: `this.callback.agentTyping()`
@@ -93,7 +93,7 @@ Keep the following things in mind as you work through these steps:
 
     Implementation of this step will vary significantly depending on your service desk provider's API, how it handles authentication, and how you choose to handle authentication for your middleware server.
 
-      For example, a Genesys Cloud integration requires that you [set up an OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/) that uses a client credentials grant. You can then make a request to the OAuth client using the Genesys PureCloud [REST API](https://developer.mypurecloud.com/api/rest/authorization/use-client-credentials.html) for an access token. (For more information, see [the Genesys PureCloud tutorial](https://developer.mypurecloud.com/api/tutorials/oauth-client-credentials/?language=nodejs&step=1).) See the Genesys Cloud [reference implementation](../src/genesys/webChat/server/README.md) for a simple example.
+      For example, a Genesys Cloud integration requires that you [set up an OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/) that uses a client credentials grant. You can then make a request to the OAuth client using the Genesys PureCloud [REST API](https://developer.mypurecloud.com/api/rest/authorization/use-client-credentials.html) for an access token. (For more information, see [the Genesys PureCloud tutorial](https://developer.mypurecloud.com/api/tutorials/oauth-client-credentials/?language=nodejs&step=1).) See the Genesys Cloud [reference implementation](../src/genesys/webChat/README.md) for a simple example.
 
       For more information about authenticated chat flow for Genesys Cloud, see the [Genesys PureCloud API documentation](https://developer.mypurecloud.com/api/webchat/authenticated-chat.html).
 
