@@ -1,7 +1,7 @@
 # Adoption Guide
-This guide is meant to provide more context to the existing documentation on our APIs and architecture, as well as provide concrete examples of how BYOSD has worked with other service desks.
+This guide is meant to provide additional context to the existing documentation on our APIs and architecture, as well as provide concrete examples of how BYOSD has worked with other service desks.
 
-To successfully create a BYOSD integration with an existing service desk, developers will need to implement the functions listed in our [API documention](./API.md), following these [developer guidelines](./STEPS.md). In order to be able to implement these APIs, however, the developer will need access to certain exposed API endpoints of the service desk application, so that information can be communicated between the WA chat widget and the service desk application.
+To successfully create a BYOSD integration with an existing service desk, developers will need to implement the functions listed in our [API documention](./API.md), following these [developer guidelines](./STEPS.md). In order to implement these APIs, however, the developer will first need access to certain exposed API endpoints of the service desk application, which are detailed in the following.
 
 **Core "must have" Functionality:** startChat, endChat, sendMessageToAgent
 
@@ -50,4 +50,4 @@ Called when user has read the agent message. _This is currently not implemented 
 ## Service Desk to Web Chat Communication
 Lastly, we also need to be able to listen to events from the service desk, so that the WA chat widget can respond (all our available callback functions are listed and described [here](./API.md#service-desk-to-web-chat-communication)). 
 
-For instance, when an "agent is typing" event is posted, then we need to let our widget know to render the typing indicator. When an agent message is received from the service desk, we need to relay the message to the user. Therefore, there needs to be a designated way to continuously receive events from the service desk during a conversation. With [Genesys](../src/genesys/webChat/client/src/genesysServiceDesk.ts), this was done via a web socket, and with [Twilio Flex](../src/flex/webChat/client/src/twilioFlex.ts), their API provides a channel on which we can listen to events. We recommend looking at their implementations for clarity.
+For instance, when an "agent is typing" event is posted, we then need to let our widget know to render the typing indicator. When an agent message is received from the service desk, we need to relay the message to the user. As such, there needs to be a designated way to continuously receive events from the service desk during a conversation. The [Genesys](../src/genesys/webChat/client/src/genesysServiceDesk.ts) API implements this via a web socket, and [Twilio Flex](../src/flex/webChat/client/src/twilioFlex.ts) provides a channel on which we can listen to events. We recommend looking at their implementations for clarity.

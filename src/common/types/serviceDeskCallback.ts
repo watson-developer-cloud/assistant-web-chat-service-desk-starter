@@ -89,7 +89,10 @@ interface ServiceDeskCallback {
 /**
  * Information about the current availability of an agent while a user is waiting to be connected. If these are not set
  * the web chat will provide generic messaging letting the user know that they will reach a live agent as soon as
- * possible.
+ * possible. 
+ * 
+ * Note: Only one of position_in_queue and estimated_wait_time can be rendered in the widget. If both fields are
+ * provided, estimated_wait_time will take priority.
  */
 interface AgentAvailability {
   /**

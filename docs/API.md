@@ -2,7 +2,7 @@
 
 ## Web Chat to Service Desk communication
 
-To be implemented by the developer. Implementation template can be found in [../src/serviceDesks/serviceDeskTemplate.ts](../src/serviceDesks/serviceDeskTemplate.ts).
+To be implemented by the developer. Implementation template can be found in [../src/example/webChat/client/src/serviceDeskTemplate.ts](../src/example/webChat/client/src/serviceDeskTemplate.ts).
 
 ### startChat
 
@@ -15,7 +15,7 @@ Opens the chat with the service desk and performs any necessary setup steps. Mos
 **Parameters:**
 
 - `connectMessage: MessageResponse`: Provided by the web chat and containing the `connect_to_agent` response as defined in the Watson Assistant tooling.
-- `startChatOptions: StartChatOptions`: As of web chat 4.5.0, this object contains additional options for starting a chat. Notably, it includes metadata needed to display a chat transcript to your live agent. See [the StartChatOptions type](../src/types/serviceDesk.ts).
+- `startChatOptions: StartChatOptions`: As of web chat 4.5.0, this object contains additional options for starting a chat. Notably, it includes metadata needed to display a chat transcript to your live agent. See [the StartChatOptions type](../src/common/types/serviceDesk.ts).
 
 **Returns:**
 
@@ -108,7 +108,7 @@ Checks to determine whether any agents are online and ready to communicate with 
 
 ## Service Desk to Web Chat communication
 
-Provided to the developer as callbacks. Type definitions can be found in [../src/types/serviceDeskCallback.ts](../src/types/serviceDeskCallback.ts). These callbacks are used within a `ServiceDesk` implementation by calling `this.callback.<callback-name>()`.
+Provided to the developer as callbacks. Type definitions can be found in [../src/common/types/serviceDeskCallback.ts](../src/common/types/serviceDeskCallback.ts). These callbacks are used within a `ServiceDesk` implementation by calling `this.callback.<callback-name>()`.
 
 ### updateAgentAvailability
 
@@ -120,7 +120,9 @@ Sends updated availability information to the chat widget for a user who is wait
 
 **Parameters:**
 
-- `availability: AgentAvailability`: The availability information to display to the user. This can be an empty object; if it is, the web chat provides a generic message indicating that the user will be connected to a live agent as soon as possible. See [../src/types/serviceDeskCallback.ts](../src/types/serviceDeskCallback.ts) for `AgentAvailability` type definition.
+- `availability: AgentAvailability`: The availability information to display to the user. This can be an empty object; if it is, the web chat provides a generic message indicating that the user will be connected to a live agent as soon as possible. See [../src/common/types/serviceDeskCallback.ts](../src/common/types/serviceDeskCallback.ts) for detailson the `AgentAvailability` type definition.
+
+    **Note:** Of the populatable fields in the `AgentAvailability` object, only *one* of `position_in_queue` and `estimated_wait_time` can be rendered in the widget. If both fields are provided, `estimated_wait_time` will take priority and the `position_in_queue` field will be ignored.
 
 ### agentJoined
 
@@ -132,7 +134,7 @@ Informs the chat widget that an agent has joined the chat.
 
 **Parameters:**
 
-- `profile: AgentProfile`: The metadata about the agent. See [../src/types/profiles.ts](../src/types/profiles.ts) for `AgentProfile` type definition.
+- `profile: AgentProfile`: The metadata about the agent. See [../src/common/types/profiles.ts](../src/common/types/profiles.ts) for `AgentProfile` type definition.
 
 ### agentReadMessages
 
@@ -208,4 +210,4 @@ Sends an error message to the user and sets the state of the given error type.
 
 **Parameters:**
 
-- `errorInfo: ServiceDeskErrorInfo`: Details for the error whose state is being set. See [../src/types/errors.ts](../src/types/errors.ts) for `ServiceDeskErrorInfo` type definition.
+- `errorInfo: ServiceDeskErrorInfo`: Details for the error whose state is being set. See [../src/common/types/errors.ts](../src/common/types/errors.ts) for `ServiceDeskErrorInfo` type definition.
