@@ -29,13 +29,15 @@ const conversationsApi = new platformClient.ConversationsApi();
 const lifecycleStatusMessageTitle = 'Interaction Widget Proxy';
 const lifecycleStatusMessageId = 'lifecycle-statusMsg';
 
-// Parse the query parameters to get the pcEnvironment variable so we can setup
-// the API client against the proper Genesys Cloud region.
-//
-// Note: Genesys Cloud will send us pcEnvironment, pcLangTag, and pcConversationId
-//       when the iframe is first initialized.  However, we'll come through this code
-//       again after the implicit grant redirect, and those parameters won't be there
-//       So we have to check if we were able to parse out the environment or not.
+/** 
+ * Parse the query parameters to get the pcEnvironment variable so we can setup
+ * the API client against the proper Genesys Cloud region.
+ *
+ * Note: Genesys Cloud will send us pcEnvironment, pcLangTag, and pcConversationId
+ *       when the iframe is first initialized.  However, we'll come through this code
+ *       again after the implicit grant redirect, and those parameters won't be there
+ *       So we have to check if we were able to parse out the environment or not.
+ */
 let integrationQueryString = '';
 if (window.location.search.length !== 0) {
   integrationQueryString = window.location.search.substring(1);
@@ -60,17 +62,17 @@ console.log(`PureCloud ClientApp About: ${window.purecloud.apps.ClientApp.about(
 
 initializeApplication();
 
-//
-// Bootstrap Listener
-//
+/**
+ * Bootstrap Listener
+ */
 myClientApp.lifecycle.addBootstrapListener(() => {
   logLifecycleEvent('App Lifecycle Event: bootstrap', true);
   initializeApplication();
 });
 
-//
-// Focus Listener
-//
+/**
+ * Focus Listener
+ */
 function onAppFocus() {
   logLifecycleEvent('App Lifecycle Event: focus', true);
 
@@ -80,9 +82,9 @@ function onAppFocus() {
 }
 myClientApp.lifecycle.addFocusListener(onAppFocus);
 
-//
-// Blur Listener
-//
+/**
+ * Blur Listener
+ */
 function onAppBlur() {
   logLifecycleEvent('App Lifecycle Event: blur', true);
 
@@ -92,9 +94,9 @@ function onAppBlur() {
 }
 myClientApp.lifecycle.addBlurListener(onAppBlur);
 
-//
-// Stop Listener
-//
+/**
+ * Stop Listener
+ */
 myClientApp.lifecycle.addStopListener(() => {
   logLifecycleEvent('App Lifecycle Event: stop', true);
 
@@ -113,59 +115,51 @@ myClientApp.lifecycle.addStopListener(() => {
   logLifecycleEvent('Notified Genesys Cloud of Successful App Stop', false);
 });
 
-function logLifecycleEvent(logText, incommingEvent) {
+function logLifecycleEvent(logText, incomingEvent) {
   console.log(logText);
 }
 
-function initializeApplication() {
+async function initializeApplication() {
   console.log('Performing application bootstrapping');
 
-  // Perform Implicit Grant Authentication
-  //
-  // Note: Pass the query string parameters in the 'state' parameter so that they are returned
-  //       to us after the implicit grant redirect.
-  client
-    .loginImplicitGrant(GENESYS_CLIENT_ID, redirectUri, { state: integrationQueryString })
-    .then((data) => {
-      // User Authenticated
-      console.log(`User Authenticated: ${JSON.stringify(data)}`);
-
-      // Make request to GET /api/v2/users/me?expand=presence
-      return conversationsApi.getConversation(appParams.pcConversationId);
-    })
-    .then((data) => {
-      console.log(`Conversation details for ${appParams.pcConversationId}: ${JSON.stringify(data)}`);
-      myClientApp.lifecycle.bootstrapped();
-
-      myClientApp.alerting.showToastPopup(lifecycleStatusMessageTitle, 'Bootstrap Complete', {
-        id: lifecycleStatusMessageId,
-        type: 'success',
-      });
-
-      // Look to see if a proxy.URL attribute exists in the customer participant data
-      // If so redirect to that URL
-      const customer = data.participants.find((participant) => participant.purpose === 'customer');
-      console.log(customer);
-      if (customer !== undefined) {
-        let { sessionHistoryKey } = customer.attributes;
-
-        // Pull session history key from phone uui data
-        if (!sessionHistoryKey && customer.attributes.uuiData) {
-          sessionHistoryKey = customer.attributes.uuiData;
-        }
-        if (sessionHistoryKey) {
-          window.location.href = `https://web-chat.global.assistant.watson.cloud.ibm.com/loadAgentAppFrame.html?session_history_key=${sessionHistoryKey}`;
-        } else {
-          console.error('Could not load Watson Assistant Agent App, session history key is missing');
-        }
-      }
-
-      logLifecycleEvent('Notified Genesys Cloud of Successful App Bootstrap', false);
-    })
-    .catch((err) => {
-      // Handle failure response
-      console.log(err);
+  try {
+    /**
+     * Perform Implicit Grand Authentication
+     * 
+     * Note: Pass the query string parameters in the 'state' parameter so that they are returned
+     *       to us after the implicit grant redirect.
+     */
+    const userAuthData = await client.loginImplicitGrant(GENESYS_CLIENT_ID, redirectUri, {
+      state: integrationQueryString
     });
+
+    console.log(`User Authenticated: ${JSON.stringify(userAuthData)}`);
+
+    const conversationData = await conversationsApi.getConversation(appParams.pcConversationId);
+
+    const customer = conversationData.participants.find((participant) => participant.purpose === 'customer');
+    console.log(customer);
+    if (customer !== undefined) {
+      let {
+        sessionHistoryKey
+      } = customer.attributes;
+
+      // Pull session history key from phone uui data
+      if (!sessionHistoryKey && customer.attributes.uuiData) {
+        sessionHistoryKey = customer.attributes.uuiData;
+      }
+      if (sessionHistoryKey) {
+        window.location.href = `https://web-chat.global.assistant.watson.cloud.ibm.com/loadAgentAppFrame.html?session_history_key=${sessionHistoryKey}`;
+      } else {
+        console.error('Could not load Watson Assistant Agent App, session history key is missing');
+      }
+    }
+
+    logLifecycleEvent('Notified Genesys Cloud of Successful App Bootstrap', false);
+  } catch (error) {
+    // Handle failure response
+    console.error(error);
+  }
 }
 
 function parseAppParameters(queryString) {
