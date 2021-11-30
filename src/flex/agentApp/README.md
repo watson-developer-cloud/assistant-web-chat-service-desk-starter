@@ -1,6 +1,6 @@
 # Twilio Flex Watson Assistant Agent App
 
-This is a functioning Agent App integration between Watson Assistant and Twilio Flex.
+This is a functioning agent app integration between Watson Assistant and Twilio Flex.
 
 **Important:**  This is a reference implementation that provides an example of a fully functional integration. Make any necessary changes and perform robust testing before deploying this integration in production.
 
