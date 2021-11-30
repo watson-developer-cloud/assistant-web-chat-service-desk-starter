@@ -35,7 +35,7 @@ To deploy your plugin, open a terminal and run the following command:
 ```bash
 twilio flex:plugins:deploy --major --changelog "Adds the Watson Assistant Agent App" --description "Enables the service desk agent to get a quick view of the conversation history between the visitor and Watson Assistant."
 ```
-This command will upload the plugin to Twilio Flex, but it is not yet enabled to all the users, it will need to be released. You can release the plugin by executing this command:
+This command will upload the plugin to Twilio Flex, but it is not enabled for all users until it is released. You can release the plugin by executing this command:
 
 ```bash
 twilio flex:plugins:release --name "Plugin Release - Watson Assistant Agent App" --description "Enabling plugin Watson Assistant Agent App" --plugin plugin-watson-assistant-agent-app@latest
