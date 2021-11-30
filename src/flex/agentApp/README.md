@@ -45,7 +45,7 @@ For more details on deploying your plugin, refer to the [deploying your plugin g
 
 ## Viewing the conversational history between an agent and the assistant
 
-On the [Twilio Flex - Agent Desktop](https://flex.twilio.com/agent-desktop/). After receiving the request, the agent can then view the conversation history from their agent desktop during the call with the end user.
+On the [Twilio Flex - Agent Desktop](https://flex.twilio.com/agent-desktop/). After receiving the request, the agent can then view the conversation history from the agent desktop during the call with the end user.
 
 <p align="center">
 <img src="images/twilio-flex-agent-app.png" width="60%">
