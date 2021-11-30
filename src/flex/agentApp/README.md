@@ -31,7 +31,7 @@ npm ci
 
 ## Deploy and Release Plugin
 
-To deploy your plugin, in the terminal run:
+To deploy your plugin, open a terminal and run the following command:
 ```bash
 twilio flex:plugins:deploy --major --changelog "Adds the Watson Assistant Agent App" --description "Enables the service desk agent to get a quick view of the conversation history between the visitor and Watson Assistant."
 ```
