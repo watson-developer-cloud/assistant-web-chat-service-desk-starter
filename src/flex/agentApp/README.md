@@ -43,7 +43,7 @@ twilio flex:plugins:release --name "Plugin Release - Watson Assistant Agent App"
 For more details on deploying your plugin, refer to the [deploying your plugin guide](https://www.twilio.com/docs/flex/developer/plugins/cli/deploy-and-release).
 
 
-## Viewing the Conversational History between an Agent and the Bot
+## Viewing the conversational history between an agent and the assistant
 
 On the [Twilio Flex - Agent Desktop](https://flex.twilio.com/agent-desktop/). After receiving the request, the agent can then view the conversation history from their agent desktop during the call with the end user.
 
