@@ -11,9 +11,7 @@
  * specific language governing permissions and limitations under the License.
  *
  */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import * as Flex from '@twilio/flex-ui';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { FlexPlugin } from 'flex-plugin';
 
 const PLUGIN_NAME = 'WatsonAssistantAgentAppPlugin';
