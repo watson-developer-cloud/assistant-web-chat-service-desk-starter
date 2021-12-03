@@ -11,7 +11,9 @@
  * specific language governing permissions and limitations under the License.
  *
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import * as Flex from '@twilio/flex-ui';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { FlexPlugin } from 'flex-plugin';
 
 const PLUGIN_NAME = 'WatsonAssistantAgentAppPlugin';
@@ -22,36 +24,18 @@ export default class WatsonAssistantAgentAppPlugin extends FlexPlugin {
   }
 
   /**
-   * This code is run when your plugin is being started
-   * Use this to modify any UI components or attach to the actions framework
-   *
-   * @param flex { typeof Flex }
-   * @param manager { Flex.Manager }
+   * This code is run when your plugin is being started. Use this to modify any
+   * UI components or attach to the actions framework.
    */
-  init(flex: typeof Flex, manager: Flex.Manager) {
-    this.registerReducers(manager);
-
-    flex.CRMContainer.defaultProps.uriCallback = (task: any) => {
+  async init(flex: typeof Flex): Promise<void> {
+    flex.CRMContainer.defaultProps.uriCallback = (task: Flex.ITask) => {
       // Pull the session history from the task attributes
       if (task?.attributes?.sessionHistoryKey) {
-        let { sessionHistoryKey } = task.attributes;
+        const { sessionHistoryKey } = task.attributes;
         return `https://web-chat.global.assistant.watson.cloud.ibm.com/loadAgentAppFrame.html?session_history_key=${sessionHistoryKey}`;
       }
-
+      // Return an empty string to indicate to not load the agent app iframe since there isn't any session history key in the attributes
       return '';
-    }
-  }
-
-  /**
-   * Registers the plugin reducers
-   *
-   * @param manager { Flex.Manager }
-   */
-  private registerReducers(manager: Flex.Manager) {
-    if (!manager.store.addReducer) {
-      // tslint: disable-next-line
-      console.error(`You need FlexUI > 1.9.0 to use built-in redux; you are currently on ${Flex.VERSION}`);
-      return;
-    }
+    };
   }
 }

@@ -6,13 +6,13 @@
     "postinstall": "flex-plugin pre-script-check"
   },
   "dependencies": {
-    "flex-plugin-scripts": "4.0.0",
+    "flex-plugin-scripts": "4.2.2",
     "react": "16.5.2",
     "react-dom": "16.5.2"
   },
   "devDependencies": {
     "@twilio/flex-ui": "^1",
-    "react-test-renderer": "16.5.2",
-    "typescript": "^3"
+    "typescript": "^3",
+    "react-test-renderer": "16.5.2"
   }
 }

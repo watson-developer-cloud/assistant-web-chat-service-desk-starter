@@ -11,6 +11,9 @@
  * specific language governing permissions and limitations under the License.
  *
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import * as FlexPlugin from 'flex-plugin';
+
 import WatsonAssistantAgentAppPlugin from './WatsonAssistantAgentAppPlugin';
+
 FlexPlugin.loadPlugin(WatsonAssistantAgentAppPlugin);

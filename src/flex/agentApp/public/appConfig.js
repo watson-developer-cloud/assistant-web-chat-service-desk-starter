@@ -3,7 +3,5 @@ var appConfig = {
     enabled: true,
     url: '/plugins',
   },
-  ytica: false,
   logLevel: 'info',
-  showSupervisorDesktopView: true,
 };
