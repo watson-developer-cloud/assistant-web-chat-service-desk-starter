@@ -1,0 +1,19 @@
+{
+  "name": "plugin-watson-assistant-agent-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "flex-plugin pre-script-check"
+  },
+  "dependencies": {
+    "flex-plugin": "^4.2.2",
+    "flex-plugin-scripts": "4.2.2",
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
+    "@twilio/flex-ui": "^1.29.1"
+  },
+  "devDependencies": {
+    "react-test-renderer": "16.5.2",
+    "typescript": "^3"
+  }
+}
