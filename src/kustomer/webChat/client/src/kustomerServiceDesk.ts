@@ -12,22 +12,24 @@
  *
  */
 
-import { ErrorType } from '../../types/errors';
-import { MessageRequest, MessageResponse } from '../../types/message';
-import { User } from '../../types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC } from '../../types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from '../../types/serviceDeskCallback';
-import { stringToMessageResponseFormat } from '../../utils';
+ import { ErrorType } from '../../../../common/types/errors';
+ import { MessageRequest, MessageResponse } from '../../../../common/types/message';
+ import {
+   ServiceDesk,
+   ServiceDeskFactoryParameters,
+   ServiceDeskStateFromWAC,
+ } from '../../../../common/types/serviceDesk';
+ import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
+ import { stringToMessageResponseFormat } from '../../../../common/utils';
  import { onMessageSentResponse, onAgentTypingActivityResponse, onSatisfactionReceivedResponse, onConversationEndedResponse, onConversationCreateResponse, onSendMessageResponse} from './kustomerTypes';
  /**
   * This class returns startChat, endChat, sendMessageToAgent, updateState, userTyping, userReadMessages and
   * areAnyAgentsOnline to be exposed to web chat through src/buildEntry.ts.
   */
- class kustomerDesk implements ServiceDesk {
+ class KustomerServiceDesk implements ServiceDesk {
    agentProfile: AgentProfile  = { id: 'liveagent', nickname: };
    callback: ServiceDeskCallback;
    state: any;
-   user: User;
    sessionID: string;
    kustomerConversationId: string =  "";
    isChatInit: boolean = false;
@@ -35,7 +37,6 @@ import { stringToMessageResponseFormat } from '../../utils';
  
    constructor(parameters: ServiceDeskFactoryParameters) {
      this.callback = parameters.callback;
-     this.user = { id: '' };
      this.sessionID = '';
    }
  
@@ -58,9 +59,7 @@ import { stringToMessageResponseFormat } from '../../utils';
             this.chatTransript += messageObject.user + ': ' + messageObject.message  + '\n\n';
         })
     }
-    console.log(this.chatTransript);
     KustomerCore.init({
-      //brandId: '600863a3cad7437f4ae80b60'
       brandId: process.env.BRANDID
     }, function (chatSettings: any) {
     //Defining Attributes of the customer
@@ -69,7 +68,6 @@ import { stringToMessageResponseFormat } from '../../utils';
           emails: ['marsha@example.com']
         }
       });
-      console.log(KustomerCore.isChatAvailable());
       let returnValue = KustomerCore.isChatAvailable(); 
       if(returnValue === 'online') {
         t.initChat();
@@ -169,12 +167,10 @@ import { stringToMessageResponseFormat } from '../../utils';
     * means the availability status of agents is unknown or the service desk doesn't support this information.
     */
    async areAnyAgentsOnline(connectMessage: MessageResponse): Promise<boolean | null> {
-     console.log('areAnyAgentsOnline', connectMessage)
      return null;
    }
 
    private onMessageReceivedHandler = (response: onMessageSentResponse, error: any) => {
-    console.log('onMessageReceivedHandler, this is your agent response', response);
     if(response.direction === "out") {
       if(!this.agentProfile.nickname) {
         this.agentProfile.nickname = response.sentBy.displayName;
@@ -220,7 +216,6 @@ import { stringToMessageResponseFormat } from '../../utils';
    }
 
    private onConversationEndedHandler = (response: onConversationEndedResponse, error: any) => {
-     console.log('onConversationEndedHandler:', response)
       if(response && response.ended == true) {
         this.callback.agentEndedChat();
       }
@@ -243,10 +238,7 @@ import { stringToMessageResponseFormat } from '../../utils';
     });
     return Promise.resolve();
    }
-
-
-   private async 
  }
  
- export { kustomerDesk };
+ export { KustomerServiceDesk };
  

@@ -1,0 +1,28 @@
+<html>
+
+<body>
+    <!--
+The html file is used when you are in development mode. The compiled extensions are automatically
+added to this file by Webpack when you are developing using npm run dev.
+-->
+    <script src="https://cdn.kustomerapp.com/chat-web/core.js" data-kustomer-api-key="YOUR_KUSTOMER_API_KEY"></script>
+
+    <script>
+        window.watsonAssistantChatOptions = {
+            integrationID: "",
+            region: "",
+            serviceInstanceID: "",
+            serviceDeskFactory: window.WebChatServiceDeskFactory,
+            serviceDesk: {
+                availabilityTimeoutSeconds: 30,
+            }
+        };
+        setTimeout(function () {
+            const t = document.createElement('script');
+            t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+            document.head.appendChild(t);
+        });
+    </script>
+</body>
+
+</html>
