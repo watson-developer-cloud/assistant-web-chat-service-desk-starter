@@ -1,0 +1,42 @@
+{
+    "app": "watson_assistant",
+    "version": "0.0.1",
+    "title": "Watson Assistant App",
+    "dependencies": ["kustomer-^1.5.0'"],
+    "iconUrl": "data:image/png;base64,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",
+    "description": "Watson Assistant App",
+    "appDetails": {
+      "appDeveloper": {
+        "name": "IBM",
+        "website": "https://www.ibm.com/products/watson-assistant",
+        "supportEmail": "support@ibm.com"
+      },
+      "documentationLinks": [
+        {
+          "title": "Getting Started",
+          "url": "https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter"
+        }
+      ]
+    },
+    "klasses": [{
+        "name": "conversation",
+        "metadata": {
+            "standard": true,
+            "properties": {
+                "watsonAssistantSessionHistoryKeyStr": {
+                    "displayName": "Watson Assistant Session History"
+                }
+            }
+        }
+    }],
+    "kviews": [{
+        "name": "watson_assistant.chatHistory",
+        "resource": "conversation",
+        "context": "smartbar-card",
+        "meta": {
+            "icon": "bot",
+            "displayName": "Watson Assistant Chat History"
+        },
+        "template": ""
+    }]
+  }

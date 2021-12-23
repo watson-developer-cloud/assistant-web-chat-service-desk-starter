@@ -21,16 +21,26 @@ The following Kustomer resources provide some useful guides on Kustomer custom c
 
 ## Setting up
 
-1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md) to make sure you can run an instance of [ExampleServiceDesk](../../serviceDesks/exampleServiceDesk.ts).
+1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md#development) to make sure you can run an instance of [ExampleServiceDesk](../../example/webChat/README.md).
 
-2. Replace .env-sample in the project directory with .env-sample found in src/middleware/kustomer subdirectory.
+2. Update [kustomerServiceDesk.ts](../../serviceDesks/kustomer/kustomerServiceDesk.ts) if you will be incorporeating JWT token authenication or only describing your customer
 
-3. In the root of the project directory, copy .env-sample to .env.
+3. Create and install a private app in your Kustomer instance using the [`exampleApp.json`](./exampleApp.json) as a template. Go [here](https://developer.kustomer.com/kustomer-apps-platform/docs/creating-an-app) to learn more about app development. 
 
-4. Edit the .env file and modify the SERVICE_DESK_CLASS variable to KustomerServiceDesk. This is the name of the class for the Kustomer implementation in kustomer.ts. Modify the BRAND_ID variable to your own brand Id. Modify the JWT_TOKEN variable to your own mock JWT token. You can find more information about chat brand [here](https://kustomer.kustomer.help/multi-brand-chat-SkItrr3w). You can find more information about chat authentication [here](https://developer.kustomer.com/chat-sdk/v2.0-Web/docs/authenticate-chat-with-jwt-token). 
+3. Go to the client directory in [src/kustomer/webChat/client](./client).
 
-5. Replace index.html in the project directory with index.html found in src/middleware/kustomer subdirectory.
+4. From the client directory [src/kustomer/webChat/client](./client) run:
+    - `npm i`
+    - `npm run dev`
 
-6. In index.html, please replace `YOUR_KUSTOMER_API` with your own Kustomer API key. 
 
-7. From the project root directory, run `npm run dev`. If you've linked everything to your Kustomer org correctly, you should be able to connect to an agent in Kustomer.
+You should now be able to start a web chat session in a browser, and within the web chat, escalate to an agent to trigger the Kustomer integration. For more information about how to start a web chat session using this integration, see the starter kit [README](../../../README.md#development).
+
+## Supported features
+
+- **Start chat with an agent:** The `startChat()` function in [`kustomerServiceDesk.ts`](../../serviceDesks/kustomer/kustomerServiceDesk.ts) triggers the integration with Kustomer by creating a chat session.
+
+- **End chat:** The chat can be ended by either the user or the agent. This happens when either party leaves or closes the chat session.
+
+- **User authentication:** By providing a JWT token, user's can have their conversation be authenicated
+

@@ -46,21 +46,21 @@ export interface onSatisfactionReceivedResponse {
     satisfactionId: string,
     timetoken: string,
     form: {
-      description: string,
-      introduction: string,
-      name: string,
-      followupQuestion: string,
-      ratingPrompt: string,
-      scale: {
-        options: string,
-        labelLow: string,
-        labelHigh: string,
-        type: string,
-      },
+        description: string,
+        introduction: string,
+        name: string,
+        followupQuestion: string,
+        ratingPrompt: string,
+        scale: {
+            options: string,
+            labelLow: string,
+            labelHigh: string,
+            type: string,
+        },
     },
     response: {
-      rating: number,
-      followupAnswer: string,
+        rating: number,
+        followupAnswer: string,
     },
 }
 
@@ -75,7 +75,7 @@ export interface onConversationCreateResponse {
     conversationId: string,
     createdAt: string,
     ended: boolean,
-    isInAssistantMode: boolean 
+    isInAssistantMode: boolean
 }
 
 export interface onSendMessageResponse {
