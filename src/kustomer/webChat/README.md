@@ -23,7 +23,7 @@ The following Kustomer resources provide some useful guides on Kustomer custom c
 
 1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md#development) to make sure you can run an instance of [ExampleServiceDesk](../../example/webChat/README.md).
 
-2. Update [kustomerServiceDesk.ts](../../serviceDesks/kustomer/webChat/client/src/kustomerServiceDesk.ts) if you will be incorporeating JWT token authenication or only describing your customer
+2. Update [kustomerServiceDesk.ts](./client/src/kustomerServiceDesk.ts) if you will be incorporeating JWT token authenication or only describing your customer
 
 3. Create and install a private app in your Kustomer instance using the [`exampleApp.json`](./client/exampleApp.json) as a template. Go [here](https://developer.kustomer.com/kustomer-apps-platform/docs/creating-an-app) to learn more about app development. 
 
@@ -38,7 +38,7 @@ You should now be able to start a web chat session in a browser, and within the 
 
 ## Supported features
 
-- **Start chat with an agent:** The `startChat()` function in [`kustomerServiceDesk.ts`](../../serviceDesks/kustomer/webChat/client/src/kustomerServiceDesk.t) triggers the integration with Kustomer by creating a chat session.
+- **Start chat with an agent:** The `startChat()` function in [`kustomerServiceDesk.ts`](./client/src/kustomerServiceDesk.ts) triggers the integration with Kustomer by creating a chat session.
 
 - **End chat:** The chat can be ended by either the user or the agent. This happens when either party leaves or closes the chat session.
 
