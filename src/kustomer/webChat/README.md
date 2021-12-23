@@ -8,7 +8,7 @@ This reference implementation supports the core features of a Kustomer integrati
 
 ## Overview
 
-This integration is based on the functionality of Kustomer Chat Core SDK which allows client side to communicate with Kustomer Chat Platform. 
+This integration is based on the functionality of Kustomer Chat Core SDK, which allows client side to communicate with Kustomer Chat Platform. 
 
 The following Kustomer resources provide some useful guides on Kustomer custom chat implementation:
   - [Build your own UI](https://developer.kustomer.com/chat-sdk/v2.0-Web/docs/build-your-own-ui)
@@ -23,7 +23,7 @@ The following Kustomer resources provide some useful guides on Kustomer custom c
 
 1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md#development) to make sure you can run an instance of [ExampleServiceDesk](../../example/webChat/README.md).
 
-2. Update [kustomerServiceDesk.ts](./client/src/kustomerServiceDesk.ts) if you will be incorporeating JWT token authenication or only describing your customer
+2. Update [kustomerServiceDesk.ts](./client/src/kustomerServiceDesk.ts) if you will be incorporating JWT token authentication or only describing your customer
 
 3. Create and install a private app in your Kustomer instance using the [`exampleApp.json`](./client/exampleApp.json) as a template. Go [here](https://developer.kustomer.com/kustomer-apps-platform/docs/creating-an-app) to learn more about app development. 
 
@@ -42,5 +42,5 @@ You should now be able to start a web chat session in a browser, and within the 
 
 - **End chat:** The chat can be ended by either the user or the agent. This happens when either party leaves or closes the chat session.
 
-- **User authentication:** By providing a JWT token, user's can have their conversation be authenicated
+- **User authentication:** By providing a JWT token, user's can have their conversation be authenticated
 
