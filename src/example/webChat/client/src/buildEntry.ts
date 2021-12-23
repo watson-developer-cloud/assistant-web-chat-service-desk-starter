@@ -42,7 +42,6 @@ function getInstance(
     // Change ServiceDeskTemplate to your service desk implementation
     ServiceDeskTemplate,
   };
-
   return new constructors[serviceDeskClass](parameters);
 }
 
