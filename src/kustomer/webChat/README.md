@@ -31,7 +31,6 @@ The following Kustomer resources provide some useful guides on Kustomer custom c
 
 ```
 <script src="https://cdn.kustomerapp.com/chat-web/core.js" data-kustomer-api-key="YOUR_KUSTOMER_API_KEY"></script>
-
 ```
 
 5. Go to the client directory in [src/kustomer/webChat/client](./client).
