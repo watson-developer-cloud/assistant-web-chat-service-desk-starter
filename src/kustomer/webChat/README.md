@@ -27,9 +27,16 @@ The following Kustomer resources provide some useful guides on Kustomer custom c
 
 3. Create and install a private app in your Kustomer instance using the [`exampleApp.json`](./client/exampleApp.json) as a template. Go [here](https://developer.kustomer.com/kustomer-apps-platform/docs/creating-an-app) to learn more about app development. 
 
-3. Go to the client directory in [src/kustomer/webChat/client](./client).
+4. Edit the index.html in the top directory to include the follow script
 
-4. From the client directory [src/kustomer/webChat/client](./client) run:
+```
+<script src="https://cdn.kustomerapp.com/chat-web/core.js" data-kustomer-api-key="YOUR_KUSTOMER_API_KEY"></script>
+
+```
+
+5. Go to the client directory in [src/kustomer/webChat/client](./client).
+
+6. From the client directory [src/kustomer/webChat/client](./client) run:
     - `npm i`
     - `npm run dev`
 
