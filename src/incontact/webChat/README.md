@@ -22,7 +22,7 @@ The communication uses the Patron API, which can be found at [Patron APIs](https
 
 ## Setting up
 
-1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md) to make sure you can run an instance of [ExampleServiceDesk](../../../example/webChat/client/src/exampleServiceDesk.ts).
+1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md) to make sure you can run an instance of [ExampleServiceDesk](../../example/webChat/client/src/exampleServiceDesk.ts).
 
 1. If you haven't done so already, [set up chat](https://help.nice-incontact.com/content/acd/chat/setupchat.htm?tocpath=ACD%7CACD%7CChat%7C_____1) using your InContact admin account.
 
