@@ -25,7 +25,7 @@ The following Kustomer resources provide some useful guides on Kustomer custom c
 
 2. Update [kustomerServiceDesk.ts](./client/src/kustomerServiceDesk.ts) if you will be incorporating JWT token authentication or only describing your customer
 
-3. Create and install a private app in your Kustomer instance using the [`exampleApp.json`](./client/exampleApp.json) as a template. Go [here](https://developer.kustomer.com/kustomer-apps-platform/docs/creating-an-app) to learn more about app development. 
+3. Within the Kustomer Platform, generate a new API Key with the role `org.tracking`. Save the key, will need it for the next step.
 
 4. Edit the index.html in the top directory to include the follow script
 
@@ -33,9 +33,13 @@ The following Kustomer resources provide some useful guides on Kustomer custom c
 <script src="https://cdn.kustomerapp.com/chat-web/core.js" data-kustomer-api-key="YOUR_KUSTOMER_API_KEY"></script>
 ```
 
-5. Go to the client directory in [src/kustomer/webChat/client](./client).
+5. To have the chat transcript display to an agent, within the Kustomer Platform create a new attribute on the Conversation Klass with Display Name as Watson Assistant Session History and set the type as Single Line Text 
 
-6. From the client directory [src/kustomer/webChat/client](./client) run:
+6. Within Conversation Klass click on Insight Card and click `Create Insight Card` with name Watson Assistant Chat History and view location set as Insight Panel Card. Click on the bottom View Code and then click on Convert to Code. Type `CONVERT` and click on `I understand, please convert`. Then copy and paste the example html code from [here](./client/src/kustomer/webChat/client/watsonAssistantKview.html) and then click Save Changes. 
+
+7. Go to the client directory in [src/kustomer/webChat/client](./client).
+
+8. From the client directory [src/kustomer/webChat/client](./client) run:
     - `npm i`
     - `npm run dev`
 

@@ -193,7 +193,7 @@ class KustomerServiceDesk implements ServiceDesk {
     KustomerCore.describeConversation({
       conversationId: response.conversationId,
       customAttributes: {
-        waSessionHistoryKeyStr: t.sessionHistoryKey
+        watsonAssistantSessionHistoryStr: t.sessionHistoryKey
       }
     })
     const messageObj = {
