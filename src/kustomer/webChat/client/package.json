@@ -1,12 +1,11 @@
 {
-  "name": "oracle-webchat-client",
+  "name": "kustomer-webchat-client",
   "version": "1.0.0",
-  "description": "Oracle webchat client service desk example.",
+  "description": "Kustomer webchat client service desk example.",
   "main": "src/buildEntry.ts",
   "browserslist": [
     "> 0.25%",
     "last 2 versions",
-    "ie 11",
     "Firefox ESR",
     "not dead"
   ],

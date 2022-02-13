@@ -1,5 +1,5 @@
 /**
- * (C) Copyright Kustomer 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,32 +13,54 @@
  */
 
 import { MessageRequest, MessageResponse } from '../../../../common/types/message';
-import {
-  ServiceDesk,
-  ServiceDeskFactoryParameters,
-  StartChatOptions,
-} from '../../../../common/types/serviceDesk';
+import { ServiceDesk, ServiceDeskFactoryParameters, StartChatOptions } from '../../../../common/types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
 import { stringToMessageResponseFormat } from '../../../../common/utils';
-import { onMessageSentResponse, onAgentTypingActivityResponse, onConversationEndedResponse, onConversationCreateResponse, onSendMessageResponse } from './kustomerTypes';
+import {
+  OnAgentTypingActivityResponse,
+  OnConversationCreateResponse,
+  OnConversationEndedResponse,
+  OnMessageSentResponse,
+  OnSendMessageResponse,
+} from './kustomerTypes';
+
 /**
  * This class returns startChat, endChat, sendMessageToAgent, updateState, userTyping, userReadMessages and
  * areAnyAgentsOnline to be exposed to web chat through src/buildEntry.ts.
  */
 
-const WATSON_TRANSFER_MESSAGE = "'Watson Assistant has transfer a chat. Please look at the chat history to get the full context of the conversation.";
+/**
+ * Default message that is sent to the agent
+ */
+const WATSON_TRANSFER_MESSAGE =
+  'Watson Assistant has transferred a chat. Please look at the chat history to get the full context of the conversation.';
+
+/**
+ * Default name for the conversation that is created in Kustomer
+ */
+const CONVERSATION_TITLE = 'Watson Assistant Chat';
 
 class KustomerServiceDesk implements ServiceDesk {
   agentProfile: AgentProfile = { id: 'liveagent', nickname: '' };
   callback: ServiceDeskCallback;
+
+  /**
+   * The sessionHistoryKey needed for displaying the chat history to the agent
+   */
   sessionHistoryKey: string;
-  kustomerConversationId: string = "";
-  isChatInit: boolean = false;
-  jwt: string;
+
+  /**
+   * The ID of the conversation that is generated at the start of a transfer. Needed for sending user message, and ending the conversation.
+   */
+  conversationId: string = '';
+
+  /**
+   * Flag to check if any agent is available. Needed when startChat is excuted before areAnyAgentsOnline
+   */
+  isAgentAvailable: boolean = false;
 
   constructor(parameters: ServiceDeskFactoryParameters) {
     this.callback = parameters.callback;
-    this.jwt = '';
   }
 
   /**
@@ -53,23 +75,15 @@ class KustomerServiceDesk implements ServiceDesk {
    * not necessarily mean that an agent has joined the conversation or has read any messages sent by the user.
    */
   async startChat(connectMessage: MessageResponse, startChatOptions: StartChatOptions): Promise<void> {
-    const t = this;
-    this.jwt = 'YOUR_JWT_TOKEN'; //If your user is login, pass JWT token here
-    this.sessionHistoryKey = startChatOptions.agentAppInfo.sessionHistoryKey;
-    KustomerCore.init({
-      brandId: process.env.BRANDID
-    }, function (chatSettings: any) {
-      //You can describe the customer here if you do not have a JWT token
-      KustomerCore.describeCustomer({
-        attributes: {
-          emails: ['YOUR_CUSTOMER_EMAIL']
-        }
-      });
-      const returnValue = KustomerCore.isChatAvailable();
-      if (returnValue === 'online') {
-        t.initChat();
+    if (!this.isAgentAvailable) {
+      const isAgentAvailable = await this.isAgentOnline();
+      if (!isAgentAvailable) {
+        return Promise.reject();
       }
-    });
+      this.isAgentAvailable = true;
+    }
+    this.sessionHistoryKey = startChatOptions.agentAppInfo.sessionHistoryKey;
+    this.initChat();
     return Promise.resolve();
   }
 
@@ -79,11 +93,14 @@ class KustomerServiceDesk implements ServiceDesk {
    * @returns Returns a Promise that resolves when the service desk has successfully handled the call.
    */
   async endChat(): Promise<void> {
-    KustomerCore.endConversation({
-      conversationId: this.kustomerConversationId
-    }, function (response: onConversationEndedResponse, error: any) {
-      console.log('conversation ended');
-    });
+    KustomerCore.endConversation(
+      {
+        conversationId: this.conversationId,
+      },
+      (response: OnConversationEndedResponse, error: any) => {
+        console.log('Conversation ended');
+      },
+    );
     return Promise.resolve();
   }
 
@@ -95,18 +112,21 @@ class KustomerServiceDesk implements ServiceDesk {
    * @returns Returns a Promise that resolves when the service desk has successfully handled the call.
    */
   async sendMessageToAgent(message: MessageRequest, messageID: string): Promise<void> {
-    let messageObj = {
-      conversationId: this.kustomerConversationId,
+    const messageObj = {
+      conversationId: this.conversationId,
       body: message.input.text,
     };
-    // Send message with a callback
-    KustomerCore.sendMessage(messageObj, function (respsone: onSendMessageResponse, error: any) {
-      console.log('Message sent!');
+    return new Promise((resolve, reject) => {
+      KustomerCore.sendMessage(messageObj, (response: OnSendMessageResponse, error: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          console.log('Message sent!');
+          resolve();
+        }
+      });
     });
-
-    return Promise.resolve();
   }
-
 
   /**
    * Tells the service desk if a user has started or stopped typing.
@@ -119,27 +139,10 @@ class KustomerServiceDesk implements ServiceDesk {
   async userTyping(isTyping: boolean): Promise<void> {
     if (isTyping) {
       KustomerCore.sendTypingActivity({
-        conversationId: this.kustomerConversationId,
+        conversationId: this.conversationId,
         typing: true,
       });
-      return Promise.resolve();
-    } else {
-      return Promise.resolve();
     }
-  }
-
-  /**
-   * Informs the service desk that the user has read all the messages that have been sent by the service desk.
-   *
-   * This functionality is not currently implemented in the web chat widget.
-   *
-   * @returns Returns a Promise that resolves when the service desk has successfully handled the call.
-   */
-  async userReadMessages(): Promise<void> {
-    KustomerCore.markRead({
-      conversationId: this.kustomerConversationId
-    });
-    console.log('userReadMessages');
     return Promise.resolve();
   }
 
@@ -152,82 +155,122 @@ class KustomerServiceDesk implements ServiceDesk {
    * means the availability status of agents is unknown or the service desk doesn't support this information.
    */
   async areAnyAgentsOnline(connectMessage: MessageResponse): Promise<boolean | null> {
-    return null;
+    const isAgentAvailable = await this.isAgentOnline();
+    return isAgentAvailable;
   }
 
-  private onMessageReceivedHandler = (response: onMessageSentResponse, error: any) => {
-    if (response.direction === "out") {
+  private onMessageReceivedHandler = (response: OnMessageSentResponse, error: any) => {
+    if (response.direction === 'out') {
       if (!this.agentProfile.nickname) {
         this.agentProfile.nickname = response.sentBy.displayName;
+        this.agentProfile.id = response.sentBy.id;
         this.callback.agentJoined(this.agentProfile);
-      } else if (this.agentProfile.nickname != response.sentBy.displayName) {
-        this.agentProfile.nickname = response.sentBy.displayName;
-        this.callback.beginTransferToAnotherAgent(this.agentProfile)
+      } else if (this.agentProfile.nickname !== response.sentBy.displayName) {
+        const newAgentProfile = {
+          nickname: response.sentBy.displayName,
+          id: response.sentBy.id,
+        };
+        this.callback.beginTransferToAnotherAgent(newAgentProfile);
+        this.callback.agentJoined(newAgentProfile);
       }
       this.callback.sendMessageToUser(stringToMessageResponseFormat(response.body), this.agentProfile.id);
     }
-  }
+  };
 
-  private onMessageSent = (response: onMessageSentResponse, error: any) => {
-    console.log('onMessageSent, this is your agent response', response);
-  }
+  private onMessageSent = (response: OnMessageSentResponse, error: any) => {
+    console.log('Your agent response', response);
+  };
 
-  private onAgentTypingActivity = (response: onAgentTypingActivityResponse, error: any) => {
+  private onAgentTypingActivity = (response: OnAgentTypingActivityResponse, error: any) => {
     if (response && response.typing === true) {
       this.callback.agentTyping(true);
     } else if (response && response.typing === false) {
       this.callback.agentTyping(false);
     }
-  }
+  };
 
   private onConversationCreate = (response: any, error: any) => {
-    if (this.isChatInit) return;
-    if (this.jwt) {
-      //Customer authenicate chat
-      Kustomer.login({
-        jwtToken: this.jwt
-      });
+    if (!response) {
+      return;
     }
-    const t = this;
-    //Passing Session History Key to Kustomer
-    KustomerCore.describeConversation({
-      conversationId: response.conversationId,
-      customAttributes: {
-        watsonAssistantSessionHistoryStr: t.sessionHistoryKey
-      }
-    })
     const messageObj = {
       conversationId: response.conversationId,
       body: WATSON_TRANSFER_MESSAGE,
     };
-    KustomerCore.sendMessage(messageObj, function (response: onSendMessageResponse, error: any) {
-      console.log('Message sent!');
+    KustomerCore.sendMessage(messageObj, (response: OnSendMessageResponse, error: any) => {
+      if (error) {
+        console.error('An error occurred when sending a message', error);
+      } else {
+        console.log('Message sent!');
+      }
     });
-    this.isChatInit = true;
-    this.kustomerConversationId = response.conversationId;
-  }
+    this.conversationId = response.conversationId;
+  };
 
-  private onConversationEndedHandler = (response: onConversationEndedResponse, error: any) => {
-    if (response && response.ended == true) {
+  private onConversationEndedHandler = (response: OnConversationEndedResponse, error: any) => {
+    if (response && response.ended === true) {
       this.callback.agentEndedChat();
     }
-  }
+  };
 
   private async initChat(): Promise<void> {
+    try {
+      this.removeKustomerChatEventListener();
+    } finally {
+      this.initKustomerChatEventListener();
+      KustomerCore.createConversation(
+        {
+          title: CONVERSATION_TITLE,
+        },
+        (response: OnConversationCreateResponse, error: any) => {
+          if (error) {
+            console.error('An error occurred when creating a new conversation', error);
+          } else {
+            setTimeout(() => {
+              KustomerCore.describeConversation({
+                conversationId: response.conversationId,
+                customAttributes: {
+                  watsonAssistantSessionHistoryStr: this.sessionHistoryKey,
+                },
+              });
+            }, 3000);
+          }
+        },
+      );
+    }
+    return Promise.resolve();
+  }
+
+  private initKustomerChatEventListener(): void {
     KustomerCore.addListener('onMessageReceived', this.onMessageReceivedHandler);
     KustomerCore.addListener('onAgentTypingActivity', this.onAgentTypingActivity);
     KustomerCore.addListener('onMessageSent', this.onMessageSent);
     KustomerCore.addListener('onConversationCreate', this.onConversationCreate);
-    KustomerCore.addListener('onConversationEnded', this.onConversationEndedHandler)
-    KustomerCore.createConversation({},
-      (response: onConversationCreateResponse, error: any) => {
-        if (error) {
-          console.log("handle the error");
-        } else {
-          console.log("handle the response")
-        }
+    KustomerCore.addListener('onConversationEnded', this.onConversationEndedHandler);
+  }
+
+  private removeKustomerChatEventListener(): void {
+    KustomerCore.removeListener('onMessageReceived', this.onMessageReceivedHandler);
+    KustomerCore.removeListener('onAgentTypingActivity', this.onAgentTypingActivity);
+    KustomerCore.removeListener('onMessageSent', this.onMessageSent);
+    KustomerCore.removeListener('onConversationCreate', this.onConversationCreate);
+    KustomerCore.removeListener('onConversationEnded', this.onConversationEndedHandler);
+  }
+
+  private isAgentOnline(): Promise<boolean> {
+    try {
+      return new Promise((resolve, reject) => {
+        KustomerCore.init({}, (chatSetting: any, error: any) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(KustomerCore.isChatAvailable().availability === 'online');
+          }
+        });
       });
-    return Promise.resolve();
+    } catch (error) {
+      return Promise.reject();
+    }
   }
 }
 

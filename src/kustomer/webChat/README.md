@@ -23,23 +23,28 @@ The following Kustomer resources provide some useful guides on Kustomer custom c
 
 1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md#development) to make sure you can run an instance of [ExampleServiceDesk](../../example/webChat/README.md).
 
-2. Update [kustomerServiceDesk.ts](./client/src/kustomerServiceDesk.ts) if you will be incorporating JWT token authentication or only describing your customer
+2. Within the Kustomer Platform, generate a new API Key with the role `org.tracking`. Save the key, will need it for the next step.
 
-3. Within the Kustomer Platform, generate a new API Key with the role `org.tracking`. Save the key, will need it for the next step.
-
-4. Edit the index.html in the top directory to include the follow script
+3. Edit the index.html in the top directory to include the follow script
 
 ```
 <script src="https://cdn.kustomerapp.com/chat-web/core.js" data-kustomer-api-key="YOUR_KUSTOMER_API_KEY"></script>
 ```
 
-5. To have the chat transcript display to an agent, within the Kustomer Platform create a new attribute on the Conversation Klass with Display Name as Watson Assistant Session History and set the type as Single Line Text 
+4. To have the chat transcript display to an agent, within the Kustomer Platform create a new attribute on the Conversation Klass with Display Name as Watson Assistant Session History and set the type as Single Line Text 
 
-6. Within Conversation Klass click on Insight Card and click `Create Insight Card` with name Watson Assistant Chat History and view location set as Insight Panel Card. Click on the bottom View Code and then click on Convert to Code. Type `CONVERT` and click on `I understand, please convert`. Then copy and paste the example html code from [here](./client/src/kustomer/webChat/client/watsonAssistantKview.html) and then click Save Changes. 
+5. Within Conversation Klass click on Insight Card and click `Create Insight Card` with name Watson Assistant Chat History and if listed set the view location set as Insight Panel Card. Click on the bottom View Code and then click on Convert to Code. Type `CONVERT` and click on `I understand, please convert`. Then copy and paste the code below and then click Save Changes. 
 
-7. Go to the client directory in [src/kustomer/webChat/client](./client).
+```
+const url ="https://web-chat.global.assistant.watson.appdomain.cloud/loadAgentAppFrame.html?session_history_key=" + _.get(conversation, 'custom.watsonAssistantSessionHistoryStr');
+<div>
+ <Card src={url} height={380} width={340} context={object.context} />
+</div>
+```
 
-8. From the client directory [src/kustomer/webChat/client](./client) run:
+6. Go to the client directory in [src/kustomer/webChat/client](./client).
+
+7. From the client directory [src/kustomer/webChat/client](./client) run:
     - `npm i`
     - `npm run dev`
 
