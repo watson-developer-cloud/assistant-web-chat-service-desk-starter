@@ -22,6 +22,7 @@ import {
   OnConversationEndedResponse,
   OnMessageSentResponse,
   OnSendMessageResponse,
+  g
 } from './kustomerTypes';
 
 /**
@@ -182,7 +183,7 @@ class KustomerServiceDesk implements ServiceDesk {
   };
 
   private onAgentTypingActivity = (response: OnAgentTypingActivityResponse, error: any) => {
-    if (response && response.typing === true) {
+    if (response?.typing === true) {
       this.callback.agentTyping(true);
     } else if (response && response.typing === false) {
       this.callback.agentTyping(false);
@@ -213,7 +214,7 @@ class KustomerServiceDesk implements ServiceDesk {
     }
   };
 
-  private async initChat(): Promise<void> {
+  private initChat(): Promise<void> {
     try {
       this.removeKustomerChatEventListener();
     } finally {
