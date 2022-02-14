@@ -2,6 +2,8 @@
 
 This document outlines a suggested sequence of steps for building a service desk integration using this repository. It is intended as a guide, and you can follow it to whatever extent you choose. At the end of this document are checklists for [core functionality](#core-functionality-checklist) and [optional functionality](#optional-functionality-checklist).
 
+You can read more information about the API with our [api documentation](./API.md).
+
 **Note:** Prebuilt reference implementations are available that implement the core features of integrations for [Genesys Cloud](../src/genesys/webChat/server) and [Twilio Flex](../src/flex/webChat/server). You can use this process described in this document if you want to further customize or extend these reference implementations to include additional features.
 
 Keep the following things in mind as you work through these steps:
