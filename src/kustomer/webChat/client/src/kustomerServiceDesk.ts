@@ -12,6 +12,7 @@
  *
  */
 
+import { ErrorType } from '../../../../common/types/errors';
 import { MessageRequest, MessageResponse } from '../../../../common/types/message';
 import { ServiceDesk, ServiceDeskFactoryParameters, StartChatOptions } from '../../../../common/types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
@@ -30,7 +31,7 @@ import {
  */
 
 /**
- * Default message that is sent to the agent
+ * Default message that is sent to the agent when the conversation is escalated to the agent.
  */
 const WATSON_TRANSFER_MESSAGE =
   'Watson Assistant has transferred a chat. Please look at the chat history to get the full context of the conversation.';
@@ -41,7 +42,7 @@ const WATSON_TRANSFER_MESSAGE =
 const CONVERSATION_TITLE = 'Watson Assistant Chat';
 
 class KustomerServiceDesk implements ServiceDesk {
-  agentProfile: AgentProfile = { id: 'liveagent', nickname: '' };
+  agentProfile: AgentProfile;
   callback: ServiceDeskCallback;
 
   /**
@@ -52,12 +53,12 @@ class KustomerServiceDesk implements ServiceDesk {
   /**
    * The ID of the conversation that is generated at the start of a transfer. Needed for sending user message, and ending the conversation.
    */
-  conversationId: string = '';
+  conversationId: string = null;
 
   /**
    * Flag to check if KustomerCore has been initialize
    */
-  isKustomerInitialize: boolean = false;
+  isKustomerInitialized: boolean = false;
 
   constructor(parameters: ServiceDeskFactoryParameters) {
     this.callback = parameters.callback;
@@ -94,6 +95,9 @@ class KustomerServiceDesk implements ServiceDesk {
         conversationId: this.conversationId,
       },
       (response: OnConversationEndedResponse, error: any) => {
+        if (error) {
+          console.error('Unable to notify Kustomer Platform that the customer ended the conversation.', error);
+        }
         console.log('Conversation ended');
       },
     );
@@ -154,18 +158,34 @@ class KustomerServiceDesk implements ServiceDesk {
   }
 
   private onMessageReceivedHandler = (response: OnMessageSentResponse, error: any) => {
+    if (error) {
+      /**
+       * If there is a problem with the event listener, we want the user to try again and restart the conversation.
+       */
+      this.callback.setErrorStatus({
+        logInfo: error,
+        type: ErrorType.DISCONNECTED,
+        isDisconnected: true,
+      });
+      return;
+    }
     if (response.direction === 'out') {
-      if (!this.agentProfile.nickname) {
-        this.agentProfile.nickname = response.sentBy.displayName;
-        this.agentProfile.id = response.sentBy.id;
-        this.callback.agentJoined(this.agentProfile);
-      } else if (this.agentProfile.nickname !== response.sentBy.displayName) {
-        const newAgentProfile = {
+      if (!this.agentProfile) {
+        this.agentProfile = {
           nickname: response.sentBy.displayName,
           id: response.sentBy.id,
         };
-        this.callback.beginTransferToAnotherAgent(newAgentProfile);
-        this.callback.agentJoined(newAgentProfile);
+        this.callback.agentJoined(this.agentProfile);
+        /**
+         * Transfer occurs when a different agent sends a message to the user.
+         */
+      } else if (this.agentProfile.id !== response.sentBy.id) {
+        this.agentProfile = {
+          nickname: response.sentBy.displayName,
+          id: response.sentBy.id,
+        };
+        this.callback.beginTransferToAnotherAgent(this.agentProfile);
+        this.callback.agentJoined(this.agentProfile);
       }
       this.callback.sendMessageToUser(stringToMessageResponseFormat(response.body), this.agentProfile.id);
     }
@@ -180,7 +200,11 @@ class KustomerServiceDesk implements ServiceDesk {
   };
 
   private onConversationEndedHandler = (response: OnConversationEndedResponse, error: any) => {
-    if (response && response.ended === true) {
+    if (response?.ended === true) {
+      /**
+       * Reset conversationId
+       */
+      this.conversationId = null;
       this.callback.agentEndedChat();
     }
   };
@@ -195,6 +219,9 @@ class KustomerServiceDesk implements ServiceDesk {
           if (error) {
             reject(error);
           } else {
+            /**
+             * Sending a static message to the agent.
+             */
             const messageObj = {
               conversationId: response.conversationId,
               body: WATSON_TRANSFER_MESSAGE,
@@ -202,8 +229,15 @@ class KustomerServiceDesk implements ServiceDesk {
             this.conversationId = response.conversationId;
             KustomerCore.sendMessage(messageObj, (response: OnSendMessageResponse, error: any) => {
               if (error) {
+                /**
+                 * If message is not delivered to the agent, the conversation is set as draft and agent will not be able to interact with it.
+                 * Better to have the user restart and try again.
+                 */
                 reject(error);
               } else {
+                /**
+                 * Adding the session history key to the custom attribute on the conversation.
+                 */
                 KustomerCore.describeConversation(
                   {
                     conversationId: response.conversationId,
@@ -213,7 +247,7 @@ class KustomerServiceDesk implements ServiceDesk {
                   },
                   (response: any, error: any) => {
                     if (error) {
-                      reject(error);
+                      console.error('Unable to map session history on the conversation.', error);
                     } else {
                       resolve();
                     }
@@ -227,9 +261,11 @@ class KustomerServiceDesk implements ServiceDesk {
     });
   }
 
-  // Initialize KustomerCore and adding eventListeners
+  /**
+   * Ensures that the KustomerCore library has been initialized and the appropriate listeners are added.
+   */
   private ensureInit(): Promise<void> {
-    if (!this.isKustomerInitialize) {
+    if (!this.isKustomerInitialized) {
       return new Promise((resolve, reject) => {
         KustomerCore.init({}, (chatSetting: any, error: any) => {
           if (error) {
@@ -238,12 +274,13 @@ class KustomerServiceDesk implements ServiceDesk {
             KustomerCore.addListener('onMessageReceived', this.onMessageReceivedHandler);
             KustomerCore.addListener('onAgentTypingActivity', this.onAgentTypingActivity);
             KustomerCore.addListener('onConversationEnded', this.onConversationEndedHandler);
-            this.isKustomerInitialize = true;
+            this.isKustomerInitialized = true;
             resolve();
           }
         });
       });
     }
+    return Promise.resolve();
   }
 }
 

@@ -19,7 +19,7 @@ The following Kustomer resources provide some useful guides on Kustomer custom c
 
   - [Chat Management: Settings](https://kustomer.kustomer.help/en_us/chat-settings-B1sdKbtz7) 
 
-## Setting up
+## Required setup
 
 1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md#development) to make sure you can run an instance of [ExampleServiceDesk](../../example/webChat/README.md).
 
