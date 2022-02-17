@@ -159,9 +159,7 @@ class KustomerServiceDesk implements ServiceDesk {
 
   private onMessageReceivedHandler = (response: OnMessageSentResponse, error: any) => {
     if (error) {
-      /**
-       * If there is a problem with the event listener, we want the user to try again and restart the conversation.
-       */
+      // If there is a problem with the event listener, we want the user to try again and restart the conversation.
       this.callback.setErrorStatus({
         logInfo: error,
         type: ErrorType.DISCONNECTED,
@@ -176,9 +174,7 @@ class KustomerServiceDesk implements ServiceDesk {
           id: response.sentBy.id,
         };
         this.callback.agentJoined(this.agentProfile);
-        /**
-         * Transfer occurs when a different agent sends a message to the user.
-         */
+        // Transfer occurs when a different agent sends a message to the user.
       } else if (this.agentProfile.id !== response.sentBy.id) {
         this.agentProfile = {
           nickname: response.sentBy.displayName,
@@ -201,9 +197,6 @@ class KustomerServiceDesk implements ServiceDesk {
 
   private onConversationEndedHandler = (response: OnConversationEndedResponse, error: any) => {
     if (response?.ended === true) {
-      /**
-       * Reset conversationId
-       */
       this.conversationId = null;
       this.callback.agentEndedChat();
     }
@@ -219,9 +212,7 @@ class KustomerServiceDesk implements ServiceDesk {
           if (error) {
             reject(error);
           } else {
-            /**
-             * Sending a static message to the agent.
-             */
+            // Sending a static message to the agent.
             const messageObj = {
               conversationId: response.conversationId,
               body: WATSON_TRANSFER_MESSAGE,
@@ -229,15 +220,10 @@ class KustomerServiceDesk implements ServiceDesk {
             this.conversationId = response.conversationId;
             KustomerCore.sendMessage(messageObj, (response: OnSendMessageResponse, error: any) => {
               if (error) {
-                /**
-                 * If message is not delivered to the agent, the conversation is set as draft and agent will not be able to interact with it.
-                 * Better to have the user restart and try again.
-                 */
+                // If message is not delivered to the agent, the conversation is set as draft and agent will not be able to interact with it. Better to have the user restart and try again.
                 reject(error);
               } else {
-                /**
-                 * Adding the session history key to the custom attribute on the conversation.
-                 */
+                // Calling describeConversation will send the session history key to the agent so that the embedded web chat agent app can show the conversation history to the agent.
                 KustomerCore.describeConversation(
                   {
                     conversationId: response.conversationId,
@@ -247,6 +233,7 @@ class KustomerServiceDesk implements ServiceDesk {
                   },
                   (response: any, error: any) => {
                     if (error) {
+                      // If an error occurs it means the agent can't see the conversation history but we still want to allow the conversation to continue so we are not going to reject the promise here.
                       console.error('Unable to map session history on the conversation.', error);
                     } else {
                       resolve();
