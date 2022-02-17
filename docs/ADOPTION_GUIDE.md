@@ -39,8 +39,8 @@ Called to update information on the state of the service desk. Specifically, the
 Called to check agent availability when a user requests escalation to an agent, so that WA can render the appropriate response.
 - Need: Endpoint that returns some sort of agent availability information. This could be a simple true/false, total number of agents available, list of agents available, etc.
 
-### ~~userTyping (optional)~~
-Called when its known that the user is typing. _This is currently not implemented in our web chat widget, but may become available in the future._
+### userTyping (optional)
+Called when the user starts or stops typing. _(Requires web chat 5.1.1)_ 
 - Need: Endpoint that allows WA web chat to notify the service desk that the user is currently typing.
 
 ### ~~userReadMessages (optional)~~
