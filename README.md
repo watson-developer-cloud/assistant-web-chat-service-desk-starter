@@ -18,6 +18,7 @@ We provide reference implementations that provide fully functional integrations 
 - [Twilio Flex](./src/flex/webChat)
 - [NICE inContact](./src/incontact/webChat)
 - [Oracle Cloud B2C](./src/oracle/webChat)
+- [Kustomer](./src/kustomer/webChat)
 
 ## Custom integrations between web chat and service desks
 
