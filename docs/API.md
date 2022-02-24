@@ -18,7 +18,7 @@ An implementation template can be found in [../src/example/webChat/client/src/se
 Below is a list of the steps and actions that typically occur when a user is connected to a service desk and how web chat interacts with the service desk integration.
 
 1. When web chat is started, it will create a single instance of the service desk integration using the `serviceDeskFactory` configuration property.
-2. A user requests an agent and Watson Assistant returns a "Connect to Agent" response (type=`connecct_to_agent`).
+2. A user requests an agent and Watson Assistant returns a "Connect to Agent" response (type=`connect_to_agent`).
 3. If the service desk integration implements it, web chat will call `areAnyAgentsOnline` to determine if any agents are online. This determines whether web chat displays a "request agent" card or if it shows the "no agents available" message instead.
 4. User clicks the "Request agent" button.
 5. The event `agent:pre:startChat` is fired.
