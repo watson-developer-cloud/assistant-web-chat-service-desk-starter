@@ -1,4 +1,4 @@
-# Embedded chat history widget
+# Web chat agent app history widget
 
 The embedded agent application allows your live agents to view a chat history of the end user's conversation with Watson Assistant to better understand their needs.
 

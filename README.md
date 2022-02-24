@@ -1,47 +1,59 @@
 # Web chat service desk extension starter
 
-A starter kit for building custom service integrations for Watson Assistant web chat. This starter kit requires web chat version 3.4.0 or above.
+This repo provides a set of example and starter kit service desk integrations for use with Watson Assistant web chat – to allow end-users on web chat to escalate to a human agent. We provide starter kits to common live agent platforms, like Genesys Cloud, and also show you how to build custom integrations to other platforms.
 
 ## Overview
 
-This project provides a development and production build environment for adding your own client-side service desk implementations to the web chat integration for Watson Assistant. These extensions can be shared between teams and also can be submitted as potential contributions to the the main web chat project. If you're interested in contributing to this project or proposing that your integration be offered in Watson Assistant, see [./CONTRIBUTING.md](./CONTRIBUTING.md).
+This repo provides a development and production build environment for adding your own client-side service desk implementations to the web chat integration for Watson Assistant. These extensions can be shared between teams and also can be submitted as potential contributions to the main web chat project. If you're interested in contributing to this project or proposing that your integration be offered in Watson Assistant, see [./CONTRIBUTING.md](./CONTRIBUTING.md).
 
 **Important:** Any custom code used with Watson Assistant is the responsibility of the developer and is not covered by IBM support.
 
-To find out if your company's tool is feasible for this approach, check out our Adoption Guide [here](./docs/ADOPTION_GUIDE.md). If you'd like some help building an integration, [contact us here](https://www.ibm.com/watson/assistant-integrations/?utm_medium=webchatbyosd).
+To find out if your company's tool is feasible for this approach, check out our Adoption Guide [here](./docs/ADOPTION_GUIDE.md). If you'd like some help to build an integration, [contact us here](https://www.ibm.com/watson/assistant-integrations/?utm_medium=webchatbyosd).
 
 ## Example Implementations
-We provide reference implementations that provide fully functional integrations with popular service desks. 
-These implementations, while functional, are examples only, and have not been vetted for production use.
+We provide reference implementations that provide fully functional integrations with popular service desks. These implementations, while functional, are examples only, and have not been vetted for production use.
 
 - [Generic Example](./src/example/webChat)
-- [Genesys Cloud](./src/genesys/webChat)  
-- [Twilio Flex](./src/flex/webChat) 
+- [Genesys Cloud](./src/genesys/webChat)
+- [Twilio Flex](./src/flex/webChat)
 - [NICE inContact](./src/incontact/webChat)
 - [Oracle Cloud B2C](./src/oracle/webChat)
 - [Kustomer](./src/kustomer/webChat)
 
-### Technical requirements and scope
+## Custom integrations between web chat and service desks
 
-The service desks must support client-side integrations using a browser-based (usually WebSockets or long-polling) API to connect from the service desk API to within the web chat browser.
+In order for web chat to integrate with a custom service desk, there are two basic steps that need to happen:
 
-### Adding the service desk extension to the web chat
+1. Code must be written that communicates with the service desk (such as by starting a conversation or sending a message to a human agent) and satisfies the API contract defined by web chat.
+2. Web chat needs to be given access to that code, so it can run it.
 
-In order to make this project available to your web chat, you simply need to pass the generated factory into your normal web chat embed code.
+This repository is intended to help with both of these steps and can be used to build a deployable javascript bundle containing your custom service desk integration. However, it is not required to use any of the processes or tools in this repository for that. If you have your own front-end application and infrastructure for your website you can copy the appropriate code from step 1 above into your application and build and deploy it using your existing infrastructure; it is not required for the integration to be built and deployed separately.
+
+You can read more information with our [api documentation](./docs/API.md).
+
+### Integration with web chat, the simple version
+
+If you have implemented a service integration that satisfies the web chat API, getting web chat to use it only requires providing a factory function that can create a new instance of your integration. Below contains an example of an empty integration (that doesn't do any communicating with a service desk) to show how to register an integration with web chat. Your integration does not have to be built into a separate javascript bundle or hosted separately from the rest of your front-end application.
 
 ```html
-<!-- This is the script we will generate. You are responsible for finding a place to host it. -->
-<script src="YOUR_HOST/servicedesk.bundle.js"></script>
-
-<!-- You can and should do something like the below to make sure loading the script is non-blocking.
 <script>
-  window.WebChatServiceDeskFactory = {};
-  setTimeout(function(){const t=document.createElement('script');t.src='YOUR_HOST/servicedesk.bundle.js';document.head.appendChild(t);});
-</script>
--->
-
-<!-- Regular web chat embed script -->
-<script>
+  // Your custom service desk integration which can be located anywhere in your codebase.
+  class MyServiceDesk {
+    constructor(callback) {
+      this.callback = callback;
+    }
+    startChat() {
+      console.log('Starting chat');
+    }
+    endChat() {
+      console.log('Ending chat');
+    }
+    sendMessageToAgent() {
+      console.log('Sending message to agent');
+    }
+  }
+    
+  // Regular web chat embed script.
   window.watsonAssistantChatOptions = {
     integrationID: "YOUR_INTEGRATION_ID",
     region: "YOUR_REGION",
@@ -49,10 +61,43 @@ In order to make this project available to your web chat, you simply need to pas
     onLoad: function(instance) {
       instance.render();
     },
-    // The function that this project exports.
+
+    // **** The important part. This creates an instance of your integration.
+    serviceDeskFactory: (parameters) => new MyServiceDesk(parameters.callback),
+  };
+  setTimeout(function(){const t=document.createElement('script');t.src='https://web-chat.global.assistant.watson.appdomain.cloud/versions/' + (window.watsonAssistantChatOptions.clientVersion || 'latest') + '/WatsonAssistantChatEntry.js';document.head.appendChild(t);});
+</script>
+```
+
+### Integration with web chat, using the build process in this repo
+
+This repo can be used as an isolated tool to build and test your integration with your web application. The basic steps to use it are:
+
+1. Use the build process in this repo to build a javascript bundle of your integration. This will produce a `servicedesk.bundle.js` file. Each integration should have a README describing in detail the steps necessary to build it.
+2. Upload the `servicedesk.bundle.js` file to a hosting location where the file can be downloaded and included in your application.
+3. Add a script tag to your application's HTML file that will load your integration. This will expose a global `WebChatServiceDeskFactory` function that can be provided to web chat.
+4. Add the configuration option to web chat to use `WebChatServiceDeskFactory`.
+
+```html
+<!-- The servicedesk.bundle.js is the script this repo will generate. You are responsible for finding a place to host it. -->
+<script>
+  window.WebChatServiceDeskFactory = {};
+  setTimeout(function(){const t=document.createElement('script');t.src='YOUR_HOST/servicedesk.bundle.js';document.head.appendChild(t);});
+</script>
+
+<script>
+  // Regular web chat embed script.
+  window.watsonAssistantChatOptions = {
+    integrationID: "YOUR_INTEGRATION_ID",
+    region: "YOUR_REGION",
+    serviceInstanceID: "YOUR_SERVICE_INSTANCE_ID",
+    onLoad: function(instance) {
+      instance.render();
+    },
+    // The function that this project exports and is contained in servicedesk.bundle.js.
     serviceDeskFactory: window.WebChatServiceDeskFactory,
   };
-  setTimeout(function(){const t=document.createElement('script');t.src='https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js';document.head.appendChild(t);});
+  setTimeout(function(){const t=document.createElement('script');t.src='https://web-chat.global.assistant.watson.appdomain.cloud/versions/' + (window.watsonAssistantChatOptions.clientVersion || 'latest') + '/WatsonAssistantChatEntry.js';document.head.appendChild(t);});
 </script>
 ```
 
@@ -62,16 +107,13 @@ Tailor web chat to your needs by initializing it with your own custom options. T
 In addition to the parameters listed [here](https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=api-configuration#configurationobject), it supports the following options:
 
 #### serviceDesk
-_requires web chat version 3.4.0 or above_
 ```
 serviceDesk: {
   availabilityTimeoutSeconds: 30,
 }
 ```
 
-- `availabilityTimeoutSeconds`: The timeout value in seconds to use when determining agent availability. When connect_to_agent response is received, 
-the system will ask the service desk if any agents are available. If no response is received within the timeout window, the system will return 
-"false" to indicate no agents are available.
+- `availabilityTimeoutSeconds`: The timeout value in seconds to use when determining agent availability. When a connect_to_agent response is received, the system will ask the service desk if any agents are available. If no response is received within the timeout window, the system will return "false" to indicate no agents are available. The default in web chat is 5 seconds.
 
 ## Prerequisites
 
@@ -80,13 +122,6 @@ the system will ask the service desk if any agents are available. If no response
 ## Development
 
 To set up your development environment, first fork this repository. 
-
-Instructions for setting up a development environment for each of the service desk reference example integrations can be found in the following directories:
-- [Genesys Cloud](./src/genesys/webChat)  
-- [Twilio Flex](./src/flex/webChat) 
-- [NICE inContact](./src/incontact/webChat)
-- [Oracle Cloud B2C](./src/oracle/webChat)
-- [Kustomer](./src/kustomer/webChat)
 
 To run the default example, go to the [`src/example/webChat`](src/example/webChat) directory and follow the instructions in the [README.md](src/example/webChat/README.md).
 

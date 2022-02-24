@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2022.
  *
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -25,7 +25,12 @@ import { AgentProfile } from './profiles';
 interface ServiceDeskCallback {
   /**
    * Sends updated availability information to the chat widget for a user who is waiting to be connected to an
-   * agent. This may be called at any point while waiting for the connection to provide newer information.
+   * agent (e.g. the user is number 2 in line). This may be called at any point while waiting for the connection to
+   * provide newer information.
+   *
+   * Note: Of the fields in the AgentAvailability object, only one of position_in_queue and estimated_wait_time can be
+   * rendered in the widget. If both fields are provided, estimated_wait_time will take priority and the
+   * position_in_queue field will be ignored.
    *
    * @param availability The availability information to display to the user.
    */
@@ -33,8 +38,6 @@ interface ServiceDeskCallback {
 
   /**
    * Informs the chat widget that an agent has joined the chat.
-   *
-   * @param profile The meta data about the agent.
    */
   agentJoined(profile: AgentProfile): void;
 
@@ -51,7 +54,8 @@ interface ServiceDeskCallback {
   agentTyping(isTyping: boolean): void;
 
   /**
-   * Sends a message to the chat widget from an agent.
+   * Sends a message to the chat widget from an agent. To display an error message to user, specify response_type:
+   * 'inline_error' in MessageResponse, this also displays an error icon as well as hides the agent's avatar from user.
    *
    * @param message The message to display to the user.
    * @param agentID The ID of the agent who is sending the message.
@@ -76,7 +80,7 @@ interface ServiceDeskCallback {
   /**
    * Informs the chat widget that the agent has ended the conversation.
    */
-  agentEndedChat(): void;
+  agentEndedChat(): Promise<void>;
 
   /**
    * Sets the state of the given error type.
@@ -89,8 +93,8 @@ interface ServiceDeskCallback {
 /**
  * Information about the current availability of an agent while a user is waiting to be connected. If these are not set
  * the web chat will provide generic messaging letting the user know that they will reach a live agent as soon as
- * possible. 
- * 
+ * possible.
+ *
  * Note: Only one of position_in_queue and estimated_wait_time can be rendered in the widget. If both fields are
  * provided, estimated_wait_time will take priority.
  */

@@ -3,6 +3,8 @@ This guide is meant to provide additional context to the existing documentation 
 
 To successfully create a BYOSD integration with an existing service desk, developers will need to implement the functions listed in our [API documention](./API.md), following these [developer guidelines](./STEPS.md). In order to implement these APIs, however, the developer will first need access to certain exposed API endpoints of the service desk application, which are detailed in the following.
 
+The service desk must support client-side integrations using a browser-based (usually WebSockets or long-polling) API to connect from the service desk API to within the web chat browser.
+
 **Core "must have" Functionality:** startChat, endChat, sendMessageToAgent
 
 **Additional "nice to have" Functionality:** updateState, areAnyAgentsOnline, userTyping, userReadMessages
@@ -32,7 +34,7 @@ Used to relay user messages from WA chat to service desk, within a chat session 
    * Twilio: [sendMessage(...)](../src/flex/webChat/client/src/twilioFlex.ts#L195)
 
 ### updateState (optional)
-Called to update information on the state of the service desk. Specifically, the sessionID, userID, and locale define the state. Depending on your implementation, you may wish to receive updates on changes in sessionId (for example, due to a session timeout from the user being idle). If so, we need an endpoint that will allow us to notify the service desk of these updates. 
+Called to update information on the state of the service desk. Specifically, the sessionID, userID, and locale define the state. Depending on your implementation, you may wish to receive updates on changes in sessionId (for example, due to a session timeout from the user being idle). If so, we need an endpoint that will allow us to notify the service desk of these updates.
 - Need: Endpoint that allows WA web chat to notify the service desk of changes in the state.
 
 ### areAnyAgentsOnline (optional)
