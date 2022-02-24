@@ -64,7 +64,7 @@ If you have implemented a service integration that satisfies the web chat API, g
     // **** The important part. This creates an instance of your integration.
     serviceDeskFactory: (parameters) => new MyServiceDesk(parameters.callback),
   };
-  setTimeout(function(){const t=document.createElement('script');t.src='https://web-chat.global.assistant.dev.watson.appdomain.cloud/versions/' + (window.watsonAssistantChatOptions.clientVersion || 'latest') + '/WatsonAssistantChatEntry.js';document.head.appendChild(t);});
+  setTimeout(function(){const t=document.createElement('script');t.src='https://web-chat.global.assistant.watson.appdomain.cloud/versions/' + (window.watsonAssistantChatOptions.clientVersion || 'latest') + '/WatsonAssistantChatEntry.js';document.head.appendChild(t);});
 </script>
 ```
 
@@ -96,7 +96,7 @@ This repo can be used as an isolated tool to build and test your integration wit
     // The function that this project exports and is contained in servicedesk.bundle.js.
     serviceDeskFactory: window.WebChatServiceDeskFactory,
   };
-  setTimeout(function(){const t=document.createElement('script');t.src='https://web-chat.global.assistant.dev.watson.appdomain.cloud/versions/' + (window.watsonAssistantChatOptions.clientVersion || 'latest') + '/WatsonAssistantChatEntry.js';document.head.appendChild(t);});
+  setTimeout(function(){const t=document.createElement('script');t.src='https://web-chat.global.assistant.watson.appdomain.cloud/versions/' + (window.watsonAssistantChatOptions.clientVersion || 'latest') + '/WatsonAssistantChatEntry.js';document.head.appendChild(t);});
 </script>
 ```
 
