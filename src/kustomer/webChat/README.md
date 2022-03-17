@@ -8,7 +8,7 @@ This reference implementation supports the core features of a Kustomer integrati
 
 ## Overview
 
-This integration is based on the functionality of the the Kustomer Core SDK and the Kustomer Chat SDK, which enable a client to communicate with the Kustomer platform.
+This integration is based on the Kustomer Core SDK and the Kustomer Chat SDK, which a client can use to communicate with the Kustomer platform.
 
 The following Kustomer resources provide some useful guides on Kustomer custom chat implementation:
   - [Build your own UI](https://developer.kustomer.com/chat-sdk/v2.0-Web/docs/build-your-own-ui)
