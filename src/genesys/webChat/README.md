@@ -17,7 +17,7 @@ This reference implementation supports the core features of a Genesys Cloud inte
 
 The Genesys Cloud integration consists of two main components: client-side code that runs in the user's browser, and server-side code that you host.
 
-![Genesys Architecture Overview](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/src/genesys/webChat/server/architecture/arch-overview.png)
+![Genesys Architecture Overview](./server/architecture/arch-overview.png)
 
 The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the Watson Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
 
