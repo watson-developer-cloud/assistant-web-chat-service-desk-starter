@@ -81,23 +81,29 @@ This repo can be used as an isolated tool to build and test your integration wit
 ```html
 <!-- The servicedesk.bundle.js is the script this repo will generate. You are responsible for finding a place to host it. -->
 <script>
-  window.WebChatServiceDeskFactory = {};
-  setTimeout(function(){const t=document.createElement('script');t.src='YOUR_HOST/servicedesk.bundle.js';document.head.appendChild(t);});
-</script>
+  function loadWebChat() {
+    // Regular web chat embed script.
+    window.watsonAssistantChatOptions = {
+      integrationID: "YOUR_INTEGRATION_ID",
+      region: "YOUR_REGION",
+      serviceInstanceID: "YOUR_SERVICE_INSTANCE_ID",
+      onLoad: function(instance) {
+        instance.render();
+      },
+      // The function that this project exports and is contained in servicedesk.bundle.js.
+      serviceDeskFactory: window.WebChatServiceDeskFactory,
+    };
+    setTimeout(function(){const t=document.createElement('script');t.src='https://web-chat.global.assistant.watson.appdomain.cloud/versions/' + (window.watsonAssistantChatOptions.clientVersion || 'latest') + '/WatsonAssistantChatEntry.js';document.head.appendChild(t);});
+  }
 
-<script>
-  // Regular web chat embed script.
-  window.watsonAssistantChatOptions = {
-    integrationID: "YOUR_INTEGRATION_ID",
-    region: "YOUR_REGION",
-    serviceInstanceID: "YOUR_SERVICE_INSTANCE_ID",
-    onLoad: function(instance) {
-      instance.render();
-    },
-    // The function that this project exports and is contained in servicedesk.bundle.js.
-    serviceDeskFactory: window.WebChatServiceDeskFactory,
-  };
-  setTimeout(function(){const t=document.createElement('script');t.src='https://web-chat.global.assistant.watson.appdomain.cloud/versions/' + (window.watsonAssistantChatOptions.clientVersion || 'latest') + '/WatsonAssistantChatEntry.js';document.head.appendChild(t);});
+  // This will load the service desk bundle. Using a setTimeout allows it to load without blocking the main page from loading.
+  setTimeout(function () {
+    const script = document.createElement('script');
+    script.src = 'YOUR_HOST/servicedesk.bundle.js';
+    // Make sure to only load web chat once this bundle has been loaded.
+    script.onload = loadWebChat;
+    document.head.appendChild(script);
+  });
 </script>
 ```
 

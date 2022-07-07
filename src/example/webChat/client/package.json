@@ -2,6 +2,9 @@
   "name": "example-service-desk-webchat-client",
   "version": "1.0.0",
   "description": "Webchat client service desk example.",
+  "engines": {
+    "node": "^16.15.1"
+  },
   "main": "src/buildEntry.ts",
   "browserslist": [
     "> 0.25%",
