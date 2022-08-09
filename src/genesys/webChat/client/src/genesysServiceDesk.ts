@@ -29,6 +29,7 @@ import {
   ServiceDesk,
   ServiceDeskFactoryParameters,
   ServiceDeskStateFromWAC,
+  StartChatOptions,
 } from '../../../../common/types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
 import {
@@ -114,7 +115,7 @@ class GenesysServiceDesk implements ServiceDesk {
    * @returns Returns a Promise that resolves when the service desk has successfully started a new chat. This does
    * not necessarily mean that an agent has joined the conversation or has read any messages sent by the user.
    */
-  async startChat(connectMessage: MessageResponse): Promise<void> {
+  async startChat(connectMessage: MessageResponse, startChatOptions?: StartChatOptions): Promise<void> {
     // append SDK script in browser
     await new Promise<void>((resolve, reject) => {
       const script = document.createElement('script');
@@ -165,6 +166,9 @@ class GenesysServiceDesk implements ServiceDesk {
       },
       memberInfo: {
         displayName: this.user.id,
+        customFields: {
+          sessionHistoryKey: startChatOptions.agentAppInfo.sessionHistoryKey,
+        },
       },
     };
 
