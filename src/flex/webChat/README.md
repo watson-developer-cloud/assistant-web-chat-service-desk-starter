@@ -28,7 +28,7 @@ The following Twilio resources provide some useful guides on Twilio Flex custom 
 | :-------------  |:------------- |
 `ACCOUNT_ID` | Your primary Twilio Flex account SID, as shown in the [Twilio console](https://www.twilio.com/console/project/settings).
 `AUTH_TOKEN` | Your Auth Token for the Twilio Flex project, as shown in the [Twilio console](https://www.twilio.com/console/project/settings). For more information, see [Auth Tokens and How to Change Them](https://support.twilio.com/hc/en-us/articles/223136027-Auth-Tokens-and-How-to-Change-Them).
-`FLEX_FLOW_ID` | The Custom FlexFlow SID. Use the Twilio CLI to create a custom Flex Flow. For more information, see [Add a Custom Chat Channel to Twilio Flex](https://www.twilio.com/blog/add-custom-chat-channel-twilio-flex).
+`FLEX_FLOW_ID` | The flexFlowSid shown in the bottom right hand corner of the [Developer Setup](https://flex.twilio.com/admin/developers).
 `API_KEY` | The API key for accessing the Twilio APIs. Generate an API key using the **Create a new Flex Flow** section of the [Twilio console](https://www.twilio.com/console/project/api-keys).
 `API_SECRET` | The secret for the specified API key.
 `CHAT_SERVICE_ID` | The Programmable Chat service SID, as shown in the Twilio [Programmable Chat tab](https://www.twilio.com/console/chat/services)
