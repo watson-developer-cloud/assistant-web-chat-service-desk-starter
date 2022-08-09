@@ -16,10 +16,12 @@
  * This file contains utility functions you may find useful for writing your own service desk implementation.
  */
 
-import uuid from 'uuid';
-
 import { THREAD_ID_AGENT } from './constants';
 import { GenericItem, MessageResponse } from './types/message';
+
+function uniqueId() {
+  return crypto?.randomUUID ? crypto.randomUUID() : performance.now().toString();
+}
 
 /**
  * Given a string will convert it into a message object to be send from Agent to User.
@@ -36,7 +38,7 @@ function stringToMessageResponseFormat(string: string): MessageResponse {
       generic: [textItem],
     },
     thread_id: THREAD_ID_AGENT,
-    id: uuid(),
+    id: uniqueId(),
   };
 }
 
