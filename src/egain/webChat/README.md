@@ -12,38 +12,47 @@ The integration example consists of client-side code that runs in the user's bro
 
 ## Prerequisites
 
-1. Configure your eGain Conversation Hub tenant using the steps listed under the section Bring-Your-Own-Channel with eGain Virtual Assistant steps and using this postman script BYOC with eGain VA Conversation API Setup.postman_collection.json from [here](https://ebrain.egain.com/kb/devcentral/content/EASY-8283/Bring-Your-Own-Channel).
+1. Contact your eGain customer representative to obtain the following:
+    - Tenant clientId and clientSecret
+    - Customer client app authentication credentials (username and password)
+    - Customer client app callback URL
+    - Initalizer, Registration and Websocket URLs
 
-2. To configure Conversation Hub, the following credentials are required:
-    - Tenant clientId and clientSecret.
-    - Customer client app authentication credentials (username and password).
-    - Customer client app callback URL.
-    Please contact your eGain customer representative to receive the above mentioned credentials.
+2. Configure your eGain Conversation Hub tenant using the steps listed under the section Bring-Your-Own-Channel with eGain Virtual Assistant steps and using this postman script BYOC with eGain VA Conversation API Setup.postman_collection.json from [here](https://ebrain.egain.com/kb/devcentral/content/EASY-8283/Bring-Your-Own-Channel).
 
-3. Once Conversation Hub is configured, to run this implementation the following credentials are required:
-    - Customer client app clientId and clientSecret - Obtained from Step 2.
-    - Channel type, account address and entrypoint Id - Obtained from Step 2.
-    - Initalizer, Registration and Websocket URLs - Provided by eGain customer representative.
+3. Once Conversation Hub is configured, please have the below credentials to setup the servicedesk.
+    - Customer client app clientId
+    - Customer client app clientSecret
+    - Channel type
+    - Account address
+    - Entrypoint Id
 
 ## Required setup
 
 1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md#development) to make sure you can run an instance of [ExampleServiceDesk](../../example/webChat/README.md).
 
-2. Register your webchat integration with eGain by sending the information gathered from the previous step. The IBMIntegrationId is the id of the watson assistant you have configured through IBM's console.
+2. Create a unique customer Id that is in the format of a V4 UUID. We recommend using a simple online generator to create this [here](https://www.uuidgenerator.net/version4).
+
+3. Register the domains you would like to restrict access to when connecting to the servicedesk. The domains should be provided in an array during registration. Wildcard values are supported for hostnames as can be seen in the example below. Any domains not included in this list will not be able to communicate with the servicedesk.
+
+4. Register your webchat integration with eGain.
 
     - Send an HTTP POST request to the `Registration URL` with the payload format shown below:
 
       ```
       {
-          "IBMIntegrationId": "XXXXXX",
+          "customerId": "XXXXXX",
           "clientId": "XXXXXX",
           "clientSecret": "XXXXXX",
           "channelType": "XXXXXX",
-          "accountAddress": "XXXXXX"
+          "accountAddress": "XXXXXX",
+          "domains": ["localhost:9000", "localhost:*", "egain.com/*"]
       }
       ```
 
-3. In the file `src/egain/webChat/client/eGainTypes.ts`, add the intializer URL to `INTIALIZE` and the websocket URL to `WEBSOCKET` fields. Update the `AGENT_AVAILABILITY` field with the domain name and the entrypoint id.
+5. In the file `src/egain/webChat/client/eGainConstants.ts`, add the URLs and customer Id as shown below.
+
+    ![eGainConstants Example](./client/images/egainConstants-example.png)
 
 ## Try it out
 

@@ -12,8 +12,10 @@
  *
  */
 
-export enum eGainConstants {
-  AGENT_AVAILABILITY = 'https://{{eGainTenantDomainName}}/system/egain/chat/entrypoint/agentAvailability/{{entrypointId}}',
-  INITIALIZE = 'Provided by eGain representative',
-  WEBSOCKET = 'Provided by eGain representative',
-}
+export const AGENT_AVAILABILITY = '';
+
+export const INITIALIZE = '';
+
+export const WEBSOCKET = '';
+
+export const CUSTOMER_ID = '';
