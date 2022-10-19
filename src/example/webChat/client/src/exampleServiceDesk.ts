@@ -198,7 +198,7 @@ function sendConnectToAgent(instance: ExampleServiceDesk, connectMessage: Messag
       callback: (instance: ExampleServiceDesk) => {
         instance.callback.agentTyping(false);
         instance.callback.sendMessageToUser(
-          stringToMessageResponseFormat(getHelloMessage(instance)),
+          getHelloMessage(instance),
           instance.agentProfile.id,
         );
       },
@@ -214,7 +214,7 @@ function sendConnectToAgent(instance: ExampleServiceDesk, connectMessage: Messag
       callback: (instance: ExampleServiceDesk) => {
         instance.callback.agentTyping(false);
         instance.callback.sendMessageToUser(
-          stringToMessageResponseFormat(STRINGS.instructions),
+          STRINGS.instructions,
           instance.agentProfile.id,
         );
       },
@@ -239,7 +239,7 @@ function sendInstructions(instance: ExampleServiceDesk): MockStep[] {
       callback: (instance: ExampleServiceDesk) => {
         instance.callback.agentTyping(false);
         instance.callback.sendMessageToUser(
-          stringToMessageResponseFormat(STRINGS.instructions),
+          STRINGS.instructions,
           instance.agentProfile.id,
         );
       },
@@ -264,7 +264,7 @@ function sendRandomMessage(instance: ExampleServiceDesk): MockStep[] {
       callback: (instance: ExampleServiceDesk) => {
         instance.callback.agentTyping(false);
         instance.callback.sendMessageToUser(
-          stringToMessageResponseFormat(randomMessage(instance)),
+          randomMessage(instance),
           instance.agentProfile.id,
         );
       },
@@ -299,7 +299,7 @@ function sendTransferAgent(instance: ExampleServiceDesk): MockStep[] {
       callback: (instance: ExampleServiceDesk) => {
         instance.callback.agentTyping(false);
         instance.callback.sendMessageToUser(
-          stringToMessageResponseFormat(getHelloMessage(instance)),
+          getHelloMessage(instance),
           instance.agentProfile.id,
         );
       },
@@ -315,7 +315,7 @@ function sendTransferAgent(instance: ExampleServiceDesk): MockStep[] {
       callback: (instance: ExampleServiceDesk) => {
         instance.callback.agentTyping(false);
         instance.callback.sendMessageToUser(
-          stringToMessageResponseFormat(STRINGS.instructions),
+          STRINGS.instructions,
           instance.agentProfile.id,
         );
       },
