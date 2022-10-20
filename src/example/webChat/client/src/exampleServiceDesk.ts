@@ -22,7 +22,6 @@ import {
   StartChatOptions,
 } from '../../../../common/types/serviceDesk';
 import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
-import { stringToMessageResponseFormat } from '../../../../common/utils';
 
 /**
  * This class returns startChat, endChat, sendMessageToAgent, updateState, userTyping, userReadMessages and
