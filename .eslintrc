@@ -95,7 +95,10 @@
     "@typescript-eslint/interface-name-prefix": "off",
 
     // Extra plugin rules.
-    "simple-import-sort/sort": "error"
+    "simple-import-sort/sort": "error",
+
+    // Make sure all blocks have braces/
+    "curly": ["error", "all"]
   },
   "settings": {
     "import/resolver": {

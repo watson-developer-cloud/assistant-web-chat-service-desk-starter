@@ -11,8 +11,8 @@
     "not dead"
   ],
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^3.10.1",
-    "@typescript-eslint/parser": "^3.10.1",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.4.0",
@@ -31,7 +31,7 @@
     "semantic-release": "^17.3.7",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.1.2",
-    "typescript": "^3.9.6",
+    "typescript": "^4.8.4",
     "typescript-eslint": "0.0.1-alpha.0"
   },
   "scripts": {
@@ -47,7 +47,8 @@
     "release:dryrun:major": "npm run release -- --release-as major --dry-run",
     "release:prerelease:patch": "npm run release -- --release-as patch --prerelease",
     "release:prerelease:minor": "npm run release -- --release-as minor --prerelease",
-    "release:prerelease:major": "npm run release -- --release-as major --prerelease"
+    "release:prerelease:major": "npm run release -- --release-as major --prerelease",
+    "preinstall": "cd src/common && npm install"
   },
   "repository": {
     "type": "git",
