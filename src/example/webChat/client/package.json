@@ -33,8 +33,9 @@
     "dotenv-webpack": "^4.0.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.1.0",
+    "npm-run-all": "^4.1.5",
     "ts-jest": "^26.1.2",
-    "typescript": "^3.9.6",
+    "typescript": "^4.8.4",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
@@ -43,7 +44,11 @@
     "preinstall": "cd ../../../../ && npm install",
     "build": "webpack --config webpack.config.js",
     "dev": "webpack-dev-server --config webpack.dev.js",
-    "test": "jest --clearCache && jest"
+    "test": "jest --clearCache && jest",
+    "lint": "eslint \"src/**/*.{ts,tsx,js}\"",
+    "lint:fix": "run-p lint:fix:*",
+    "lint:fix:prettier": "prettier --write \"src/**/*.{ts,tsx,js}\"",
+    "lint:fix:eslint": "eslint --fix \"src/**/*.{ts,tsx,js}\""
   },
   "license": "MIT"
 }

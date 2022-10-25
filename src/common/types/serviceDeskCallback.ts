@@ -16,11 +16,10 @@ import { ServiceDeskErrorInfo } from './errors';
 import { MessageResponse } from './message';
 import { AgentProfile } from './profiles';
 
-/* eslint-disable camelcase */
-
 /**
- * Any code that's using a service desk must implement this interface to provide this callback functions that the
- * service desk can use to send information back to the calling code when the information becomes available.
+ * This interface represents the operations that a service desk integration can call on web chat when it wants web
+ * chat to do something. When a service desk integration instance is created, web chat will provide an
+ * implementation of this interface to the integration for it to use.
  */
 interface ServiceDeskCallback {
   /**
