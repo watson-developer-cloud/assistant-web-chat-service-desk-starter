@@ -12,6 +12,18 @@
  *
  */
 
+export const LOG_PREFIX = '[eGainServiceDesk]';
+
+// Indicates that an endpoint is "going away", such as a server going down or a browser having navigated away from a page.
+export const SOCKET_TIMEOUT_CODE = 1001;
+
+// An expression used to find HTML links in the incoming message.
+export const FIND_LINKS = /<a .*?href="(.*?)".*?>(.*?)<\/a>/g;
+
+// Used to replace an HTML link with a markdown link.
+export const REPLACE_LINKS_WITH_MARKDOWN = '[$2]($1){{target="_blank" rel="noopener noreferrer"}}';
+
+// The following fields must be filled in from the information gathered during the account setup. Please refer to the README for detailed instructions.
 export const AGENT_AVAILABILITY = '';
 
 export const INITIALIZE = '';
