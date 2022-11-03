@@ -186,12 +186,7 @@ class EgainServiceDesk implements ServiceDesk {
    * @param message The incoming message from the agent containing at least one HTML link.
    */
   extractLinks(message: string): string {
-    try {
-      return message.replace(FIND_LINKS, REPLACE_LINKS_WITH_MARKDOWN);
-    } catch (error) {
-      console.error(`${LOG_PREFIX} An error occurred while extracting links`, error);
-    }
-    return '';
+    return message.replace(FIND_LINKS, REPLACE_LINKS_WITH_MARKDOWN);
   }
 
   /**
@@ -292,6 +287,16 @@ class EgainServiceDesk implements ServiceDesk {
    */
   updateState(state: ServiceDeskStateFromWAC): void {
     this.userID = state.userID;
+  }
+
+  /**
+   * Tells the service desk if a user has started or stopped typing.
+   *
+   * @param isTyping If true, indicates that the user is typing. False indicates the user has stopped typing.
+   * @returns Returns a Promise that resolves when the service desk has successfully handled the call.
+   */
+  async userTyping(isTyping: boolean): Promise<void> {
+    // eGain service desk does not support userTyping functionality.
   }
 }
 
