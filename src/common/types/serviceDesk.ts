@@ -74,7 +74,7 @@ interface ServiceDesk {
    *
    * @param isTyping If true, indicates that the user is typing. False indicates the user has stopped typing.
    * @returns Returns a Promise that resolves when the service desk has successfully handled the call.
-   * @since 5.1.1
+   * @since Web chat 5.1.1. Earlier versions of web chat will not call this function.
    */
   userTyping?(isTyping: boolean): Promise<void>;
 
