@@ -92,6 +92,9 @@ interface ServiceDeskCallback {
 /**
  * Information about the current availability of an agent while a user is waiting to be connected. If these are not set
  * the web chat will provide generic messaging letting the user know that a request for an agent has been sent.
+ *
+ * Note that only one of these fields will be used by web chat if more than one has been assigned a value. Priority
+ * first goes to estimated_wait_time, then position_in_queue, and then message.
  */
 interface AgentAvailability {
   /**
