@@ -100,7 +100,7 @@ interface AgentAvailability {
   position_in_queue?: number;
 
   /**
-   * The estimated wait time for the user in minutes. E.g. "Current wait times is 2 minutes."
+   * The estimated wait time for the user in minutes. E.g. "Current wait time is 2 minutes."
    */
   estimated_wait_time?: number;
 
