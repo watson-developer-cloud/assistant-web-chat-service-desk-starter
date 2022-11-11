@@ -91,22 +91,28 @@ interface ServiceDeskCallback {
 
 /**
  * Information about the current availability of an agent while a user is waiting to be connected. If these are not set
- * the web chat will provide generic messaging letting the user know that they will reach a live agent as soon as
- * possible.
+ * the web chat will provide generic messaging letting the user know that a request for an agent has been sent.
  *
- * Note: Only one of position_in_queue and estimated_wait_time can be rendered in the widget. If both fields are
- * provided, estimated_wait_time will take priority.
+ * Note that only one of these fields will be used by web chat if more than one has been assigned a value. Priority
+ * first goes to estimated_wait_time, then position_in_queue, and then message.
  */
 interface AgentAvailability {
   /**
-   * Number of users ahead in the queue.
+   * The current position of the user in a queue. E.g. "You are number 2 in line."
    */
   position_in_queue?: number;
 
   /**
-   * Estimated wait time in minutes.
+   * The estimated wait time for the user in minutes. E.g. "Current wait time is 2 minutes."
    */
   estimated_wait_time?: number;
+
+  /**
+   * A custom message to display to the user containing the updated status. This may contain markdown.
+   *
+   * @since Web chat 6.7.0. This value will be ignored if used with earlier versions of web chat.
+   */
+  message?: string;
 }
 
 export { AgentAvailability, AgentProfile, ServiceDeskCallback };

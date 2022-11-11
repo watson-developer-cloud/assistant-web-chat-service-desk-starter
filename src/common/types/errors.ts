@@ -69,7 +69,7 @@ interface ConnectingErrorInfo extends BaseErrorInfo {
    * An optional message that is displayed to the user in the bot view. If this value is not provided, a default
    * message will be shown instead.
    *
-   * Note that support for this field was added in web chat 6.7.0. It will be ignored in earlier versions.
+   * @since Web chat 6.7.0. This value will be ignored if used with earlier versions of web chat.
    */
   messageToUser?: string;
 }
