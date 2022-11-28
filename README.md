@@ -19,6 +19,7 @@ We provide reference implementations that provide fully functional integrations 
 - [NICE inContact](./src/incontact/webChat)
 - [Oracle Cloud B2C](./src/oracle/webChat)
 - [Kustomer](./src/kustomer/webChat)
+- [eGain](./src/egain/webChat)
 
 ## Custom integrations between web chat and service desks
 
