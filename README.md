@@ -10,6 +10,10 @@ This repo provides a development and production build environment for adding you
 
 To find out if your company's tool is feasible for this approach, check out our Adoption Guide [here](./docs/ADOPTION_GUIDE.md). If you'd like some help to build an integration, [contact us here](https://www.ibm.com/watson/assistant-integrations/?utm_medium=webchatbyosd).
 
+## Support
+
+This is an open source project of example implementations to help people get started on their own custom code. Any custom code used with Watson Assistant is the responsibility of the developer and is not covered by IBM support. If you find a bug in these examples, please submit a pull request with a fix. See [./CONTRIBUTING.md](./CONTRIBUTING.md).
+
 ## Example Implementations
 We provide reference implementations that provide fully functional integrations with popular service desks. These implementations, while functional, are examples only, and have not been vetted for production use.
 
