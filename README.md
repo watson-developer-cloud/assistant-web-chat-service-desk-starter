@@ -4,26 +4,22 @@ This repo provides a set of example and starter kit service desk integrations fo
 
 ## Overview
 
-This repo provides a development and production build environment for adding your own client-side service desk implementations to the web chat integration for Watson Assistant. These extensions can be shared between teams and also can be submitted as potential contributions to the main web chat project. If you're interested in contributing to this project or proposing that your integration be offered in Watson Assistant, see [./CONTRIBUTING.md](./CONTRIBUTING.md).
+This repo provides a development and production build environment for adding your own client-side service desk implementations to the web chat integration for Watson Assistant. These extensions can be shared between teams and also can be submitted as potential contributions to the main web chat project. If you're interested in contributing to this project or proposing that your integration be offered in Watson Assistant, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-**Important:** Any custom code used with Watson Assistant is the responsibility of the developer and is not covered by IBM support.
+**Important:** This is an open source project of example implementations to help people get started on their own custom code. Any custom code used with Watson Assistant is the responsibility of the developer and is not covered by IBM support. If you find a bug in these examples, please submit a pull request with a fix. See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 To find out if your company's tool is feasible for this approach, check out our Adoption Guide [here](./docs/ADOPTION_GUIDE.md). If you'd like some help to build an integration, [contact us here](https://www.ibm.com/watson/assistant-integrations/?utm_medium=webchatbyosd).
-
-## Support
-
-This is an open source project of example implementations to help people get started on their own custom code. Any custom code used with Watson Assistant is the responsibility of the developer and is not covered by IBM support. If you find a bug in these examples, please submit a pull request with a fix. See [./CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Example Implementations
 We provide reference implementations that provide fully functional integrations with popular service desks. These implementations, while functional, are examples only, and have not been vetted for production use.
 
 - [Generic Example](./src/example/webChat)
+- [eGain](./src/egain/webChat)
 - [Genesys Cloud](./src/genesys/webChat)
-- [Twilio Flex](./src/flex/webChat)
+- [Kustomer](./src/kustomer/webChat)
 - [NICE inContact](./src/incontact/webChat)
 - [Oracle Cloud B2C](./src/oracle/webChat)
-- [Kustomer](./src/kustomer/webChat)
-- [eGain](./src/egain/webChat)
+- [Twilio Flex](./src/flex/webChat)
 
 ## Custom integrations between web chat and service desks
 
@@ -32,7 +28,7 @@ In order for web chat to integrate with a custom service desk, there are two bas
 1. Code must be written that communicates with the service desk (such as by starting a conversation or sending a message to a human agent) and satisfies the API contract defined by web chat.
 2. Web chat needs to be given access to that code, so it can run it.
 
-This repository is intended to help with both of these steps and can be used to build a deployable javascript bundle containing your custom service desk integration. However, it is not required to use any of the processes or tools in this repository for that. If you have your own front-end application and infrastructure for your website you can copy the appropriate code from step 1 above into your application and build and deploy it using your existing infrastructure; it is not required for the integration to be built and deployed separately.
+This repository is intended to help with both of these steps and can be used to build a deployable javascript bundle containing your custom service desk integration. However, it is not required to use any of the code, processes or tools in this repository for that. If you have your own front-end application and infrastructure for your website you can copy the appropriate code from step 1 above into your application or write your own and build and deploy it using your existing infrastructure; it is not required for the integration to be built and deployed separately.
 
 You can read more information with our [api documentation](./docs/API.md).
 
@@ -48,13 +44,18 @@ If you have implemented a service integration that satisfies the web chat API, g
       this.callback = callback;
     }
     startChat() {
-      console.log('Starting chat');
+      // This code will communicate with the SD to start the chat and is expected to eventually result in
+      // "callback.agentJoined" being called when an agent is available and "callback.sendMessageToUser" 
+      // when the agent sends a message to the user.
+      // ...
     }
     endChat() {
-      console.log('Ending chat');
+      // This code will communicate with the SD to tell it the chat was ended.
+      // ...
     }
     sendMessageToAgent() {
-      console.log('Sending message to agent');
+      // This code will communicate with the SD to give the message from the user to an agent.
+      // ...
     }
   }
     
@@ -112,23 +113,27 @@ This repo can be used as an isolated tool to build and test your integration wit
 </script>
 ```
 
-## Configuration
-Tailor web chat to your needs by initializing it with your own custom options. The web chat configuration options are defined by the parameters of watsonAssistantChatOptions.
-
-In addition to the parameters listed [here](https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=api-configuration#configurationobject), it supports the following options:
-
-#### serviceDesk
-```
-serviceDesk: {
-  availabilityTimeoutSeconds: 30,
-}
-```
-
-- `availabilityTimeoutSeconds`: The timeout value in seconds to use when determining agent availability. When a connect_to_agent response is received, the system will ask the service desk if any agents are available. If no response is received within the timeout window, the system will return "false" to indicate no agents are available. The default in web chat is 5 seconds.
-
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/en/download/)
+The scripts and some of the code in this repository rely on having [Node.js](https://nodejs.org/en/download/) installed but not all the custom service desks do if run on their own. Some of the example code may be copied into your own application without needing NodeJS. Refer to each service desk for more specific dependencies.
+
+## API Architecture
+
+Web chat provides a public API that can be implemented by custom code that will enable web chat to communicate with a service desk in a manner where the communication is integrated into the web chat visual experience. The API provides functions such as `startChat` to let the SD know what a chat should start and `sendMessageToAgent` to send a message from the user to an agent. In addition, web chat provides a callback API that allows the SD to talk back to web chat. This includes functions like `agendJoined` to let web chat know when an agent has joined the chat and `sendMessageToUser` when the agent has sent a message to be displayed to the user.
+
+See [./docs/API.md](./docs/API.md) for the detailed API documentation, and [./docs/STEPS.md](./docs/STEPS.md) for a recommended sequence of steps for building an integration.
+
+### Communicating from the web chat to your service desk
+
+The `serviceDeskFactory` configuration setting expects a factory that returns an object of functions or a class. These functions and the properties passed to the factory are defined in [./src/types/serviceDesk.ts](./src/types/serviceDesk.ts). The web chat will call these functions as needed to communicate with your service desk code.
+
+### Communicating from your service desk to web chat
+
+One of the items passed into the factory is a callback object. These callbacks are defined in [./src/types/serviceDeskCallback.ts](./src/types/serviceDeskCallback.ts). These are the functions you will call inside your service desk code to communicate information back to the web chat.
+
+### Displaying the chat history to your human agent ("agent app")
+
+As of the 4.5.0 release of web chat, Watson Assistant will pass configuration needed to display a chat history widget in your live agent application interface. This agent application will contain a copy of the conversation your customer had with Watson Assistant for your live agent to be able to view. Visit ['./docs/AGENT_APP.md'](./docs/AGENT_APP.md) to learn more.
 
 ## Development
 
@@ -140,22 +145,6 @@ To enable linting rules specific to this project on your IDE or Code Editor run 
 
 It is recommended you follow the same pattern and add your service-desk-specific files to the [./src/](./src/) directory as well. All the code is heavily commented via JSDoc and contains TypeScript type definitions for all properties passed to functions.
 
-### Documentation
-
-See [./docs/API.md](./docs/API.md) for further API documentation, and [./docs/STEPS.md](./docs/STEPS.md) for a recommended sequence of steps for building an integration.  
-
-### Communicating from the web chat to your service desk
-
-The `serviceDeskFactory` configuration setting expects a factory that returns an object of functions or a class. These functions and the properties passed to the factory are defined in [./src/types/serviceDesk.ts](./src/types/serviceDesk.ts). The web chat will call these functions as needed to communicate with your service desk code.
-
-### Communicating from your service desk to web chat
-
-One of the items passed into the factory is a callback object. These callbacks are defined in [./src/types/serviceDeskCallback.ts](./src/types/serviceDeskCallback.ts). These are the functions you will call inside your service desk code to communicate information back to the web chat.
-
-### Displaying the chat history to your human agent
-
-As of the 4.5.0 release of web chat, Watson Assistant will pass configuration needed to display a chat history widget in your live agent application interface. This agent application will contain a copy of the conversation your customer had with Watson Assistant for your live agent to be able to view. Visit ['./docs/AGENT_APP.md'](./docs/AGENT_APP.md) to learn more.
-
 ### Production build
 
 Supporting compatible browsers and all other build concerns are handled for you. Just run `npm run build`, and `dist/servicedesk.bundle.js` is generated. Embed this file *before* the web chat embed script, and it will make `window.WebChatServiceDeskFactory` available for use.
@@ -165,14 +154,6 @@ Supporting compatible browsers and all other build concerns are handled for you.
 This project uses [jest](https://jestjs.io/) as its testing framework with TypeScript capabilities enabled. Tests should be under a `__tests__` subdirectory and should have file names in the following format: `FILE_TO_BE_TESTED_NAME.test.ts`.
 
 To run the defined tests, run `npm run test`.
-
-### Currently out of scope
-
-The following items are not currently in scope for this starter kit and would be your responsibility to implement if you need them:
-
-- Security support (this varies depending on the service desk, but most require generating and sending valid JWTs with messages to the agent)
-- Routing to specific agents
-- Behavior when all agents are offline
 
 ### TypeScript resources
 
