@@ -134,11 +134,12 @@ const EXAMPLE_AGENT_PROFILE_2: AgentProfile = {
 const STRINGS = {
   hello_leonard: 'Hello, I am Dr. Leonard McCoy. How can I help?',
   hello_jim: 'Hello, I am Captain James T. Kirk. How can I help?',
-  instructions: `You can send the following messages to get a specific response from me:<br/>
-<u><b>help</b></u>: I will repeat these instructions.
-<u><b>someone else</b></u>: I will transfer you to someone else.
-<u><b>disconnect and reconnect</b></u>: I will simulate the service desk connect disconnecting and then reconnecting.
-<u><b>end chat</b></u>: I will simulate the agent ending the chat.
+  instructions: `You can send the following messages to get a specific response from me:
+
+- **help**: I will repeat these instructions.
+- **someone else**: I will transfer you to someone else.
+- **disconnect and reconnect**: I will simulate the service desk connect disconnecting and then reconnecting.
+- **end chat**: I will simulate the agent ending the chat.
 `,
   random_leonard: [
     `I'm a doctor, not a physicist!`,
