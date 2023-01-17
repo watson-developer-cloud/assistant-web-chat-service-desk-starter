@@ -19,7 +19,7 @@ The Genesys Cloud integration consists of two main components: client-side code 
 
 ![Genesys Architecture Overview](./server/architecture/arch-overview.png)
 
-The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the Watson Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
+The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the Watson Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)). The middleware server is responsible for generating authentication tokens based on the Genesys Cloud organization credentials. The tokens are used to authenticate the client-side Web Chat Genesys service desk implementation when making API calls to the Genesys Chat APIs.
 
 The communication uses the Genesys guest chat SDK, which can be found at [Guest Chat Client - JavaScript](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/index.html). This SDK is based on WebSocket, which enables two-way communication. For some advanced functions, the integration also uses the Genesys [REST API](https://developer.mypurecloud.com.au/api/rest/v2/).
 
