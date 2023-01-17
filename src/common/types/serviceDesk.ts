@@ -38,7 +38,7 @@ interface ServiceDesk {
    * shown instead.
    *
    * @param connectMessage The original server message response that caused the connection to an agent. It will
-   * contain specific information to send to the service desk as part of the connection. This can includes things
+   * contain specific information to send to the service desk as part of the connection. This can include things
    * like a message to display to a human agent.
    * @param startChatOptions Additional configuration for startChat. Added in 4.5.0 of web chat.
    * @returns Returns a Promise that resolves when the service desk has successfully started a new chat. This does
@@ -93,7 +93,7 @@ interface ServiceDesk {
    * agent to become available. The callback function {@link ServiceDeskCallback.updateAgentAvailability} is used to
    * give the user more up-to-date information while they are waiting for an agent to become available.
    *
-   * @param connectMessage The message that contains the transfer_info object that may be used by the service desk
+   * @param connectMessage The message that contains the transfer_info object that may be used by the service desk,
    * so it can perform a more specific check.
    * @returns True if some agents are available or false if no agents are available. This may also return null which
    * means the availability status of agents is unknown or the service desk doesn't support this information.
@@ -109,6 +109,20 @@ interface ServiceDeskFactoryParameters {
    * The callback used by the service desk to communicate with the widget.
    */
   callback: ServiceDeskCallback;
+
+  /**
+   * The instance of web chat being used. See https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=api-instance-methods
+   * for documentation of the possible methods and properties that are available on this object. But use this with care
+   * since what exactly is available here can be different depending on the version of web chat that is being used.
+   * You can use the getWidgetVersion instance method to determine this. If the service desk needs to rely on features
+   * that are not available on all versions of web chat, you can use the widget version to log an error or warning.
+   *
+   * Since this property was added in version 7.1.0 of web chat, you should make sure to check to see that a value
+   * here exists before accessing any methods or properties on it.
+   *
+   * @since Web chat 7.1.0. This value will be undefined in earlier versions.
+   */
+  instance: unknown;
 }
 
 /**
@@ -141,13 +155,13 @@ interface StartChatOptions {
 }
 
 /**
- * This data is used to configure an read only web chat inside the service desk.
+ * This data is used to configure a read only web chat inside the service desk.
  */
 interface AgentAppInfo {
   /**
    * A string that is separated by `::` that can be used to create a PublicConfig. It includes base connect
-   * info like integrationID, etc, and by pass JWT security with a one time auth code. The data inside this
-   * string can change at any time and it should be used only to pass data to the agent application.
+   * info like integrationID, etc., and by pass JWT security with a one time auth code. The data inside this
+   * string can change at any time, and it should be used only to pass data to the agent application.
    */
   sessionHistoryKey: string;
 }
