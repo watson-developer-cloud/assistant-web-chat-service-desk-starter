@@ -49,7 +49,10 @@ The integration utilises the flexible Custom Chat integration to EI **CCaaS**, t
 1. Configure Chat routing in EI **CCaaS** tenant with desired Queue and Skills.
 2. Configure CustomChat "widget" and copy its URL used to control the Live Agent interaction specific to your needs, and a "WA" URL to access the WA integration from EI **CCaaS**.
 3. When using the CCaaS integration HTML, the "widget" URL is required to be passed either as the *ccURL* parameter to the "WA" URL, or as a variable in the WA Dialog called *CCURL*.  The "WA" URL must also include parameters to utilise your Assistant's *integrationID*, *region*, and *serviceInstanceID*.  If using your own HTML you can hard-code the required parameters, or obtain the values via some alternative method to suit your preference.
-
+4. By default the name presented to the contact-centre is the Watson user_id - this display name can be changed in the Flow by setting variables (case of names ignored) as per [Dialog example](./VG_TravelDemo-dialog.json), i.e. 
+- firstName - if this is set without lastName, this is the display name
+- lastName - if the firstName is also set, the display name is firstName and lastName (with a space between)
+- userId - if the firstName is not set this may set the display name
 
 
 ## Example
