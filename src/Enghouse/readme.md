@@ -14,7 +14,7 @@ The EI **CCaaS**  integration consists of two main components: hosting web page 
 
 The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the Watson Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
 
-The communication uses the EI CustomChat widget component.  This can be referenced using the EI **CCaaS** default page or the [hosting page](./client/indexWatson.html) can set the `watsonAssistantChatOptions` prior to loading the EnghouseCCaaSWatsonAssistant.js for more advanced features, e.g.:
+The communication uses the EI CustomChat widget component.  This can be referenced using the EI **CCaaS** default page or the [hosting page](./client/watsonExample.html) can set the `watsonAssistantChatOptions` prior to loading the EnghouseCCaaSWatsonAssistant.js for more advanced features, e.g.:
 
 ```
 <script>
