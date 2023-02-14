@@ -14,29 +14,44 @@ The EI **CCaaS**  integration consists of two main components: hosting web page 
 
 The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the Watson Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
 
-The communication uses the EI CustomChat widget component.  This can be referenced using the EI **CCaaS** default page or the [hosting page](./client/watsonExample.html) can set the `watsonAssistantChatOptions` prior to loading the EnghouseCCaaSWatsonAssistant.js for more advanced features, e.g.:
+The communication uses the EI CustomChat widget component.  This can be referenced using the EI **CCaaS** default page or a [hosting page](./client/watsonExample.html) can set the `watsonAssistantChatOptions` prior to loading the EnghouseCCaaSWatsonAssistant.js for more advanced features, e.g.:
 
 ```
 <script>
-  window.watsonAssistantChatOptions = {
-	// ... add any additional configuration options you may need..
-	integrationID: [integrationID],
-	region: [region],
-	serviceInstanceID: [serviceInstanceID],
-	subscriptionID: [subscriptionID],
-    carbonTheme: 'g100',
-	
-	serviceDeskFactory: (params) =>
-	  new window.EnghouseCCaaSWatsonAssistantSD(params.callback, ccName, ccUrl, agentIcon, webChatInstance),
+    function loadWebChat() {
+      // Fill in your values for these variables.
+      const ccURL = 'https://ccsp.ei.eilabonline.biz/SocialConnectorHelperAPI/api/customchat/getWidgetConfiguration?WidgetId=...';
+      const ccName = 'IBM Test Contact Centre';
+      const ccAgentIcon = null;
 
-	onLoad: async (instance) => {
-	  webChatInstance = instance;
-	  instance.render();
-	}
-  };
+      let webChatInstance;
 
+      // This is the standard web chat configuration object. You should modify these values with the embed code for your
+      // own assistant and can modify it further as you need. You can find the documentation for this at
+      // https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=api-configuration#configurationobject.
+      window.watsonAssistantChatOptions = {
+        integrationID: '...',
+        region: '...',
+        serviceInstanceID: '...',
+        subscriptionID: '...',
+
+        serviceDeskFactory: (params) =>
+          new window.EnghouseCCaaSWatsonAssistantSD(params.callback, ccName , ccURL, ccAgentIcon, webChatInstance),
+
+        onLoad: async (instance) => {
+          webChatInstance = instance;
+          instance.render();
+        }
+      };
+
+      setTimeout(function(){
+        const t=document.createElement('script');
+        t.src='https://web-chat.global.assistant.watson.appdomain.cloud/versions/' + ((window.watsonAssistantChatOptions && window.watsonAssistantChatOptions.clientVersion) || 'latest') + '/WatsonAssistantChatEntry.js';
+        document.head.appendChild(t);
+      });
+    }
 </script>	
-<script src="https://ccsp.ei.eilabonline.biz/PS.CustomChat/EnghouseCCaaSWatsonAssistant.js"></script>
+<script async src="https://ccsp.ei.eilabonline.biz/PS.CustomChat/EnghouseCCaaSWatsonAssistant.js" onload="loadWebChat()"></script>
 ```
 
 
