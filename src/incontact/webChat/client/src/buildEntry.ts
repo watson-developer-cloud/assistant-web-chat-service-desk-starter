@@ -11,7 +11,8 @@
  * specific language governing permissions and limitations under the License.
  *
  */
-import { ServiceDesk, ServiceDeskFactoryParameters } from '../../../../common/types/serviceDesk';
+import { ServiceDesk, ServiceDeskFactoryParameters } from 'common/types/serviceDesk';
+
 import { InContactServiceDesk } from './inContactServiceDesk';
 
 /**

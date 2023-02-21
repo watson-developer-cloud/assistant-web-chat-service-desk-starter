@@ -16,22 +16,17 @@
  * Copy and paste this file into a new folder to get started.
  */
 
-import { ErrorType } from '../../../../common/types/errors';
-import {
-  ConnectToAgentItem,
-  MessageInput,
-  MessageOutput,
-  MessageRequest,
-  MessageResponse,
-} from '../../../../common/types/message';
-import { User } from '../../../../common/types/profiles';
+import { ErrorType } from 'common/types/errors';
+import { ConnectToAgentItem, MessageInput, MessageOutput, MessageRequest, MessageResponse } from 'common/types/message';
+import { User } from 'common/types/profiles';
 import {
   ServiceDesk,
   ServiceDeskFactoryParameters,
   ServiceDeskStateFromWAC,
   StartChatOptions,
-} from '../../../../common/types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
+} from 'common/types/serviceDesk';
+import { ServiceDeskCallback } from 'common/types/serviceDeskCallback';
+
 import {
   ChatBody,
   ChatResponse,
@@ -63,7 +58,6 @@ const OAUTH_API_CALLS_ENABLED = false;
  * through src/buildEntry.ts.
  */
 class GenesysServiceDesk implements ServiceDesk {
-  agentProfile: AgentProfile;
   callback: ServiceDeskCallback;
   user: User;
 
@@ -104,14 +98,27 @@ class GenesysServiceDesk implements ServiceDesk {
     this.callback = parameters.callback;
     this.initialAgentJoined = false;
   }
+
+  /**
+   * Returns a name for this service desk integration. This value should reflect the name of the service desk that is
+   * being integrated to. This information will be reported to IBM and may be used to gauge interest in various
+   * service desks for the possibility of creating fully supported out-of-the-box implementations.
+   *
+   * This value is required for custom service desks and may have a maximum of 40 characters.
+   */
+  getName() {
+    return 'genesys';
+  }
+
   /**
    * Instructs the service desk to start a new chat. This should be called immediately after the service desk
    * instance has been created. It will make the appropriate calls to the service desk and begin communicating back
    * to the calling code using the callback produce to the instance. This may only be called once per instance.
    *
    * @param connectMessage The original server message response that caused the connection to an agent. It will
-   * contain specific information to send to the service desk as part of the connection. This can includes things
+   * contain specific information to send to the service desk as part of the connection. This can include things
    * like a message to display to a human agent.
+   * @param startChatOptions Additional configuration for startChat. Added in 4.5.0 of web chat.
    * @returns Returns a Promise that resolves when the service desk has successfully started a new chat. This does
    * not necessarily mean that an agent has joined the conversation or has read any messages sent by the user.
    */
@@ -299,7 +306,9 @@ class GenesysServiceDesk implements ServiceDesk {
             }
 
             case GenesysBodyType.MEMBER_LEAVE: {
-              if (this.agent?.id === sender) this.callback.agentLeftChat();
+              if (this.agent?.id === sender) {
+                this.callback.agentLeftChat();
+              }
               break;
             }
 
@@ -334,7 +343,9 @@ class GenesysServiceDesk implements ServiceDesk {
                  */
                 const userStillConnected = await this.userConnected();
                 console.log(`${LOG_PREFIX} user still connected: ${userStillConnected}`);
-                if (!userStillConnected) this.callback.agentEndedChat();
+                if (!userStillConnected) {
+                  this.callback.agentEndedChat();
+                }
               }
 
               break;
@@ -342,7 +353,9 @@ class GenesysServiceDesk implements ServiceDesk {
 
             case GenesysMemberState.ALERTING: {
               // either this alert is to the first agent to join, or we're transferring to a new agent
-              if (this.initialAgentJoined) this.callback.beginTransferToAnotherAgent();
+              if (this.initialAgentJoined) {
+                this.callback.beginTransferToAnotherAgent();
+              }
 
               this.agent = {
                 id: member,
@@ -358,14 +371,18 @@ class GenesysServiceDesk implements ServiceDesk {
                 console.log(`${LOG_PREFIX} new agent joined`);
                 await this.populateAgent();
 
-                if (!this.initialAgentJoined) this.initialAgentJoined = true;
+                if (!this.initialAgentJoined) {
+                  this.initialAgentJoined = true;
+                }
               } else if (this.conversationUserId !== member) {
                 /**
                  * If no agents have answered a call, the chat is connected to a dummy agent.
                  * In that case, getAgentAvailability() sets the current wait time for web chat.
                  */
                 try {
-                  if (OAUTH_API_CALLS_ENABLED) await this.getAgentAvailability();
+                  if (OAUTH_API_CALLS_ENABLED) {
+                    await this.getAgentAvailability();
+                  }
                 } catch (error) {
                   console.error(error); // don't need to stop everything for an error here
                 }
@@ -383,16 +400,14 @@ class GenesysServiceDesk implements ServiceDesk {
 
         case GenesysMetadataType.TYPING_IND: {
           const sender = message.eventBody.sender.id;
-          if (sender === this.conversationUserId) {
-            await this.userTyping(true);
-          } else {
+          if (sender !== this.conversationUserId) {
             this.callback.agentTyping(true);
 
             /**
-             * Per Genesys docs: https://developer.mypurecloud.com/api/webchat/guestchat.html#_span_style__text_transform__none___typing_indicator__event__span_
-             * The typing indicator should generally be honored for about
-             * four seconds or until a message is received from that participant,
-             * whichever comes first.
+             * Per Genesys docs:
+             * https://developer.mypurecloud.com/api/webchat/guestchat.html#_span_style__text_transform__none___typing_indicator__event__span_
+             * The typing indicator should generally be honored for about four seconds or until a message is received
+             * from that participant, whichever comes first.
              */
             setTimeout(() => this.callback.agentTyping(false), 4000);
           }
@@ -449,7 +464,9 @@ class GenesysServiceDesk implements ServiceDesk {
     const userConnected = await this.userConnected();
 
     return new Promise((resolve, reject) => {
-      if (!userConnected) return resolve(); // conversation already deleted
+      if (!userConnected) {
+        return resolve();
+      } // conversation already deleted
 
       try {
         this.webChatApi.deleteWebchatGuestConversationMember(this.chatInfo.id, this.conversationUserId);
@@ -534,7 +551,9 @@ class GenesysServiceDesk implements ServiceDesk {
   }
 
   buildSummaryMessageToAgent(item: ConnectToAgentItem): string {
-    if (item.message_to_human_agent) return `${item.message_to_human_agent}\n${messages.SUMMARY(item.topic)}`;
+    if (item.message_to_human_agent) {
+      return `${item.message_to_human_agent}\n${messages.SUMMARY(item.topic)}`;
+    }
     return `${messages.PREFIX_MESSAGE_TO_AGENT}\n${messages.SUMMARY(item.topic)}\n${messages.POSTFIX_MESSAGE_TO_AGENT}`;
   }
 

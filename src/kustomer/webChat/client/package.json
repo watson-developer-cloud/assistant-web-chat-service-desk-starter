@@ -10,7 +10,8 @@
     "not dead"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.4"
+    "@babel/runtime": "^7.10.4",
+    "common": "file:../../../common"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.4",

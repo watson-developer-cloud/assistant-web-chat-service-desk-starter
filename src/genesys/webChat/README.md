@@ -2,16 +2,20 @@
 
 This is a functioning service desk integration between Watson Assistant and Genesys Cloud.
 
+**Note:** This integration relies on a 3rd party library that is downloaded at runtime by the user's browser. IBM is not responsible for the behavior or maintenance of this library.
+
 **Important:**  This is a reference implementation that provides an example of a fully functional integration. Make any necessary changes and perform robust testing before deploying this integration in production.
 
 This reference implementation supports the core features of a Genesys Cloud integration. If you want to customize or extend it to add more features, follow the procedure described in the [README](../../../README.md) for this repository.
 
   You can refer to these Genesys docs and resources for more information about using the Genesys PureCloud API:
 
-  - [Guest Chat Client - JavaScript](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/index.html)
-  - [Guest Chat APIs](https://developer.mypurecloud.com/api/webchat/guestchat.html)
-  - [Guest Chat Client API documentation](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/WebChatApi.html)
-  - [Guest Chat Client API source code](https://github.com/MyPureCloud/purecloud-guest-chat-client-javascript/blob/9599e33609a87358671532b10e53fad24e592373/build/src/purecloud-guest-chat-client/api/WebChatApi.js)
+  - [Guest Chat Client - JavaScript SDK](https://developer.mypurecloud.com/api/rest/client-libraries/javascript-guest/index.html)
+    - [SDK Source](https://github.com/MyPureCloud/platform-client-sdk-javascript)
+  - [Guest Chat APIs](https://developer.mypurecloud.com/api/webchat/guestchat.html) - We only use a subset of these for dealing with authentication, routing and availability. The main communication for messages is done using the SDK above.
+    - [Authentication](https://developer.genesys.cloud/commdigital/digital/webchat/guestchat#authenticated-chat)
+    - [Routing](https://developer.genesys.cloud/routing/routing/#get-api-v2-routing-queues)
+    - [Analytics](https://developer.genesys.cloud/analyticsdatamanagement/analytics/analytics-apis#post-api-v2-analytics-queues-observations-query)
 
 ## Overview
 
@@ -54,7 +58,7 @@ The communication uses the Genesys guest chat SDK, which can be found at [Guest 
 
     1. From the `src/genesys/webChat/server` directory, run `npm install`.
 
-    1. From the `src/genesys/webChat/server` directory, run `npm start`. This starts a server on port 3000 on your local machine.
+    1. From the `src/genesys/webChat/server` directory, run `npm run start:dev`. This starts a server on port 3000 on your local machine.
 
     1. Your end users must be able to access the server from their browsers. If you do not have your own hosted environment, and you wish to expose your local development for testing, consider using a service such as [ngrok](https://ngrok.com/) to create a public URL:
 

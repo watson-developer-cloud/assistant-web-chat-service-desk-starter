@@ -12,13 +12,12 @@
  *
  */
 
+import { MessageRequest, MessageResponse } from 'common/types/message';
+import { User } from 'common/types/profiles';
+import { ServiceDesk, ServiceDeskFactoryParameters } from 'common/types/serviceDesk';
+import { AgentProfile, ServiceDeskCallback } from 'common/types/serviceDeskCallback';
+import { stringToMessageResponseFormat } from 'common/utils';
 import TurndownService from 'turndown';
-
-import { MessageRequest, MessageResponse } from '../../../../common/types/message';
-import { User } from '../../../../common/types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters } from '../../../../common/types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
-import { stringToMessageResponseFormat } from '../../../../common/utils';
 
 declare global {
   interface Window {
@@ -73,6 +72,17 @@ class OracleB2CServiceDesk implements ServiceDesk {
   constructor(parameters: ServiceDeskFactoryParameters) {
     this.callback = parameters.callback;
     this.user = { id: '' };
+  }
+
+  /**
+   * Returns a name for this service desk integration. This value should reflect the name of the service desk that is
+   * being integrated to. This information will be reported to IBM and may be used to gauge interest in various
+   * service desks for the possibility of creating fully supported out-of-the-box implementations.
+   *
+   * This value is required for custom service desks and may have a maximum of 40 characters.
+   */
+  getName() {
+    return 'oracle b2c';
   }
 
   /**

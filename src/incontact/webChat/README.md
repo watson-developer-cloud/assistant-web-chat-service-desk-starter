@@ -24,7 +24,7 @@ The communication uses the Patron API, which can be found at [Patron APIs](https
 
 1. If you haven't done so already, follow the setup steps in the root-level [README](../../../README.md) to make sure you can run an instance of [ExampleServiceDesk](../../../src/example/webChat/README.md).
 
-1. If you haven't done so already, [set up chat](https://help.nice-incontact.com/content/acd/chat/setupchat.htm?tocpath=ACD%7CACD%7CChat%7C_____1) using your InContact admin account.
+1. If you haven't done so already, [set up chat](https://help.nice-incontact.com/content/acd/channels/chat/setupchat.htm) using your InContact admin account.
 
     1. Create a [Campaign](https://help.incontact.com/spring20/en/Content/ACD/Campaigns/CampaignsOverview.htm?tocpath=System%20Administration%7CSkills%20and%20Campaigns%7CCampaigns%7C_____0): A campaign is a grouping of skills that serve a common business purpose.
         - Navigate to ACD > Contact Settings > Campaigns > Create New 

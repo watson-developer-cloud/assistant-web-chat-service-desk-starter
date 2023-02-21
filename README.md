@@ -15,6 +15,7 @@ We provide reference implementations that provide fully functional integrations 
 
 - [Generic Example](./src/example/webChat)
 - [eGain](./src/egain/webChat)
+- [Enghouse](./src/enghouse) (3rd party UI)
 - [Genesys Cloud](./src/genesys/webChat)
 - [Kustomer](./src/kustomer/webChat)
 - [NICE inContact](./src/incontact/webChat)
@@ -112,6 +113,13 @@ This repo can be used as an isolated tool to build and test your integration wit
   });
 </script>
 ```
+
+## Types of integrations
+
+There are two basic types of integrations.
+
+1. A seamless integration with the existing web chat UI. The user will use the web chat input field to send messages to an agent and messages from an agent will be displayed in the same message list along with messages from Watson Assistant. These integrations require fully implementing the service desk integration API provided by web chat.
+2. A custom panel implementation embedding a 3rd party chat widget. The user will switch to a different panel where they will see a different UI created by a 3rd party. A different field from the standard web chat input field will generally be available and messages to and from the agent will be displayed in a separate view and not part of the messages from Watson Assistant. These integrations generally require a lot less code and only require embedding another existing widget into web chat.
 
 ## Prerequisites
 

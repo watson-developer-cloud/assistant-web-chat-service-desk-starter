@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon dist/index.js",
-    "start": "tsc-watch --noClear --onSuccess \"npm run start:dev\""
+    "start": "nodemon dist/index.js",
+    "start:dev": "tsc-watch --noClear --onSuccess \"npm run start\""
   },
   "keywords": [],
   "author": "IBM Corp",

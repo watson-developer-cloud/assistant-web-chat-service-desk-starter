@@ -12,17 +12,17 @@
  *
  */
 
-import { v4 as uuidv4 } from 'uuid';
-
-import { MessageRequest, MessageResponse } from '../../../../common/types/message';
+import { MessageRequest, MessageResponse } from 'common/types/message';
 import {
   ServiceDesk,
   ServiceDeskFactoryParameters,
   ServiceDeskStateFromWAC,
   StartChatOptions,
-} from '../../../../common/types/serviceDesk';
-import { ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
-import { stringToMessageResponseFormat } from '../../../../common/utils';
+} from 'common/types/serviceDesk';
+import { ServiceDeskCallback } from 'common/types/serviceDeskCallback';
+import { stringToMessageResponseFormat } from 'common/utils';
+import { v4 as uuidv4 } from 'uuid';
+
 import {
   AGENT_AVAILABILITY,
   CUSTOMER_ID,
@@ -69,14 +69,27 @@ class EgainServiceDesk implements ServiceDesk {
   constructor(parameters: ServiceDeskFactoryParameters) {
     this.callback = parameters.callback;
   }
+
   // Public ServiceDesk Methods
+
+  /**
+   * Returns a name for this service desk integration. This value should reflect the name of the service desk that is
+   * being integrated to. This information will be reported to IBM and may be used to gauge interest in various
+   * service desks for the possibility of creating fully supported out-of-the-box implementations.
+   *
+   * This value is required for custom service desks and may have a maximum of 40 characters.
+   */
+  getName() {
+    return 'egain';
+  }
+
   /**
    * Instructs the service desk to start a new chat. This should be called immediately after the service desk
    * instance has been created. It will make the appropriate calls to the service desk and begin communicating back
    * to the calling code using the callback produce to the instance. This may only be called once per instance.
    *
    * @param connectMessage The original server message response that caused the connection to an agent. It will
-   * contain specific information to send to the service desk as part of the connection. This can includes things
+   * contain specific information to send to the service desk as part of the connection. This can include things
    * like a message to display to a human agent.
    * @param startChatOptions Starting with version 4.5.0 of web chat, a set of options that can be applied when
    * starting a new chat. This includes metadata on how to add chat transcripts to your agent's view.
