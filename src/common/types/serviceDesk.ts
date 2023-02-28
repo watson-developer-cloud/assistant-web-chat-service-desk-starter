@@ -21,6 +21,15 @@ import { ServiceDeskCallback } from './serviceDeskCallback';
  */
 interface ServiceDesk {
   /**
+   * Returns a name for this service desk integration. This value should reflect the name of the service desk that is
+   * being integrated to. This information will be reported to IBM and may be used to gauge interest in various
+   * service desks for the possibility of creating fully supported out-of-the-box implementations.
+   *
+   * This value is required for custom service desks and may have a maximum of 40 characters.
+   */
+  getName(): string;
+
+  /**
    * Instructs the service desk to start a new chat. This will be called when a user requests to connect to an agent
    * and web chat initiates the process (typically when the user clicks the button on the "Connect to Agent" card).
    * It will make the appropriate calls to the service desk to start the chat and will make use of the callback to

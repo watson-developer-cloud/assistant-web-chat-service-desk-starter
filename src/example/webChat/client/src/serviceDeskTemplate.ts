@@ -15,15 +15,15 @@
 /**
  * Copy and paste this file into a new folder to get started.
  */
-import { MessageRequest, MessageResponse } from '../../../../common/types/message';
-import { User } from '../../../../common/types/profiles';
+import { MessageRequest, MessageResponse } from 'common/types/message';
+import { User } from 'common/types/profiles';
 import {
   ServiceDesk,
   ServiceDeskFactoryParameters,
   ServiceDeskStateFromWAC,
   StartChatOptions,
-} from '../../../../common/types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
+} from 'common/types/serviceDesk';
+import { AgentProfile, ServiceDeskCallback } from 'common/types/serviceDeskCallback';
 /**
  * This class returns startChat, endChat, sendMessageToAgent, updateState, userTyping, userReadMessages and
  * areAnyAgentsOnline to be exposed to web chat through src/buildEntry.ts.
@@ -41,6 +41,17 @@ class ServiceDeskTemplate implements ServiceDesk {
   }
 
   /**
+   * Returns a name for this service desk integration. This value should reflect the name of the service desk that is
+   * being integrated to. This information will be reported to IBM and may be used to gauge interest in various
+   * service desks for the possibility of creating fully supported out-of-the-box implementations.
+   *
+   * This value is required for custom service desks and may have a maximum of 40 characters.
+   */
+  getName() {
+    return 'service desk template';
+  }
+
+  /**
    * Instructs the service desk to start a new chat. This should be called immediately after the service desk
    * instance has been created. It will make the appropriate calls to the service desk and begin communicating back
    * to the calling code using the callback produce to the instance. This may only be called once per instance.
@@ -51,7 +62,7 @@ class ServiceDeskTemplate implements ServiceDesk {
    * methods the service desk you are using uses.
    *
    * @param connectMessage The original server message response that caused the connection to an agent. It will
-   * contain specific information to send to the service desk as part of the connection. This can includes things
+   * contain specific information to send to the service desk as part of the connection. This can include things
    * like a message to display to a human agent.
    * @param startChatOptions Starting with version 4.5.0 of web chat, a set of options that can be applied when
    * starting a new chat. This includes metadata on how to add chat transcripts to your agent's view.

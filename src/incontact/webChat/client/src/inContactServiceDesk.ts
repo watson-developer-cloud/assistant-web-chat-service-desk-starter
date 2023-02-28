@@ -12,15 +12,12 @@
  *
  */
 
-import { ErrorType } from '../../../../common/types/errors';
-import { MessageRequest, MessageResponse } from '../../../../common/types/message';
-import {
-  ServiceDesk,
-  ServiceDeskFactoryParameters,
-  ServiceDeskStateFromWAC,
-} from '../../../../common/types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from '../../../../common/types/serviceDeskCallback';
-import { stringToMessageResponseFormat } from '../../../../common/utils';
+import { ErrorType } from 'common/types/errors';
+import { MessageRequest, MessageResponse } from 'common/types/message';
+import { ServiceDesk, ServiceDeskFactoryParameters, ServiceDeskStateFromWAC } from 'common/types/serviceDesk';
+import { AgentProfile, ServiceDeskCallback } from 'common/types/serviceDeskCallback';
+import { stringToMessageResponseFormat } from 'common/utils';
+
 import { InContactSession } from './inContactTypes';
 
 class InContactServiceDesk implements ServiceDesk {
@@ -51,6 +48,17 @@ class InContactServiceDesk implements ServiceDesk {
 
   constructor(parameters: ServiceDeskFactoryParameters) {
     this.callback = parameters.callback;
+  }
+
+  /**
+   * Returns a name for this service desk integration. This value should reflect the name of the service desk that is
+   * being integrated to. This information will be reported to IBM and may be used to gauge interest in various
+   * service desks for the possibility of creating fully supported out-of-the-box implementations.
+   *
+   * This value is required for custom service desks and may have a maximum of 40 characters.
+   */
+  getName() {
+    return 'nice incontact patron';
   }
 
   async endChat(): Promise<void> {

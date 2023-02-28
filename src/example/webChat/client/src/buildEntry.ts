@@ -11,7 +11,8 @@
  * specific language governing permissions and limitations under the License.
  *
  */
-import { ServiceDesk, ServiceDeskFactoryParameters } from '../../../../common/types/serviceDesk';
+import { ServiceDesk, ServiceDeskFactoryParameters } from 'common/types/serviceDesk';
+
 import { ExampleServiceDesk } from './exampleServiceDesk';
 // Change ServiceDeskTemplate to your service desk implementation
 import { ServiceDeskTemplate } from './serviceDeskTemplate';

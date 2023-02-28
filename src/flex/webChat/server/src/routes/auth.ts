@@ -39,7 +39,7 @@ AuthRouter.get('/', async (_req: Request, res: Response) => {
       chatFriendlyName: 'Chat with Jane',
       flexFlowSid,
     })
-    .then((channel) => {
+    .then((channel: any) => {
       console.log(`Received channel with channel.sid: ${channel.sid}`);
       channelId = channel.sid;
     });

@@ -12,4 +12,10 @@ For support, we will maintain the repository, we encourage contributions and imp
 
 ## Intellectual Property
 
-We take intellectual property seriously. We need to be sure of the provenance of your contribution and that we have the ability to include it in our project and redistribute it under our open source [license](./LICENSE). When you submit your PR, you're asserting that you have authored all of the code in the PR and that you have the right to contribute it to our project.
+We take intellectual property seriously. We need to be sure of the provenance of your contribution and that we have the ability to include it in our project and redistribute it under our open source [license](./LICENSE). When you submit your PR, you're asserting that you have authored all the code in the PR and that you have the right to contribute it to our project.
+
+## Implementation Requirements
+
+To be accepted as an example implementation of the web chat service desk integration API, you must provide code that implements the [documented API](API.md).
+
+**Important**: If you are making a service desk integration available for general use, keep in mind that a customer using your integration may not be using the latest version of web chat. If you are relying on specific features only available in later versions of web chat, make sure to document that requirement in the README for your integration. You may also wish to require a customer to provide the instance of web chat being used (e.g. by making it a constructor argument). You can then call [getWidgetVersion](https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=api-instance-methods#getWidgetVersion) to determine what version is being used.
