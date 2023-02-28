@@ -58,7 +58,7 @@ class InContactServiceDesk implements ServiceDesk {
    * This value is required for custom service desks and may have a maximum of 40 characters.
    */
   getName() {
-    return 'nice incontact';
+    return 'nice incontact patron';
   }
 
   async endChat(): Promise<void> {

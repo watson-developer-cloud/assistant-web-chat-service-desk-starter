@@ -119,7 +119,7 @@ This repo can be used as an isolated tool to build and test your integration wit
 There are two basic types of integrations.
 
 1. A seamless integration with the existing web chat UI. The user will use the web chat input field to send messages to an agent and messages from an agent will be displayed in the same message list along with messages from Watson Assistant. These integrations require fully implementing the service desk integration API provided by web chat.
-2. A custom panel implementation embedding a 3rd party chat widget. The user will switch to a different panel where they will see a different UI created by a 3rd party. A different field from the standard web chat input field will generally be available and messages to and from the agent will be displayed in a separate view and not part of the messages from Watson Assistant. These integrations generally require a lot less code and only require embedding another existing widget into web chat.
+2. A custom panel implementation embedding a 3rd party chat widget. The user will switch to a different panel where they will see a different UI created by a 3rd party. A different field from the standard web chat input field will generally be available and messages to and from the agent will be displayed in a separate view and not part of the messages from Watson Assistant. These integrations generally require a lot less code and only require embedding another existing widget into web chat, but can result in an inconsistent user or visual experience. 
 
 ## Prerequisites
 
@@ -141,7 +141,7 @@ One of the items passed into the factory is a callback object. These callbacks a
 
 ### Displaying the chat history to your human agent ("agent app")
 
-As of the 4.5.0 release of web chat, Watson Assistant will pass configuration needed to display a chat history widget in your live agent application interface. This agent application will contain a copy of the conversation your customer had with Watson Assistant for your live agent to be able to view. Visit ['./docs/AGENT_APP.md'](./docs/AGENT_APP.md) to learn more.
+Watson Assistant will pass configuration needed to display a chat history widget in your live agent application interface. This agent application will contain a copy of the conversation your customer had with Watson Assistant for your live agent to be able to view. Visit ['./docs/AGENT_APP.md'](./docs/AGENT_APP.md) to learn more.
 
 ## Development
 

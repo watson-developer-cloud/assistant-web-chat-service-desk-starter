@@ -107,7 +107,7 @@ class GenesysServiceDesk implements ServiceDesk {
    * This value is required for custom service desks and may have a maximum of 40 characters.
    */
   getName() {
-    return 'genesys';
+    return 'genesys web chat';
   }
 
   /**
