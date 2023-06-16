@@ -12,10 +12,15 @@
  *
  */
 
-import { MessageRequest, MessageResponse } from 'common/types/message';
 import { User } from 'common/types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters } from 'common/types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from 'common/types/serviceDeskCallback';
+import {
+  AgentProfile,
+  MessageRequest,
+  MessageResponse,
+  ServiceDesk,
+  ServiceDeskCallback,
+  ServiceDeskFactoryParameters,
+} from 'common/types/serviceDeskTypes';
 import { stringToMessageResponseFormat } from 'common/utils';
 import TurndownService from 'turndown';
 

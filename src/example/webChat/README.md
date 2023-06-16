@@ -26,5 +26,3 @@ and add your service-desk-specific files to the [/src/](/src/) folder as well. Y
 via JSDoc and contains TypeScript type definitions for all properties passed to functions. Once you add your class, 
 import the same in [buildEntry.ts](./client/src/buildEntry.ts) by changing `ServiceDeskTemplate` to the name of your 
 class.  
-
-For a recommended sequence of steps for building an integration see [/docs/STEPS.md](/docs/STEPS.md).

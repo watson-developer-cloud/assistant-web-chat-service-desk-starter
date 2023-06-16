@@ -16,16 +16,20 @@
  * Copy and paste this file into a new folder to get started.
  */
 
-import { ErrorType } from 'common/types/errors';
-import { ConnectToAgentItem, MessageInput, MessageOutput, MessageRequest, MessageResponse } from 'common/types/message';
 import { User } from 'common/types/profiles';
 import {
+  ConnectToAgentItem,
+  ErrorType,
+  MessageInput,
+  MessageOutput,
+  MessageRequest,
+  MessageResponse,
   ServiceDesk,
+  ServiceDeskCallback,
   ServiceDeskFactoryParameters,
   ServiceDeskStateFromWAC,
   StartChatOptions,
-} from 'common/types/serviceDesk';
-import { ServiceDeskCallback } from 'common/types/serviceDeskCallback';
+} from 'common/types/serviceDeskTypes';
 
 import {
   ChatBody,

@@ -11,7 +11,6 @@
  * specific language governing permissions and limitations under the License.
  *
  */
-import { ServiceDesk, ServiceDeskFactoryParameters } from 'common/types/serviceDesk';
 
 import { EgainServiceDesk } from './eGainServiceDesk';
 

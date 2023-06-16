@@ -12,7 +12,7 @@
  *
  */
 
-import { ServiceDeskFactoryParameters } from 'common/types/serviceDesk';
+import { ServiceDeskFactoryParameters } from 'common/types/serviceDeskTypes';
 
 import { ExampleServiceDesk } from '../src/exampleServiceDesk';
 import { EXAMPLE_CONNECT_MESSAGE, EXAMPLE_SERVICE_DESK_FACTORY_PARAMETERS } from './testHelpers';

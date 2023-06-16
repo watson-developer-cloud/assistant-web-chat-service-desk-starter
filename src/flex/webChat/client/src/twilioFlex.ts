@@ -12,10 +12,16 @@
  *
  */
 
-import { ConnectToAgentItem, MessageRequest, MessageResponse } from 'common/types/message';
-import { User } from 'common/types/profiles';
-import { ServiceDesk, ServiceDeskFactoryParameters } from 'common/types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from 'common/types/serviceDeskCallback';
+import {
+  AgentProfile,
+  ConnectToAgentItem,
+  MessageRequest,
+  MessageResponse,
+  ServiceDesk,
+  ServiceDeskCallback,
+  ServiceDeskFactoryParameters,
+  User,
+} from 'common/types/serviceDeskTypes';
 import { stringToMessageResponseFormat } from 'common/utils';
 import { Client } from 'twilio-chat';
 import { Channel } from 'twilio-chat/lib/channel';

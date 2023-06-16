@@ -13,9 +13,15 @@
  */
 
 import { ErrorType } from 'common/types/errors';
-import { MessageRequest, MessageResponse } from 'common/types/message';
-import { ServiceDesk, ServiceDeskFactoryParameters, StartChatOptions } from 'common/types/serviceDesk';
-import { AgentProfile, ServiceDeskCallback } from 'common/types/serviceDeskCallback';
+import {
+  AgentProfile,
+  MessageRequest,
+  MessageResponse,
+  ServiceDesk,
+  ServiceDeskCallback,
+  ServiceDeskFactoryParameters,
+  StartChatOptions,
+} from 'common/types/serviceDeskTypes';
 import { stringToMessageResponseFormat } from 'common/utils';
 
 import {
