@@ -16,13 +16,11 @@
  * This file contains utility functions you may find useful for writing your own service desk implementation.
  */
 
-import uuid from 'uuid';
-
 import { THREAD_ID_AGENT } from './constants';
-import { GenericItem, MessageResponse } from './types/message';
+import { GenericItem, MessageResponse } from './types/serviceDeskTypes';
 
 /**
- * Given a string will convert it into a message object to be send from Agent to User.
+ * Given a string will convert it into a message object to be sent from Agent to User.
  *
  * @param string A string to show the user.
  */
@@ -36,7 +34,6 @@ function stringToMessageResponseFormat(string: string): MessageResponse {
       generic: [textItem],
     },
     thread_id: THREAD_ID_AGENT,
-    id: uuid(),
   };
 }
 

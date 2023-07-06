@@ -12,14 +12,15 @@
  *
  */
 
-import { MessageRequest, MessageResponse } from 'common/types/message';
 import {
+  MessageRequest,
+  MessageResponse,
   ServiceDesk,
+  ServiceDeskCallback,
   ServiceDeskFactoryParameters,
   ServiceDeskStateFromWAC,
   StartChatOptions,
-} from 'common/types/serviceDesk';
-import { ServiceDeskCallback } from 'common/types/serviceDeskCallback';
+} from 'common/types/serviceDeskTypes';
 import { stringToMessageResponseFormat } from 'common/utils';
 import { v4 as uuidv4 } from 'uuid';
 
