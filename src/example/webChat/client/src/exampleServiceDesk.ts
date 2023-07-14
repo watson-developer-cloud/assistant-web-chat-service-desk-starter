@@ -12,16 +12,18 @@
  *
  */
 
-import { ErrorType , MessageRequest, MessageResponse , User ,
+import {
+  AgentProfile,
+  ErrorType,
+  MessageRequest,
+  MessageResponse,
   ServiceDesk,
+  ServiceDeskCallback,
   ServiceDeskFactoryParameters,
   ServiceDeskStateFromWAC,
   StartChatOptions,
-, AgentProfile, ServiceDeskCallback } from 'common/types/serviceDeskTypes';
-
-
-
-
+  User,
+} from 'common/types/serviceDeskTypes';
 import { stringToMessageResponseFormat } from 'common/utils';
 
 /**
