@@ -1,6 +1,6 @@
 # Twilio Flex integration example
 
-This is a functioning service desk integration between Watson Assistant and the Twilio Flex contact center.
+This is a functioning service desk integration between watsonx Assistant and the Twilio Flex contact center.
 
 **Important:**  This is a reference implementation that provides an example of a fully functional integration. Make any necessary changes and perform robust testing before deploying this integration in production.
 
@@ -35,7 +35,7 @@ The following Twilio resources provide some useful guides on Twilio Flex custom 
 
 1. Run `npm install` to install the dependencies.
 
-1. Run `npm run dev` to start the middleware server, which authorizes the user with Twilio and helps in setting up the integration. At run time, the Watson Assistant web chat will call the `/auth` API hosted here for the necessary authentication information.
+1. Run `npm run dev` to start the middleware server, which authorizes the user with Twilio and helps in setting up the integration. At run time, the watsonx Assistant web chat will call the `/auth` API hosted here for the necessary authentication information.
 
     **Note:** By default, the local server uses an unsecure `http://` connection. For a production deployment, you must host the server API at a secure public URL using `https://`.
 
@@ -57,7 +57,7 @@ You should now be able to start a web chat session in a browser, and within the 
 
 - **Agent transfers:** The event listeners set up in [twilioFlex.ts](./client/src/twilioFlex.ts) listen for participants joining and leaving the channel. This example implementation uses the `memberLeft` event to close the chat if an agent leaves; you will need to modify this behavior to support agent transfers.
 
-- **Conversation topic:** The example implementation sends the `message_to_human_agent` attribute from the dialog as the first message to the agent when the conversation starts. However, several other attributes are available within the `connectMessage` object that is passed to the `startChat()` function. For more information, see the documentation for the `topic` property of the `connect_to_agent` response type in the Watson Assistant [API reference](https://cloud.ibm.com/apidocs/assistant/assistant-v2#message).
+- **Conversation topic:** The example implementation sends the `message_to_human_agent` attribute from the dialog as the first message to the agent when the conversation starts. However, several other attributes are available within the `connectMessage` object that is passed to the `startChat()` function. For more information, see the documentation for the `topic` property of the `connect_to_agent` response type in the watsonx Assistant [API reference](https://cloud.ibm.com/apidocs/assistant/assistant-v2#message).
 
 - **Agent name and avatar:** The agent name is available in the example implementation. The web chat provides a method to display the agent avatar, but this is not implemented for Twilio Flex.
 

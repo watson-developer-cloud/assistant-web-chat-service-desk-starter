@@ -1,12 +1,12 @@
-# Genesys PureCloud Watson Assistant Agent App
+# Genesys PureCloud IBM watsonx Assistant Agent App
 
-This is a functioning Agent App integration between Watson Assistant and Genesys PureCloud.
+This is a functioning Agent App integration between watsonx Assistant and Genesys PureCloud.
 
 **Important:**  This is a reference implementation that provides an example of a fully functional integration. Make any necessary changes and perform robust testing before deploying this integration in production.
 
 ## Overview
 
-This integration provides agents in Genesys PureCloud with a transcript of the conversation between the end user and Watson Assistant. To learn more about transferring between end users and agents in Genesys PureCloud, please see:
+This integration provides agents in Genesys PureCloud with a transcript of the conversation between the end user and watsonx Assistant. To learn more about transferring between end users and agents in Genesys PureCloud, please see:
 - [Genesys Service Desk for WebChat](../webChat/)
 - [Genesys Service Desk for Phone](https://cloud.ibm.com/docs/assistant?topic=assistant-deploy-phone-genesys)
 
@@ -29,7 +29,7 @@ To start up a server in `localhost`, follow these steps:
 ## Authentication
 
 1. Follow the steps to create an [OAuth Client for Genesys](https://help.mypurecloud.com/articles/create-an-oauth-client/). When choosing the **Grant Type**, choose **Implicit Grant (Browser)**.
-    - For **App Name**, you can specify any name for the application (for example, `Watson Assistant - Agent App OAuth`).
+    - For **App Name**, you can specify any name for the application (for example, `watsonx Assistant - Agent App OAuth`).
     - In the **Authorized Redirect URI(s)** field, specify the URL where you will be hosting the Agent Application. If you're using `ngrok`, specify the URL in the following format:
     ```
     https://<some-hash>.grok.io/WatsonAssistantAgentAppWidgetProxy.html

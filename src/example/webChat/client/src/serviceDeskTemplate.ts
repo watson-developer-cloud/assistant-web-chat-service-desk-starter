@@ -58,7 +58,7 @@ class ServiceDeskTemplate implements ServiceDesk {
    *
    * Most service desks have a way to embed a custom iFrame into the agent view, as well as a way to pass metadata
    * into that iFrame. startChatOptions.agentAppInfo contains metadata for you to be able to render the conversation
-   * history with Watson Assistant to your agents in a custom iFrame and this data should be passed via whatever
+   * history with watsonx Assistant to your agents in a custom iFrame and this data should be passed via whatever
    * methods the service desk you are using uses.
    *
    * @param connectMessage The original server message response that caused the connection to an agent. It will

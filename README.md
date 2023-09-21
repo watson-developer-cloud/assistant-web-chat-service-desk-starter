@@ -1,12 +1,12 @@
 # Web chat service desk extension starter
 
-This repo provides a set of example and starter kit service desk integrations for use with Watson Assistant web chat – to allow end-users on web chat to escalate to a human agent. We provide starter kits to common live agent platforms, like Genesys Cloud, and also show you how to build custom integrations to other platforms.
+This repo provides a set of example and starter kit service desk integrations for use with watsonx Assistant web chat – to allow end-users on web chat to escalate to a human agent. We provide starter kits to common live agent platforms, like Genesys Cloud, and also show you how to build custom integrations to other platforms.
 
 ## Overview
 
-This repo provides an example development and production build environment as well as code examples for adding your own client-side service desk integration with web chat for Watson Assistant. You can use the tools in this repo to build an independently deployable JavaScript bundle of your integration, or you can copy the example code into your own application for build and deployment. These integrations can be shared between teams and also can be submitted as potential contributions to the main web chat project. If you're interested in contributing to this project or proposing that your integration be offered in Watson Assistant, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+This repo provides an example development and production build environment as well as code examples for adding your own client-side service desk integration with web chat for watsonx Assistant. You can use the tools in this repo to build an independently deployable JavaScript bundle of your integration, or you can copy the example code into your own application for build and deployment. These integrations can be shared between teams and also can be submitted as potential contributions to the main web chat project. If you're interested in contributing to this project or proposing that your integration be offered in watsonx Assistant, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-**Important:** This is an open source project of example implementations to help people get started on their own custom code. Any custom code used with Watson Assistant is the responsibility of the developer and is not covered by IBM support. If you find a bug in these examples, please submit a pull request with a fix. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+**Important:** This is an open source project of example implementations to help people get started on their own custom code. Any custom code used with watsonx Assistant is the responsibility of the developer and is not covered by IBM support. If you find a bug in these examples, please submit a pull request with a fix. See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 To find out if your company's tool is feasible for this approach, check out our Adoption Guide [here](./docs/ADOPTION_GUIDE.md). If you'd like some help to build an integration, [you can contact us](https://www.ibm.com/watson/assistant-integrations/?utm_medium=webchatbyosd).
 
@@ -68,8 +68,8 @@ This repo can be used as an isolated tool to build and test your integration wit
 
 There are two basic types of integrations provided in this repo.
 
-1. A seamless integration with the existing web chat UI. The user will use the web chat input field to send messages to an agent and messages from an agent will be displayed in the same message list along with messages from Watson Assistant. These integrations require fully implementing the service desk integration API provided by web chat.
-2. A custom panel implementation embedding a 3rd party chat widget. The user will switch to a different panel where they will see a different UI created by a 3rd party. A different field from the standard web chat input field will generally be available and messages to and from the agent will be displayed in a separate view and not part of the messages from Watson Assistant. These integrations generally require a lot less code and only require embedding another existing widget into web chat, but can result in an inconsistent user or visual experience. 
+1. A seamless integration with the existing web chat UI. The user will use the web chat input field to send messages to an agent and messages from an agent will be displayed in the same message list along with messages from watsonx Assistant. These integrations require fully implementing the service desk integration API provided by web chat.
+2. A custom panel implementation embedding a 3rd party chat widget. The user will switch to a different panel where they will see a different UI created by a 3rd party. A different field from the standard web chat input field will generally be available and messages to and from the agent will be displayed in a separate view and not part of the messages from watsonx Assistant. These integrations generally require a lot less code and only require embedding another existing widget into web chat, but can result in an inconsistent user or visual experience. 
 
 ## Prerequisites
 
@@ -77,7 +77,7 @@ The scripts and some of the code in this repository rely on having [Node.js](htt
 
 ## Displaying the chat history to your human agent ("agent app")
 
-Watson Assistant will pass configuration needed to display a chat history widget in your live agent application interface. This agent application will contain a copy of the conversation your customer had with Watson Assistant for your live agent to be able to view. Visit [the agent app documentation](https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=service-desks-custom-sd#agent-app) to learn more.
+watsonx Assistant will pass configuration needed to display a chat history widget in your live agent application interface. This agent application will contain a copy of the conversation your customer had with watsonx Assistant for your live agent to be able to view. Visit [the agent app documentation](https://web-chat.global.assistant.watson.cloud.ibm.com/docs.html?to=service-desks-custom-sd#agent-app) to learn more.
 
 ## Development
 

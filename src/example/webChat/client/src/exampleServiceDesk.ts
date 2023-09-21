@@ -71,7 +71,7 @@ class ExampleServiceDesk implements ServiceDesk {
   async startChat(connectMessage: MessageResponse, startChatOptions?: StartChatOptions): Promise<void> {
     // Most service desks have a way to embed a custom iFrame into the agent view, as well as a way to pass metadata
     // into that iFrame. startChatOptions.agentAppInfo contains metadata for you to be able to render the conversation
-    // history with Watson Assistant to your agents in a custom iFrame and this data should be passed via whatever
+    // history with watsonx Assistant to your agents in a custom iFrame and this data should be passed via whatever
     // methods the service desk you are using uses.
 
     // In your real implementation you will want to grab this.user and this.sessionID to make available to your service desk.
