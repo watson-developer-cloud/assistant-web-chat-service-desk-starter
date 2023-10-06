@@ -1,6 +1,6 @@
 # Enghouse Interactive CCaaS Integration Example
 
-The **Enghouse CCaaS** integration enables integration between IBM Watson Assistant (WA) and Enghouse Interactive (EI) CCaaS tenants' live agents.
+The **Enghouse CCaaS** integration enables integration between watsonx Assistant (WA) and Enghouse Interactive (EI) CCaaS tenants' live agents.
 
 ## Overview
 
@@ -12,9 +12,9 @@ The integration attempts to make it as simple as possible for Watson Assistance 
 
 The EI CCaaS  integration consists of two main components: hosting web page and backend Contact Center platform . Below is client side component Architecture:
 
-![EI CCaaS Watson Assistant Integration Architecture Overview](ibmWatson.jpg)
+![EI CCaaS watsonx Assistant Integration Architecture Overview](ibmWatson.jpg)
 
-The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the Watson Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
+The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the watsonx Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
 
 The communication uses the EI CustomChat widget component.  This can be referenced using the EI CCaaS default page or a [hosting page](./client/watsonExample.html) can set the `watsonAssistantChatOptions` prior to loading the EnghouseCCaaSWatsonAssistant.js for more advanced features, e.g.:
 
@@ -98,10 +98,10 @@ If the Assistant URL provided to you by Enghouse Interactive was:
 
 The complete list of parameters that may be passed to the standard EI CCaaS Watson page URL are:
 
-- *integrationID* - Watson Assistant Integration ID
-- *region* - Watson Assistant region
-- *serviceInstanceID* - Watson Assistant Instance ID
-- *subscriptionID* - Watson Assistant Subscription ID
+- *integrationID* - watsonx Assistant Integration ID
+- *region* - watsonx Assistant region
+- *serviceInstanceID* - watsonx Assistant Instance ID
+- *subscriptionID* - watsonx Assistant Subscription ID
 - *ccName* - the display name of the contact centre, displayed prior to agent answering chat (default is "Contact Centre")
 - *ccURL* - the URL-encoded "widget" URL. This may also be set (un-encoded) via the Dialog as the *CCURL* variable (overrides URL if both set). 
 - *agentIcon* - the URL-encoded URL of the agent icon (default is an Enghouse Interactive swirl logo).  This may also be set (un-encoded) in the Dialog as the *AgentIcon* variable (overrides URL if both set).

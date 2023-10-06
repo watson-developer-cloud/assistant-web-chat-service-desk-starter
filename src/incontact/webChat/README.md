@@ -1,6 +1,6 @@
 # NICE inContact Integration Example
 
-This is a functioning service desk integration between Watson Assistant and NICE inContact.
+This is a functioning service desk integration between watsonx Assistant and NICE inContact.
 
 **Important:**  This is a reference implementation that provides an example of a fully functional integration. Make any necessary changes and perform robust testing before deploying this integration in production.
 
@@ -16,7 +16,7 @@ Note: This implementation only supports UserHub accounts, and has not been teste
 
 The NICE inContact integration consists of two main components: client-side code that runs in the user's browser, and server-side code that you host.
 
-The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the Watson Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
+The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the watsonx Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
 
 The communication uses the Patron API, which can be found at [Patron APIs](https://developer.niceincontact.com/API/PatronAPI).
 

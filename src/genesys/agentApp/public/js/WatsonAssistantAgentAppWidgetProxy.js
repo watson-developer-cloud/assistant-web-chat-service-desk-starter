@@ -151,7 +151,7 @@ async function initializeApplication() {
       if (sessionHistoryKey) {
         window.location.href = `https://web-chat.global.assistant.watson.cloud.ibm.com/loadAgentAppFrame.html?session_history_key=${sessionHistoryKey}`;
       } else {
-        console.error('Could not load Watson Assistant Agent App, session history key is missing');
+        console.error('Could not load IBM watsonx Assistant Agent App, session history key is missing');
       }
     }
 

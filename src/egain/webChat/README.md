@@ -1,6 +1,6 @@
 # eGain ServiceDesk Integration Example
 
-This is a functioning service desk integration between Watson Assistant and eGain's Advisor Desktop.
+This is a functioning service desk integration between watsonx Assistant and eGain's Advisor Desktop.
 
 **Important:** This is a reference implementation that provides an example of a fully functional integration. Make any necessary changes and perform robust testing before deploying this integration in production.
 
@@ -8,7 +8,7 @@ This reference implementation supports the core features of an eGain integration
 
 ## Overview
 
-The integration example consists of client-side code that runs in the user's browser and manages the communication between the user and agent. This is an integration of eGain's Advisor Desktop with service desk API that is fully supported by the Watson Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
+The integration example consists of client-side code that runs in the user's browser and manages the communication between the user and agent. This is an integration of eGain's Advisor Desktop with service desk API that is fully supported by the watsonx Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
 
 ## Prerequisites
 

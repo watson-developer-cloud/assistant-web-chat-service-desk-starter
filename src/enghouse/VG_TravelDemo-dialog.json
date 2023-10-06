@@ -1935,7 +1935,7 @@
         "CCURL": "https://ccsp.ei.eilabonline.biz/SocialConnectorHelperAPI/api/customchat/getWidgetConfiguration?WidgetId=5dae9357-0660-ed11-8160-00155dfe5104",
         "LiveCSR": false,
         "AgentIcon": "EI_swirl_up.png",
-        "SC_TestOP": "Watson Assistant Live Agent handover test",
+        "SC_TestOP": "watsonx Assistant Live Agent handover test",
         "firstName": "CustomerName",
         "my_credentials": {
           "user": "a0e67977-e38e-45cc-b222-884d415eff09",

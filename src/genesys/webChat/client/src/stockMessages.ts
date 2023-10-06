@@ -22,7 +22,7 @@ interface TEMPLATES {
 }
 
 export const messages: TEMPLATES = {
-  PREFIX_MESSAGE_TO_AGENT: 'This customer needs assistance, below is a summary of the requested need.', // 'In the Watson Assistant widget to the right you can review the entire conversation',
+  PREFIX_MESSAGE_TO_AGENT: 'This customer needs assistance, below is a summary of the requested need.', // 'In the watsonx Assistant widget to the right you can review the entire conversation',
   SUMMARY: (topic: any) => `Summary: ${topic !== undefined ? topic : messages.MISSING_TOPIC}`,
   POSTFIX_MESSAGE_TO_AGENT: 'To respond directly to the customer address them here.',
   MESSAGE_TO_USER: `<strong>Live agent support</strong><br>I'll notify you when an agent answers your request. Response times vary based on availability.`,

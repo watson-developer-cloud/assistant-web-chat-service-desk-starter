@@ -41,12 +41,12 @@ import {
  * Default message that is sent to the agent when the conversation is escalated to the agent.
  */
 const WATSON_TRANSFER_MESSAGE =
-  'Watson Assistant has transferred a chat. Please look at the chat history to get the full context of the conversation.';
+  'watsonx Assistant has transferred a chat. Please look at the chat history to get the full context of the conversation.';
 
 /**
  * Default name for the conversation title that is created in Kustomer
  */
-const CONVERSATION_TITLE = 'Watson Assistant Chat';
+const CONVERSATION_TITLE = 'watsonx Assistant Chat';
 
 class KustomerServiceDesk implements ServiceDesk {
   agentProfile: AgentProfile;

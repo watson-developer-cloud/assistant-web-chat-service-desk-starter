@@ -1,6 +1,6 @@
 # Oracle Cloud B2C Service Integration Example
 
-This is a functioning service desk integration between Watson Assistant and Oracle Cloud's [B2C Service](https://docs.oracle.com/en/cloud/saas/b2c-service/21b/index.html) (previously Oracle Service Cloud).
+This is a functioning service desk integration between watsonx Assistant and Oracle Cloud's [B2C Service](https://docs.oracle.com/en/cloud/saas/b2c-service/21b/index.html) (previously Oracle Service Cloud).
 
 **Important:**  This is a reference implementation that provides an example of a fully functional integration. Make any necessary changes and perform robust testing before deploying this integration in production.
 
@@ -14,7 +14,7 @@ You can refer to these Oracle docs and resources for more information about usin
 
 The Oracle B2C Service integration consists of two main components: client-side code that runs in the user's browser, and server-side code that you host.
 
-The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the Watson Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
+The client-side component manages the communication between the user and the agent. It implements the service desk API that is fully supported by the watsonx Assistant web chat integration. (For more information about this API, see [ServiceDesk API](https://github.com/watson-developer-cloud/assistant-web-chat-service-desk-starter/blob/main/docs/API.md)).
 
 The communication uses the B2C Service, where details can be found at [B2C Service APIs](https://docs.oracle.com/en/cloud/saas/b2c-service/21b/cxscc/rest-endpoints.html).
 
@@ -52,7 +52,7 @@ You should now be able to start a web chat session in a browser, and within the 
 
 - **Agent transfers:** This example implementation does not implement support for agent transfer.
 
-- **Conversation topic:** The example implementation sends the conversation transcript between the user and the bot as the first message to the agent when the conversation starts, and the user will first receive the greeting message set within your Oracle B2C center. Note that several other attributes are available within the `connectMessage` object that is passed to the `startChat()` function. For more information, see the documentation for the `topic` property of the `connect_to_agent` response type in the Watson Assistant [API reference](https://cloud.ibm.com/apidocs/assistant/assistant-v2#message).
+- **Conversation topic:** The example implementation sends the conversation transcript between the user and the bot as the first message to the agent when the conversation starts, and the user will first receive the greeting message set within your Oracle B2C center. Note that several other attributes are available within the `connectMessage` object that is passed to the `startChat()` function. For more information, see the documentation for the `topic` property of the `connect_to_agent` response type in the watsonx Assistant [API reference](https://cloud.ibm.com/apidocs/assistant/assistant-v2#message).
 
 - **Typing indicator:** Support for both agent typing and user typing are implemented in this example code. However, the user typing indicator fails to render in Oracle's chat window, likely due to some API bug. This needs further investigation.
 
